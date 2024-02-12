@@ -9,14 +9,14 @@ interface MinimalWindow {
     listener: (event: {}) => void
   ): void
 
+  document: {
+    querySelector(selector: string): any
+  }
+
   removeEventListener(
     type: 'keydown' | 'keyup',
     listener: (event: {}) => void
   ): void
-
-  document: {
-    querySelector(selector: string): any
-  }
 }
 
 export interface KeyUXOptions {

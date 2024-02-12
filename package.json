@@ -6,8 +6,10 @@
   "scripts": {
     "test:lint": "eslint .",
     "test:coverage": "c8 pnpm bnt",
+    "test:build": "vite build test/demo/",
     "test:size": "size-limit",
-    "test": "pnpm run /^test:/"
+    "test": "pnpm run /^test:/",
+    "start": "vite test/demo/"
   },
   "author": "Andrey Sitnik <andrey@sitnik.ru>",
   "license": "MIT",
@@ -33,6 +35,8 @@
     "@size-limit/preset-small-lib": "^11.0.2",
     "@types/jsdom": "^21.1.6",
     "@types/node": "^20.11.17",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "better-node-test": "^0.5.0",
@@ -47,9 +51,12 @@
     "eslint-plugin-prefer-let": "^3.0.1",
     "eslint-plugin-promise": "^6.1.1",
     "jsdom": "^24.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "size-limit": "^11.0.2",
     "tsx": "^4.7.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vite": "^5.1.1"
   },
   "prettier": {
     "arrowParens": "avoid",
@@ -61,6 +68,7 @@
   },
   "c8": {
     "exclude": [
+      "test/demo/dist",
       "**/*.test.*",
       "test/*"
     ],
@@ -74,12 +82,14 @@
     "clean": true
   },
   "eslintConfig": {
-    "extends": "@logux/eslint-config",
+    "extends": "@logux/eslint-config/ts",
     "rules": {
+      "@typescript-eslint/no-explicit-any": "off",
       "no-control-regex": "off"
     }
   },
   "eslintIgnore": [
+    "test/demo/dist",
     "**/errors.ts"
   ],
   "size-limit": [

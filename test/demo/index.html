@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KeyUX</title>
+    <style>
+      button {
+        padding: 0.5em 1em;
+        border: 1px solid #aaa;
+        border-radius: 6px;
+        background: #eee;
+        cursor: pointer;
+
+        &:hover {
+          background: #f4f4f4;
+        }
+
+        &:active,
+        &.is-pressed {
+          padding-top: calc(0.5em + 1px);
+          padding-bottom: calc(0.5em - 1px);
+          box-shadow: inset 0 1px 2px rgba(0 0 0 / 0.3);
+        }
+      }
+      button strong {
+        min-width: 1.5em;
+        display: inline-block;
+        text-align: right;
+      }
+      kbd {
+        background-color: white;
+        border-radius: 3px;
+        box-shadow: 0 1px 2px rgba(0 0 0 / 0.3);
+        display: inline-block;
+        padding: 0.1em 0.4em;
+        font-size: 0.9em;
+        white-space: nowrap;
+        margin: 0 -0.5em 0 0.5em;
+        font-weight: bold;
+        color: #444;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="./index.ts"></script>
+  </body>
+</html>
