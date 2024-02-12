@@ -1,15 +1,15 @@
-import { test } from 'node:test'
+import { type DOMWindow, JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
-import { JSDOM, type DOMWindow } from 'jsdom'
+import { test } from 'node:test'
 
-import { startKeyUX, createKeyUX } from '../index.js'
+import { createKeyUX, startKeyUX } from '../index.js'
 
 function press(
   window: DOMWindow,
   data: Partial<Omit<KeyboardEventInit, 'view'>>,
   target: EventTarget = window,
   onMiddle?: () => void
-) {
+): void {
   let down = new window.KeyboardEvent('keydown', { ...data, bubbles: true })
   target.dispatchEvent(down)
   if (onMiddle) onMiddle()
@@ -37,22 +37,22 @@ test('adds hot keys to buttons and links', () => {
   press(window, { key: 'b' })
   equal(result, 1)
 
-  press(window, { key: 'b', altKey: true })
+  press(window, { altKey: true, key: 'b' })
   equal(result, 1)
 
   press(window, { key: 'b' })
   equal(result, 2)
 
-  press(window, { key: 'b', ctrlKey: true })
+  press(window, { ctrlKey: true, key: 'b' })
   equal(result, 12)
 
   press(window, { key: '+' })
   equal(result, 112)
 
   press(window, {
-    key: 'b',
-    ctrlKey: true,
     altKey: true,
+    ctrlKey: true,
+    key: 'b',
     metaKey: true,
     shiftKey: true
   })
@@ -157,6 +157,6 @@ test('supports non-English keyboard layouts', () => {
     clicked += 1
   })
 
-  press(window, { key: 'и', code: 'KeyB', altKey: true })
+  press(window, { altKey: true, code: 'KeyB', key: 'и' })
   equal(clicked, 1)
 })
