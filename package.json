@@ -31,6 +31,7 @@
   "devDependencies": {
     "@logux/eslint-config": "^52.0.2",
     "@size-limit/preset-small-lib": "^11.0.2",
+    "@types/jsdom": "^21.1.6",
     "@types/node": "^20.11.17",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
@@ -45,6 +46,7 @@
     "eslint-plugin-perfectionist": "^2.5.0",
     "eslint-plugin-prefer-let": "^3.0.1",
     "eslint-plugin-promise": "^6.1.1",
+    "jsdom": "^24.0.0",
     "size-limit": "^11.0.2",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3"
@@ -72,7 +74,10 @@
     "clean": true
   },
   "eslintConfig": {
-    "extends": "@logux/eslint-config"
+    "extends": "@logux/eslint-config",
+    "rules": {
+      "no-control-regex": "off"
+    }
   },
   "eslintIgnore": [
     "**/errors.ts"
@@ -82,7 +87,7 @@
       "import": {
         "./index.js": "{ startKeyUX }"
       },
-      "limit": "14 B"
+      "limit": "383 B"
     }
   ],
   "clean-publish": {
