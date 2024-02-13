@@ -2,7 +2,7 @@ import { type DOMWindow, JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
 
-import { createKeyUX, startKeyUX } from '../index.js'
+import { hotkeysKeyUX, startKeyUX } from '../index.js'
 
 function press(
   window: DOMWindow,
@@ -19,7 +19,7 @@ function press(
 
 test('adds hot keys to buttons and links', () => {
   let window = new JSDOM().window
-  startKeyUX(window)
+  startKeyUX(window, [hotkeysKeyUX()])
   window.document.body.innerHTML =
     '<button aria-keyshortcuts="b">1</button>' +
     '<button aria-keyshortcuts="Ctrl+B">10</button>' +
@@ -61,7 +61,7 @@ test('adds hot keys to buttons and links', () => {
 
 test('stops event tracking', () => {
   let window = new JSDOM().window
-  let keyux = startKeyUX(window)
+  let stop = startKeyUX(window, [hotkeysKeyUX()])
   window.document.body.innerHTML = '<button aria-keyshortcuts="b"></button>'
 
   let clicked = 0
@@ -72,44 +72,18 @@ test('stops event tracking', () => {
   press(window, { key: 'b' })
   equal(clicked, 1)
 
-  keyux.stop()
+  stop()
   press(window, { key: 'b' })
   equal(clicked, 1)
 
-  keyux.start()
+  startKeyUX(window, [hotkeysKeyUX()])
   press(window, { key: 'b' })
   equal(clicked, 2)
 })
 
-test('creates an instance without starting', () => {
-  let window = new JSDOM().window
-  let keyux = createKeyUX(window)
-  window.document.body.innerHTML = '<button aria-keyshortcuts="b"></button>'
-
-  let clicked = 0
-  window.document.querySelector('button')!.addEventListener('click', () => {
-    clicked += 1
-  })
-
-  press(window, { key: 'b' })
-  equal(clicked, 0)
-
-  keyux.stop()
-  press(window, { key: 'b' })
-  equal(clicked, 0)
-
-  keyux.start()
-  press(window, { key: 'b' })
-  equal(clicked, 1)
-
-  keyux.stop()
-  press(window, { key: 'b' })
-  equal(clicked, 1)
-})
-
 test('ignores hot keys when focus is inside text fields', () => {
   let window = new JSDOM().window
-  startKeyUX(window)
+  startKeyUX(window, [hotkeysKeyUX()])
   window.document.body.innerHTML =
     '<input type="text">' +
     '<textarea></textarea>' +
@@ -133,7 +107,7 @@ test('ignores hot keys when focus is inside text fields', () => {
 
 test('adds pressed state', () => {
   let window = new JSDOM().window
-  startKeyUX(window, { pressedClass: 'is-pressed is-hover' })
+  startKeyUX(window, [hotkeysKeyUX({ pressedClass: 'is-pressed is-hover' })])
   window.document.body.innerHTML = '<button aria-keyshortcuts="b"></button>'
 
   let button = window.document.querySelector('button')!
@@ -149,7 +123,7 @@ test('adds pressed state', () => {
 
 test('supports non-English keyboard layouts', () => {
   let window = new JSDOM().window
-  startKeyUX(window)
+  startKeyUX(window, [hotkeysKeyUX()])
   window.document.body.innerHTML = '<button aria-keyshortcuts="Alt+B"></button>'
 
   let clicked = 0

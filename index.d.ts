@@ -19,16 +19,35 @@ interface MinimalWindow {
   ): void
 }
 
-export interface KeyUXOptions {
-  pressedClass?: string
+export interface KeyUXModule {
+  (window: MinimalWindow): () => void
 }
 
 /**
- * Create an instance to control key events for better keyboard UX.
+ * Press button/a according to `aria-keyshortcuts`.
+ *
+ * ```js
+ * import { hotkeysKeyUX, startKeyUX } from 'keyux'
+ *
+ * startKeyUX(window, [
+ *   hotkeysKeyUX({ pressedClass: 'is-pressed' })
+ * ])
+ * ```
  */
-export function createKeyUX(window: MinimalWindow, opts?: KeyUXOptions): KeyUX
+export function hotkeysKeyUX(opts?: { pressedClass?: string }): KeyUXModule
 
 /**
  * Start listeners for key events for better keyboard UX.
+ *
+ * ```js
+ * import { hotkeys, startKeyUX } from 'keyux'
+ *
+ * startKeyUX(window, [
+ *   hotkeys({ pressedClass: 'is-pressed' })
+ * ])
+ * ```
  */
-export function startKeyUX(window: MinimalWindow, opts?: KeyUXOptions): KeyUX
+export function startKeyUX(
+  window: MinimalWindow,
+  plugins: KeyUXModule[]
+): () => void
