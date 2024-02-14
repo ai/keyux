@@ -56,6 +56,9 @@ test('adds menu navigation', () => {
 
   press(window, 'ArrowUp')
   equal(window.document.activeElement, items[2])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[0])
 })
 
 test('stops tacking on loosing focus', () => {
@@ -150,4 +153,32 @@ test('stops event tracking', () => {
   stop()
   press(window, 'ArrowDown')
   equal(window.document.activeElement, items[1])
+})
+
+test('ignores broken DOM', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [menuKeyUX()])
+
+  window.document.body.innerHTML =
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>'
+  let items = window.document.querySelectorAll('a')
+  items[0].focus()
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[0])
+
+  window.document.body.innerHTML =
+    '<nav role="menu">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
+  let another = window.document.querySelectorAll('a')
+  another[0].focus()
+
+  window.document.querySelector('nav')!.role = ''
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, another[0])
 })
