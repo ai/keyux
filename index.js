@@ -1,5 +1,6 @@
 export * from './hotkeys.js'
 export * from './press.js'
+export * from './menu.js'
 
 export function startKeyUX(window, plugins) {
   let unbinds = plugins.map(plugin => plugin(window))

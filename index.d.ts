@@ -37,6 +37,19 @@ export interface KeyUXModule {
 export function hotkeysKeyUX(): KeyUXModule
 
 /**
+ * Add arrow-navigation on `role="menu"`.
+ *
+ * ```js
+ * import { startKeyUX, menuKeyUX } from 'keyux'
+ *
+ * startKeyUX(window, [
+ *   menuKeyUX()
+ * ])
+ * ```
+ */
+export function menuKeyUX(): KeyUXModule
+
+/**
  * Add pressed style on button activation from keyboard.
  *
  * ```js

@@ -25,7 +25,7 @@ test('adds pressed state', () => {
   equal(button.classList.contains('is-hover'), false)
 })
 
-test('unbinds', () => {
+test('stops event tracking', () => {
   let window = new JSDOM().window
   let stop = startKeyUX(window, [
     pressKeyUX('is-pressed is-hover'),

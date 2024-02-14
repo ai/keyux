@@ -1,11 +1,11 @@
-import { type FC, createElement as h, useState } from 'react'
+import { type FC, Fragment, createElement as h, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { hotkeysKeyUX, pressKeyUX, startKeyUX } from '../../index.js'
+import { hotkeysKeyUX, menuKeyUX, pressKeyUX, startKeyUX } from '../../index.js'
 
-startKeyUX(window, [hotkeysKeyUX(), pressKeyUX('is-pressed')])
+startKeyUX(window, [hotkeysKeyUX(), menuKeyUX(), pressKeyUX('is-pressed')])
 
-const App: FC = () => {
+const Counter: FC = () => {
   let [clicked, setClicked] = useState(0)
   return h(
     'button',
@@ -19,6 +19,48 @@ const App: FC = () => {
     h('strong', {}, clicked),
     h('kbd', {}, 'b')
   )
+}
+
+const Menu: FC = () => {
+  return h(
+    'nav',
+    {
+      'aria-orientation': 'horizontal',
+      'className': 'menu',
+      'role': 'menu'
+    },
+    h(
+      'a',
+      {
+        className: 'menu_item',
+        href: '#home',
+        role: 'menuitem'
+      },
+      'Home'
+    ),
+    h(
+      'a',
+      {
+        className: 'menu_item',
+        href: '#about',
+        role: 'menuitem'
+      },
+      'About'
+    ),
+    h(
+      'a',
+      {
+        className: 'menu_item',
+        href: '#contact',
+        role: 'menuitem'
+      },
+      'Contact'
+    )
+  )
+}
+
+const App: FC = () => {
+  return h(Fragment, {}, h(Counter), h(Menu))
 }
 
 createRoot(document.getElementById('app')!).render(h(App))

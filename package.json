@@ -96,9 +96,9 @@
     {
       "name": "All modules",
       "import": {
-        "./index.js": "{ startKeyUX, hotkeysKeyUX, pressKeyUX }"
+        "./index.js": "{ startKeyUX, hotkeysKeyUX, pressKeyUX, menuKeyUX }"
       },
-      "limit": "764 B"
+      "limit": "777 B"
     }
   ],
   "clean-publish": {
