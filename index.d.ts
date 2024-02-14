@@ -27,23 +27,38 @@ export interface KeyUXModule {
  * Press button/a according to `aria-keyshortcuts`.
  *
  * ```js
- * import { hotkeysKeyUX, startKeyUX } from 'keyux'
+ * import { startKeyUX, hotkeysKeyUX } from 'keyux'
  *
  * startKeyUX(window, [
- *   hotkeysKeyUX({ pressedClass: 'is-pressed' })
+ *   hotkeysKeyUX()
  * ])
  * ```
  */
-export function hotkeysKeyUX(opts?: { pressedClass?: string }): KeyUXModule
+export function hotkeysKeyUX(): KeyUXModule
+
+/**
+ * Add pressed style on button activation from keyboard.
+ *
+ * ```js
+ * import { startKeyUX, pressKeyUX } from 'keyux'
+ *
+ * startKeyUX(window, [
+ *   pressKeyUX('is-pressed')
+ * ])
+ * ```
+ */
+export function pressKeyUX(className: string): KeyUXModule
 
 /**
  * Start listeners for key events for better keyboard UX.
  *
  * ```js
- * import { hotkeys, startKeyUX } from 'keyux'
+ * import { startKeyUX, hotkeysKeyUX, menuKeyUX, pressKeyUX } from 'keyux'
  *
  * startKeyUX(window, [
- *   hotkeys({ pressedClass: 'is-pressed' })
+ *   hotkeysKeyUX(),
+ *   menuKeyUX(),
+ *   pressKeyUX('is-pressed')
  * ])
  * ```
  */

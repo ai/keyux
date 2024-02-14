@@ -7,12 +7,10 @@ import { hotkeysKeyUX, startKeyUX } from '../index.js'
 function press(
   window: DOMWindow,
   data: Partial<Omit<KeyboardEventInit, 'view'>>,
-  target: EventTarget = window,
-  onMiddle?: () => void
+  target: EventTarget = window
 ): void {
   let down = new window.KeyboardEvent('keydown', { ...data, bubbles: true })
   target.dispatchEvent(down)
-  if (onMiddle) onMiddle()
   let up = new window.KeyboardEvent('keyup', { ...data, bubbles: true })
   target.dispatchEvent(up)
 }
@@ -103,22 +101,6 @@ test('ignores hot keys when focus is inside text fields', () => {
 
   press(window, { key: 'b' }, window.document.querySelector('a')!)
   equal(clicked, 1)
-})
-
-test('adds pressed state', () => {
-  let window = new JSDOM().window
-  startKeyUX(window, [hotkeysKeyUX({ pressedClass: 'is-pressed is-hover' })])
-  window.document.body.innerHTML = '<button aria-keyshortcuts="b"></button>'
-
-  let button = window.document.querySelector('button')!
-
-  equal(button.classList.contains('is-pressed'), false)
-  press(window, { key: 'b' }, window, () => {
-    equal(button.classList.contains('is-pressed'), true)
-    equal(button.classList.contains('is-hover'), true)
-  })
-  equal(button.classList.contains('is-pressed'), false)
-  equal(button.classList.contains('is-hover'), false)
 })
 
 test('supports non-English keyboard layouts', () => {

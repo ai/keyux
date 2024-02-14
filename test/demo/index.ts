@@ -1,9 +1,9 @@
 import { type FC, createElement as h, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { hotkeysKeyUX, startKeyUX } from '../../index.js'
+import { hotkeysKeyUX, pressKeyUX, startKeyUX } from '../../index.js'
 
-startKeyUX(window, [hotkeysKeyUX({ pressedClass: 'is-pressed' })])
+startKeyUX(window, [hotkeysKeyUX(), pressKeyUX('is-pressed')])
 
 const App: FC = () => {
   let [clicked, setClicked] = useState(0)
