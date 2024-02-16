@@ -9,3 +9,8 @@ export function startKeyUX(window, plugins) {
     unbinds.forEach(unbind => unbind())
   }
 }
+
+export function likelyWithKeyboard(window = globalThis) {
+  let agent = window.navigator.userAgent.toLowerCase()
+  return !['iphone', 'ipad', 'android'].some(device => agent.includes(device))
+}

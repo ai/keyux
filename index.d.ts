@@ -13,6 +13,10 @@ interface MinimalWindow {
     querySelector(selector: string): any
   }
 
+  navigator: {
+    userAgent: string
+  }
+
   removeEventListener(
     type: 'keydown' | 'keyup',
     listener: (event: {}) => void
@@ -99,3 +103,11 @@ export function startKeyUX(
   window: MinimalWindow,
   plugins: KeyUXModule[]
 ): () => void
+
+/**
+ * Returns `false` for tablets and phones.
+ *
+ * They still can have connected physical keyboard, it is just less likely.
+ * We recommend still support hot keys, but maybe do not show hints in UI.
+ */
+export function likelyWithKeyboard(window: MinimalWindow): boolean
