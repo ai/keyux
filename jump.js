@@ -28,9 +28,10 @@ export function jumpKeyUX(
     }
 
     function jump(from) {
-      if (!from.dataset.keyuxJumpInto) return
+      let ariaControls = from.getAttribute('aria-controls')
+      if (!ariaControls) return
       setTimeout(() => {
-        let area = window.document.getElementById(from.dataset.keyuxJumpInto)
+        let area = window.document.getElementById(ariaControls)
         if (area) {
           let next = area.querySelector(interactive)
           if (next) focus(next)

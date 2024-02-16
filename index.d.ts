@@ -63,7 +63,7 @@ export function menuKeyUX(): KeyUXModule
 export function pressKeyUX(className: string): KeyUXModule
 
 /**
- * Add support for `data-keyux-jump-into`.
+ * Add support for focus jump into `aria-controls`.
  *
  * ```js
  * import { startKeyUX, jumpsKeyUX } from 'keyux'

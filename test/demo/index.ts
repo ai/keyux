@@ -46,10 +46,10 @@ const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
     h(
       'a',
       {
+        'aria-controls': 'page',
         'aria-current': router === 'home' ? 'page' : undefined,
         'aria-keyshortcuts': 'h',
         'className': 'menu_item',
-        'data-keyux-jump-into': 'page',
         'href': '#home',
         'onClick': (e: MouseEvent) => {
           e.preventDefault()
@@ -63,10 +63,10 @@ const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
     h(
       'a',
       {
+        'aria-controls': 'page',
         'aria-current': router === 'about' ? 'page' : undefined,
         'aria-keyshortcuts': 'a',
         'className': 'menu_item',
-        'data-keyux-jump-into': 'page',
         'href': '#about',
         'onClick': (e: MouseEvent) => {
           e.preventDefault()
@@ -80,10 +80,10 @@ const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
     h(
       'a',
       {
+        'aria-controls': 'page',
         'aria-current': router === 'contact' ? 'page' : undefined,
         'aria-keyshortcuts': 'c',
         'className': 'menu_item',
-        'data-keyux-jump-into': 'page',
         'href': '#contact',
         'onClick': (e: MouseEvent) => {
           e.preventDefault()
@@ -104,7 +104,7 @@ const Page: FC<{ router: string }> = ({ router }) => {
       Fragment,
       {},
       h('input', {
-        'data-keyux-jump-into': 'results',
+        'aria-controls': 'results',
         'placeholder': 'Search',
         'type': 'search'
       }),

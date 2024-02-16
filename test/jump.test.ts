@@ -31,11 +31,11 @@ test('jumps to next area by click and back by escape', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [jumpKeyUX()])
   window.document.body.innerHTML =
-    '<a id="step1" href="#" data-keyux-jump-into="step2"></a>' +
-    '<div id="step2"><button data-keyux-jump-into="step3"></button></div>' +
-    '<div id="step3"><label tabindex="0" data-keyux-jump-into="step4">' +
+    '<a id="step1" href="#" aria-controls="step2"></a>' +
+    '<div id="step2"><button aria-controls="step3"></button></div>' +
+    '<div id="step3"><label tabindex="0" aria-controls="step4">' +
     '</label><a href="#"></a></div>' +
-    '<div id="step4"><input type="text" data-keyux-jump-into="step5" /></div>' +
+    '<div id="step4"><input type="text" aria-controls="step5" /></div>' +
     '<div id="step5"><a href="#"></a></div>'
 
   let step1 = window.document.querySelector<HTMLElement>('#step1')!
@@ -82,7 +82,7 @@ test('stops event tracking', async () => {
   let window = new JSDOM().window
   let stop = startKeyUX(window, [jumpKeyUX()])
   window.document.body.innerHTML =
-    '<a id="step1" href="#" data-keyux-jump-into="step2"></a>' +
+    '<a id="step1" href="#" aria-controls="step2"></a>' +
     '<div id="step2"><button></button></div>'
 
   let step1 = window.document.querySelector('#step1')!
@@ -97,7 +97,7 @@ test('ignores mouse click', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [jumpKeyUX()])
   window.document.body.innerHTML =
-    '<a id="step1" href="#" data-keyux-jump-into="step2"></a>' +
+    '<a id="step1" href="#" aria-controls="step2"></a>' +
     '<div id="step2"><button></button></div>'
 
   let step1 = window.document.querySelector('#step1')!
@@ -128,13 +128,13 @@ test('is ready for missed next area', async () => {
   startKeyUX(window, [jumpKeyUX()])
 
   window.document.body.innerHTML =
-    '<a id="step1" href="#" data-keyux-jump-into="step2"></a>'
+    '<a id="step1" href="#" aria-controls="step2"></a>'
   click(window, window.document.querySelector('#step1')!)
   await setTimeout(10)
   equal(window.document.activeElement, window.document.body)
 
   window.document.body.innerHTML =
-    '<a id="step1" href="#" data-keyux-jump-into="step2"></a>' +
+    '<a id="step1" href="#" aria-controls="step2"></a>' +
     '<div id="step2"></div>'
   click(window, window.document.querySelector('#step1')!)
   await setTimeout(10)
@@ -145,8 +145,8 @@ test('is ready for missed previous area', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [jumpKeyUX()])
   window.document.body.innerHTML =
-    '<a id="step1" href="#" data-keyux-jump-into="step2">1</a>' +
-    '<div id="step2"><a href="#" data-keyux-jump-into="step3">2</a></div>' +
+    '<a id="step1" href="#" aria-controls="step2">1</a>' +
+    '<div id="step2"><a href="#" aria-controls="step3">2</a></div>' +
     '<div id="step3"><a href="#">3</a></div>'
 
   let step1 = window.document.querySelector<HTMLElement>('#step1')!
@@ -172,7 +172,7 @@ test('allows to change interactive selector', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [jumpKeyUX('button')])
   window.document.body.innerHTML =
-    '<a id="step1" href="#" data-keyux-jump-into="step2"></a>' +
+    '<a id="step1" href="#" aria-controls="step2"></a>' +
     '<div id="step2"><a></a><button></button></div>'
 
   click(window, window.document.querySelector('#step1')!)
