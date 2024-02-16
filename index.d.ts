@@ -63,15 +63,35 @@ export function menuKeyUX(): KeyUXModule
 export function pressKeyUX(className: string): KeyUXModule
 
 /**
+ * Add support for `data-keyux-jump-into`.
+ *
+ * ```js
+ * import { startKeyUX, jumpsKeyUX } from 'keyux'
+ *
+ * startKeyUX(window, [
+ *   jumpsKeyUX()
+ * ])
+ * ```
+ */
+export function jumpKeyUX(interactives?: string): KeyUXModule
+
+/**
  * Start listeners for key events for better keyboard UX.
  *
  * ```js
- * import { startKeyUX, hotkeysKeyUX, menuKeyUX, pressKeyUX } from 'keyux'
+ * import {
+ *   startKeyUX,
+ *   hotkeysKeyUX,
+ *   menuKeyUX,
+ *   pressKeyUX,
+ *   jumpKeyUX
+ * } from 'keyux'
  *
  * startKeyUX(window, [
  *   hotkeysKeyUX(),
  *   menuKeyUX(),
- *   pressKeyUX('is-pressed')
+ *   pressKeyUX('is-pressed'),
+ *   jumpKeyUX()
  * ])
  * ```
  */

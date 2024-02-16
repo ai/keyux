@@ -1,9 +1,20 @@
 import { type FC, Fragment, createElement as h, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { hotkeysKeyUX, menuKeyUX, pressKeyUX, startKeyUX } from '../../index.js'
+import {
+  hotkeysKeyUX,
+  jumpKeyUX,
+  menuKeyUX,
+  pressKeyUX,
+  startKeyUX
+} from '../../index.js'
 
-startKeyUX(window, [hotkeysKeyUX(), menuKeyUX(), pressKeyUX('is-pressed')])
+startKeyUX(window, [
+  hotkeysKeyUX(),
+  menuKeyUX(),
+  pressKeyUX('is-pressed'),
+  jumpKeyUX()
+])
 
 const Counter: FC = () => {
   let [clicked, setClicked] = useState(0)
@@ -21,7 +32,10 @@ const Counter: FC = () => {
   )
 }
 
-const Menu: FC = () => {
+const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
+  router,
+  setRouter
+}) => {
   return h(
     'nav',
     {
@@ -32,35 +46,90 @@ const Menu: FC = () => {
     h(
       'a',
       {
-        className: 'menu_item',
-        href: '#home',
-        role: 'menuitem'
+        'aria-current': router === 'home' ? 'page' : undefined,
+        'aria-keyshortcuts': 'h',
+        'className': 'menu_item',
+        'data-keyux-jump-into': 'page',
+        'href': '#home',
+        'onClick': (e: MouseEvent) => {
+          e.preventDefault()
+          setRouter('home')
+        },
+        'role': 'menuitem'
       },
-      'Home'
+      'Home',
+      h('kbd', {}, 'h')
     ),
     h(
       'a',
       {
-        className: 'menu_item',
-        href: '#about',
-        role: 'menuitem'
+        'aria-current': router === 'about' ? 'page' : undefined,
+        'aria-keyshortcuts': 'a',
+        'className': 'menu_item',
+        'data-keyux-jump-into': 'page',
+        'href': '#about',
+        'onClick': (e: MouseEvent) => {
+          e.preventDefault()
+          setRouter('about')
+        },
+        'role': 'menuitem'
       },
-      'About'
+      'About',
+      h('kbd', {}, 'a')
     ),
     h(
       'a',
       {
-        className: 'menu_item',
-        href: '#contact',
-        role: 'menuitem'
+        'aria-current': router === 'contact' ? 'page' : undefined,
+        'aria-keyshortcuts': 'c',
+        'className': 'menu_item',
+        'data-keyux-jump-into': 'page',
+        'href': '#contact',
+        'onClick': (e: MouseEvent) => {
+          e.preventDefault()
+          setRouter('contact')
+        },
+        'role': 'menuitem'
       },
-      'Contact'
+      'Contact',
+      h('kbd', {}, 'c')
     )
   )
 }
 
+const Page: FC<{ router: string }> = ({ router }) => {
+  let content = null
+  if (router === 'home') {
+    content = h(
+      Fragment,
+      {},
+      h('input', {
+        'data-keyux-jump-into': 'results',
+        'placeholder': 'Search',
+        'type': 'search'
+      }),
+      h(
+        'ul',
+        { id: 'results', role: 'menu' },
+        h('li', {}, h('a', { href: '#', role: 'menuitem' }, 'Search result 1')),
+        h('li', {}, h('a', { href: '#', role: 'menuitem' }, 'Search result 2'))
+      )
+    )
+  } else {
+    content = h('p', {}, `The ${router} page`)
+  }
+  return h('main', { id: 'page' }, content)
+}
+
 const App: FC = () => {
-  return h(Fragment, {}, h(Counter), h(Menu))
+  let [router, setRouter] = useState('home')
+  return h(
+    Fragment,
+    {},
+    h(Counter),
+    h(Menu, { router, setRouter }),
+    h(Page, { router })
+  )
 }
 
 createRoot(document.getElementById('app')!).render(h(App))
