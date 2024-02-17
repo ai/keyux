@@ -1,8 +1,14 @@
 {
   "name": "keyux",
   "version": "0.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "Improve keyboard UI of web apps",
+  "keywords": [
+    "hotkey",
+    "menu",
+    "keyboard",
+    "accessibility",
+    "a11y"
+  ],
   "scripts": {
     "test:lint": "eslint .",
     "test:coverage": "c8 pnpm bnt",
