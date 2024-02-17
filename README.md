@@ -156,7 +156,7 @@ const overrides = {
 }
 ```
 
-Then KeyUX will click on `aria-keyshortcuts="b"` on <kbd>Alt</kdb>+<kbd>B</kdb>
+Then KeyUX will click on `aria-keyshortcuts="b"` on <kbd>Alt</kbd>+<kbd>B</kbd>
 press and `getHotKeyHint(window, 'b', overrides)` will return `Alt + B`/`⌥ + B`.
 
 
