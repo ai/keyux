@@ -182,3 +182,22 @@ test('allows to change interactive selector', async () => {
     window.document.querySelector('#step2 button')!
   )
 })
+
+test('fires event on jump', async () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [jumpKeyUX()])
+  window.document.body.innerHTML =
+    '<a id="step1" href="#" aria-controls="step2"></a>' +
+    '<div id="step2"><button></button></div>'
+
+  let jumped = 0
+  window.document.body.addEventListener('keyuxJump', e => {
+    let el = e.target as HTMLElement
+    equal(el.id, 'step2')
+    jumped += 1
+  })
+
+  click(window, window.document.querySelector('#step1')!)
+  await setTimeout(10)
+  equal(jumped, 1)
+})

@@ -98,7 +98,7 @@
       "import": {
         "./index.js": "{ startKeyUX, hotkeysKeyUX, pressKeyUX, menuKeyUX, jumpKeyUX }"
       },
-      "limit": "993 B"
+      "limit": "1022 B"
     }
   ],
   "clean-publish": {

@@ -31,6 +31,9 @@ export function jumpKeyUX(interactive = 'a, button, input, [tabindex]') {
       setTimeout(() => {
         let area = window.document.getElementById(ariaControls)
         if (area) {
+          area.dispatchEvent(
+            new window.CustomEvent('keyuxJump', { bubbles: true })
+          )
           let next = area.querySelector(interactive)
           if (next) focus(next)
         }
