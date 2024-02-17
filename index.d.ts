@@ -140,7 +140,7 @@ export function likelyWithKeyboard(window: MinimalWindow): boolean
  * import { getHotKeyHint, likelyWithKeyboard } from 'keyux'
  *
  * export const Button = ({ hokey, children }) => {
- *   return <button>
+ *   return <button aria-keyshortcuts={hotkey}>
  *     {children}
  *     {likelyWithKeyboard(window) && <kbd>{getHotKeyHint(window, hotkey)}</kbd>}
  *   </button>
