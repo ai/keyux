@@ -36,27 +36,27 @@ npm install keyux
 
 Then add `startKeyUX` call with necessary features to main JS file.
 
-```diff
-+ import {
-+   getHotKeyHint,
-+   hiddenKeyUX,
-+   hotkeyKeyUX,
-+   jumpKeyUX,
-+   likelyWithKeyboard,
-+   menuKeyUX,
-+   pressKeyUX,
-+   startKeyUX
-+ } from 'keyux'
+```jsx
+import {
+  getHotKeyHint,
+  hiddenKeyUX,
+  hotkeyKeyUX,
+  jumpKeyUX,
+  likelyWithKeyboard,
+  menuKeyUX,
+  pressKeyUX,
+  startKeyUX
+} from 'keyux'
 
-+ startKeyUX(window, [
-+   hotkeyKeyUX(overrides),
-+   menuKeyUX(),
-+   pressKeyUX('is-pressed'),
-+   jumpKeyUX(),
-+   hiddenKeyUX()
-+ ])
+startKeyUX(window, [
+  hotkeyKeyUX(overrides),
+  menuKeyUX(),
+  pressKeyUX('is-pressed'),
+  jumpKeyUX(),
+  hiddenKeyUX()
+])
 
-  createRoot(root).render(<App>)
+createRoot(root).render(<App>)
 ```
 
 ## Features
