@@ -11,6 +11,7 @@ using keyboard.
 * Show/hide submenus of `role="menu"`.
 * Allows users to **override hotkeys**.
 * **1 KB** (minified and brotlied). No dependencies.
+* Vanilla JS and works with any framework including React, Vue, Svelte.
 
 ```jsx
 export const Button = ({ hokey, children }) => {
@@ -32,3 +33,58 @@ export const Button = ({ hokey, children }) => {
 ```sh
 npm install keyux
 ```
+
+Then add `startKeyUX` call with necessary features to main JS file.
+
+```diff
++ import {
++   getHotKeyHint,
++   hiddenKeyUX,
++   hotkeyKeyUX,
++   jumpKeyUX,
++   likelyWithKeyboard,
++   menuKeyUX,
++   pressKeyUX,
++   startKeyUX
++ } from 'keyux'
+
++ startKeyUX(window, [
++   hotkeyKeyUX(overrides),
++   menuKeyUX(),
++   pressKeyUX('is-pressed'),
++   jumpKeyUX(),
++   hiddenKeyUX()
++ ])
+
+  createRoot(root).render(<App>)
+```
+
+## Features
+
+### Hotkeys
+
+TODO
+
+### Pressed State
+
+TODO
+
+### Hotkeys Hint
+
+TODO
+
+### Hotkeys Override
+
+TODO
+
+### Menu
+
+TODO
+
+### Jumps
+
+TODO
+
+### Nested Menu
+
+TODO
