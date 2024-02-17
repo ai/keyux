@@ -68,8 +68,8 @@ startKeyUX(window, [
 If user will press hotkey, KeyUX will click on button or link
 with `aria-keyshortcuts` with the same hotkey.
 
-For instance, KeyUX will click on this button if user press <kbd>Alt + B</kbd>
-or <kbd>⌥ + B</kbd>.
+For instance, KeyUX will click on this button if user press
+<kbd>Alt</kbd>+<kbd>B</kbd> or <kbd>⌥</kbd>+<kbd>B</kbd>.
 
 ```js
 <button aria-keyshortcuts="alt+b">Bold</button>
@@ -178,8 +178,8 @@ with arrows navigation.
 </nav>
 ```
 
-Users will use Tab to go inside menu and will use arrows and `<Home>`, `<End>`
-to navigate inside.
+Users will use Tab to go inside menu and will use arrows and <kbd>Home</kbd>,
+<kbd>End</kbd> to navigate inside.
 
 To enable this feature call `menuKeyUX`.
 
