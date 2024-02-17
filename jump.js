@@ -1,6 +1,4 @@
-export function jumpKeyUX(
-  interactive = 'a, button, input, [tabindex]:not([tabindex="-1"])'
-) {
+export function jumpKeyUX(interactive = 'a, button, input, [tabindex]') {
   return window => {
     let jumps = []
 
