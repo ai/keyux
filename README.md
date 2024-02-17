@@ -22,7 +22,8 @@ export const Button = ({ hokey, children }) => {
 }
 ```
 
-See [project’s demo](https://ai.github.io/keyux/).
+See [demo page](https://ai.github.io/keyux/)
+and [example](./test/demo/index.tsx).
 
 ---
 
