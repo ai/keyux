@@ -50,3 +50,34 @@ jobs:
         run: pnpm install --ignore-scripts
       - name: Run unit tests
         run: pnpm bnt
+  deploy:
+    name: Demo Deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - full
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts
+      - name: Build
+        run: pnpm build
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: test/demo/dist
+          branch: gh-pages
