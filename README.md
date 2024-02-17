@@ -55,8 +55,6 @@ startKeyUX(window, [
   jumpKeyUX(),
   hiddenKeyUX()
 ])
-
-createRoot(root).render(<App>)
 ```
 
 ## Features
