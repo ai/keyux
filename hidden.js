@@ -10,7 +10,7 @@ export function hiddenKeyUX() {
         wasHidden = allowed.hidden
         if (wasHidden) allowed.hidden = false
         let first = e.target.querySelector(
-          'a, button, input, select, [tabindex]'
+          'a, button, input, select, textarea, [tabindex]'
         )
         if (first) first.tabIndex = 0
       }

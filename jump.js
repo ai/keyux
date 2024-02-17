@@ -34,7 +34,9 @@ export function jumpKeyUX() {
           area.dispatchEvent(
             new window.CustomEvent('keyuxJump', { bubbles: true })
           )
-          let next = area.querySelector('a, button, input, select, [tabindex]')
+          let next = area.querySelector(
+            'a, button, input, select, textarea, [tabindex]'
+          )
           if (next) focus(next)
         }
       }, 1)

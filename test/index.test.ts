@@ -2,9 +2,34 @@ import { JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
 
-import { likelyWithKeyboard } from '../index.js'
+import {
+  getHotKeyHint,
+  likelyWithKeyboard,
+  type MinimalWindow
+} from '../index.js'
+
+const IHPONE_WINDOW = {
+  navigator: {
+    platform: 'iPhone',
+    userAgent: 'iPhone'
+  }
+} as MinimalWindow
+
+const MAC_WINDOW = {
+  navigator: {
+    platform: 'Mac',
+    userAgent: 'Mac'
+  }
+} as MinimalWindow
 
 test('detects keyboard', () => {
+  equal(likelyWithKeyboard(new JSDOM().window), true)
+  equal(likelyWithKeyboard(IHPONE_WINDOW), false)
+})
+
+test('makes hotkey hint prettier', () => {
   let window = new JSDOM().window
-  equal(likelyWithKeyboard(window), true)
+  equal(getHotKeyHint(window, 'alt+b'), 'Alt + B')
+  equal(getHotKeyHint(window, 'alt+b', { b: 'alt+b' }), 'B')
+  equal(getHotKeyHint(MAC_WINDOW, 'alt+b'), '⌥ + B')
 })

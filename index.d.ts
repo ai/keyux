@@ -14,6 +14,7 @@ interface MinimalWindow {
   }
 
   navigator: {
+    platform: string
     userAgent: string
   }
 
@@ -129,3 +130,25 @@ export function startKeyUX(
  * We recommend still support hot keys, but maybe do not show hints in UI.
  */
 export function likelyWithKeyboard(window: MinimalWindow): boolean
+
+/**
+ * Return text for `<kbd>` element with hint for hot key.
+ *
+ * It replaced `Ctrl` with `⌘` on Mac and respects overrides.
+ *
+ * ```js
+ * import { getHotKeyHint, likelyWithKeyboard } from 'keyux'
+ *
+ * export const Button = ({ hokey, children }) => {
+ *   return <button>
+ *     {children}
+ *     {likelyWithKeyboard(window) && <kbd>{getHotKeyHint(window, hotkey)}</kbd>}
+ *   </button>
+ * }
+ * ```
+ */
+export function getHotKeyHint(
+  window: MinimalWindow,
+  code: string,
+  overrides?: HotkeyOverride
+): string

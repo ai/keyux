@@ -1,22 +1,33 @@
 import { type FC, Fragment, createElement as h, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
+import type { HotkeyOverride } from '../../index.js'
 import {
+  getHotKeyHint,
   hiddenKeyUX,
   hotkeyKeyUX,
   jumpKeyUX,
+  likelyWithKeyboard,
   menuKeyUX,
   pressKeyUX,
   startKeyUX
 } from '../../index.js'
 
+let overrides: HotkeyOverride = {}
+
 startKeyUX(window, [
-  hotkeyKeyUX(),
+  hotkeyKeyUX(overrides),
   menuKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
   hiddenKeyUX()
 ])
+
+const HotKeyHint: FC<{ hotkey: string }> = ({ hotkey }) => {
+  return likelyWithKeyboard(window)
+    ? h('kbd', {}, getHotKeyHint(window, hotkey, overrides))
+    : null
+}
 
 const MenuItem: FC<{
   controls: string
@@ -44,7 +55,7 @@ const MenuItem: FC<{
       tabIndex
     },
     route[0].toUpperCase() + route.slice(1),
-    hotkey ? h('kbd', {}, hotkey) : null
+    hotkey ? h(HotKeyHint, { hotkey }) : null
   )
 }
 
@@ -53,14 +64,14 @@ const Counter: FC = () => {
   return h(
     'button',
     {
-      'aria-keyshortcuts': 'b',
+      'aria-keyshortcuts': 'alt+b',
       'onClick': () => {
         setClicked(clicked + 1)
       }
     },
     `Clicked `,
     h('strong', {}, clicked),
-    h('kbd', {}, 'b')
+    h(HotKeyHint, { hotkey: 'alt+b' })
   )
 }
 
@@ -92,18 +103,19 @@ const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
     }),
     h(MenuItem, {
       controls: 'page',
-      hotkey: 'c',
-      route: 'contact',
+      hotkey: 's',
+      route: 'settings',
       router,
       setRouter
     })
   )
 }
 
-const Page: FC<{ router: string; setRouter: (value: string) => void }> = ({
-  router,
-  setRouter
-}) => {
+const Page: FC<{
+  router: string
+  setRouter: (value: string) => void
+  update: () => void
+}> = ({ router, setRouter, update }) => {
   let content = null
   if (router === 'home') {
     content = h(
@@ -171,19 +183,43 @@ const Page: FC<{ router: string; setRouter: (value: string) => void }> = ({
         : h('p', {}, `The ${router} page`)
     )
   } else {
-    content = h('p', {}, `The ${router} page`)
+    content = h('textarea', {
+      defaultValue: Object.keys(overrides)
+        .map(key => `${key}: ${overrides[key]}`)
+        .join('\n'),
+      onChange: (e: Event) => {
+        let textarea = e.target as HTMLTextAreaElement
+        for (let i in overrides) {
+          delete overrides[i]
+        }
+        for (let i of textarea.value.split('\n')) {
+          let [key, value] = i.split(/:\s*/)
+          overrides[key] = value
+        }
+        update()
+      },
+      placeholder: 'new: old\nnew: old'
+    })
   }
   return h('main', { id: 'page' }, content)
 }
 
 const App: FC = () => {
+  let [, setUpdate] = useState({})
   let [router, setRouter] = useState('home')
+
   return h(
     Fragment,
     {},
     h(Counter),
     h(Menu, { router, setRouter }),
-    h(Page, { router, setRouter })
+    h(Page, {
+      router,
+      setRouter,
+      update() {
+        setUpdate({})
+      }
+    })
   )
 }
 
