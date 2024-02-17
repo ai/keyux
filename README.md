@@ -162,7 +162,7 @@ press and `getHotKeyHint(window, 'b', overrides)` will return `Alt + B`/`⌥ + B
 
 ### Menu
 
-Using only <kbd>Tab<kbd> for navigation is not very useful. User may need to
+Using only <kbd>Tab</kbd> for navigation is not very useful. User may need to
 press it to many to get their button (also non-screen-reader users don’t
 have quick navigation).
 
