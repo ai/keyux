@@ -4,7 +4,13 @@ function ignoreHotkeysIn(target) {
   return target.tagName === 'TEXTAREA' || target.tagName === 'INPUT'
 }
 
-function findHotKey(event, where) {
+function checkHotkey(where, code, overrides) {
+  let codeOverride = overrides[code]
+  if (Object.values(overrides).includes(code) && !codeOverride) return false
+  return where.querySelector(`[aria-keyshortcuts="${codeOverride || code}" i]`)
+}
+
+function findHotKey(event, where, overrides) {
   let prefix = ''
   if (event.metaKey) prefix += 'meta+'
   if (event.ctrlKey) prefix += 'ctrl+'
@@ -18,25 +24,24 @@ function findHotKey(event, where) {
     code += event.key.toLowerCase()
   }
 
-  let hotkey = where.querySelector(`[aria-keyshortcuts="${code}" i]`)
+  let hotkey = checkHotkey(where, code, overrides)
   if (
     !hotkey &&
     NON_ENGLISH_LAYOUT.test(event.key) &&
     /^Key.$/.test(event.code)
   ) {
     let enKey = event.code.replace(/^Key/, '').toLowerCase()
-    let enCode = prefix + enKey
-    hotkey = where.querySelector(`[aria-keyshortcuts="${enCode}" i]`)
+    hotkey = checkHotkey(where, prefix + enKey, overrides)
   }
 
   return hotkey
 }
 
-export function hotkeysKeyUX() {
+export function hotkeyKeyUX(overrides = {}) {
   return window => {
     function keyDown(event) {
       if (ignoreHotkeysIn(event.target)) return
-      let press = findHotKey(event, window.document)
+      let press = findHotKey(event, window.document, overrides)
       if (press) press.click()
     }
 

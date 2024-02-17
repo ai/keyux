@@ -27,18 +27,20 @@ export interface KeyUXModule {
   (window: MinimalWindow): () => void
 }
 
+export type HotkeyOverride = Record<string, string>
+
 /**
  * Press button/a according to `aria-keyshortcuts`.
  *
  * ```js
- * import { startKeyUX, hotkeysKeyUX } from 'keyux'
+ * import { startKeyUX, hotkeyKeyUX } from 'keyux'
  *
  * startKeyUX(window, [
- *   hotkeysKeyUX()
+ *   hotkeyKeyUX()
  * ])
  * ```
  */
-export function hotkeysKeyUX(): KeyUXModule
+export function hotkeyKeyUX(overrides?: HotkeyOverride): KeyUXModule
 
 /**
  * Add arrow-navigation on `role="menu"`.
@@ -99,7 +101,7 @@ export function hiddenKeyUX(): KeyUXModule
  * ```js
  * import {
  *   startKeyUX,
- *   hotkeysKeyUX,
+ *   hotkeyKeyUX,
  *   menuKeyUX,
  *   pressKeyUX,
  *   jumpKeyUX,
@@ -107,7 +109,7 @@ export function hiddenKeyUX(): KeyUXModule
  * } from 'keyux'
  *
  * startKeyUX(window, [
- *   hotkeysKeyUX(),
+ *   hotkeyKeyUX(),
  *   menuKeyUX(),
  *   pressKeyUX('is-pressed'),
  *   jumpKeyUX(),

@@ -2,7 +2,8 @@ import { type DOMWindow, JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
 
-import { hotkeysKeyUX, startKeyUX } from '../index.js'
+import type { HotkeyOverride } from '../index.js'
+import { hotkeyKeyUX, startKeyUX } from '../index.js'
 
 function press(
   window: DOMWindow,
@@ -17,7 +18,7 @@ function press(
 
 test('adds hot keys to buttons and links', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [hotkeysKeyUX()])
+  startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
     '<button aria-keyshortcuts="b">1</button>' +
     '<button aria-keyshortcuts="Ctrl+B">10</button>' +
@@ -59,7 +60,7 @@ test('adds hot keys to buttons and links', () => {
 
 test('stops event tracking', () => {
   let window = new JSDOM().window
-  let stop = startKeyUX(window, [hotkeysKeyUX()])
+  let stop = startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML = '<button aria-keyshortcuts="b"></button>'
 
   let clicked = 0
@@ -74,14 +75,14 @@ test('stops event tracking', () => {
   press(window, { key: 'b' })
   equal(clicked, 1)
 
-  startKeyUX(window, [hotkeysKeyUX()])
+  startKeyUX(window, [hotkeyKeyUX()])
   press(window, { key: 'b' })
   equal(clicked, 2)
 })
 
 test('ignores hot keys when focus is inside text fields', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [hotkeysKeyUX()])
+  startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
     '<input type="text">' +
     '<textarea></textarea>' +
@@ -105,7 +106,7 @@ test('ignores hot keys when focus is inside text fields', () => {
 
 test('supports non-English keyboard layouts', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [hotkeysKeyUX()])
+  startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML = '<button aria-keyshortcuts="Alt+B"></button>'
 
   let clicked = 0
@@ -115,4 +116,34 @@ test('supports non-English keyboard layouts', () => {
 
   press(window, { altKey: true, code: 'KeyB', key: 'и' })
   equal(clicked, 1)
+})
+
+test('allows to override hotkeys', () => {
+  let window = new JSDOM().window
+  let overrides: HotkeyOverride = {}
+  startKeyUX(window, [hotkeyKeyUX(overrides)])
+  window.document.body.innerHTML =
+    '<button aria-keyshortcuts="b"></button>' +
+    '<button aria-keyshortcuts="q"></button>'
+
+  let clicked = ''
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += button.getAttribute('aria-keyshortcuts')!
+    })
+  }
+
+  overrides.q = 'b'
+  overrides.a = 'q'
+  press(window, { key: 'b' })
+  equal(clicked, '')
+
+  press(window, { key: 'q' })
+  equal(clicked, 'b')
+
+  press(window, { key: 'a' })
+  equal(clicked, 'bq')
+
+  press(window, { code: 'KeyQ', key: 'й' })
+  equal(clicked, 'bqb')
 })

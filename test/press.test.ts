@@ -2,11 +2,11 @@ import { JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
 
-import { hotkeysKeyUX, pressKeyUX, startKeyUX } from '../index.js'
+import { hotkeyKeyUX, pressKeyUX, startKeyUX } from '../index.js'
 
 test('adds pressed state', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [pressKeyUX('is-pressed is-hover'), hotkeysKeyUX()])
+  startKeyUX(window, [pressKeyUX('is-pressed is-hover'), hotkeyKeyUX()])
 
   window.document.body.innerHTML = '<button aria-keyshortcuts="b"></button>'
   let button = window.document.querySelector('button')!
@@ -53,7 +53,7 @@ test('stops event tracking', () => {
   let window = new JSDOM().window
   let stop = startKeyUX(window, [
     pressKeyUX('is-pressed is-hover'),
-    hotkeysKeyUX()
+    hotkeyKeyUX()
   ])
 
   window.document.body.innerHTML = '<button aria-keyshortcuts="b"></button>'

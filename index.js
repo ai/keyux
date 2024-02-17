@@ -1,4 +1,4 @@
-export * from './hotkeys.js'
+export * from './hotkey.js'
 export * from './hidden.js'
 export * from './press.js'
 export * from './menu.js'

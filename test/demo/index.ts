@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 
 import {
   hiddenKeyUX,
-  hotkeysKeyUX,
+  hotkeyKeyUX,
   jumpKeyUX,
   menuKeyUX,
   pressKeyUX,
@@ -11,7 +11,7 @@ import {
 } from '../../index.js'
 
 startKeyUX(window, [
-  hotkeysKeyUX(),
+  hotkeyKeyUX(),
   menuKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
