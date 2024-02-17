@@ -38,11 +38,9 @@ Then add `startKeyUX` call with necessary features to main JS file.
 
 ```jsx
 import {
-  getHotKeyHint,
   hiddenKeyUX,
   hotkeyKeyUX,
   jumpKeyUX,
-  likelyWithKeyboard,
   menuKeyUX,
   pressKeyUX,
   startKeyUX
