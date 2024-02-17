@@ -168,21 +168,6 @@ test('is ready for missed previous area', async () => {
   equal(window.document.activeElement, step1)
 })
 
-test('allows to change interactive selector', async () => {
-  let window = new JSDOM().window
-  startKeyUX(window, [jumpKeyUX('button')])
-  window.document.body.innerHTML =
-    '<a id="step1" href="#" aria-controls="step2"></a>' +
-    '<div id="step2"><a></a><button></button></div>'
-
-  click(window, window.document.querySelector('#step1')!)
-  await setTimeout(10)
-  equal(
-    window.document.activeElement,
-    window.document.querySelector('#step2 button')!
-  )
-})
-
 test('fires event on jump', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [jumpKeyUX()])

@@ -2,6 +2,7 @@ import { type FC, Fragment, createElement as h, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import {
+  hiddenKeyUX,
   hotkeysKeyUX,
   jumpKeyUX,
   menuKeyUX,
@@ -13,8 +14,39 @@ startKeyUX(window, [
   hotkeysKeyUX(),
   menuKeyUX(),
   pressKeyUX('is-pressed'),
-  jumpKeyUX()
+  jumpKeyUX(),
+  hiddenKeyUX()
 ])
+
+const MenuItem: FC<{
+  controls: string
+  hotkey?: string
+  route: string
+  router: string
+  routes?: string[]
+  setRouter: (value: string) => void
+  tabIndex?: number
+}> = ({ controls, hotkey, route, router, routes, setRouter, tabIndex }) => {
+  if (!routes) routes = [route]
+  return h(
+    'a',
+    {
+      'aria-controls': controls,
+      'aria-current': routes.includes(router) ? 'page' : undefined,
+      'aria-keyshortcuts': hotkey,
+      'className': 'menu_item',
+      'href': '#',
+      'onClick': (e: MouseEvent) => {
+        e.preventDefault()
+        setRouter(route)
+      },
+      'role': 'menuitem',
+      tabIndex
+    },
+    route[0].toUpperCase() + route.slice(1),
+    hotkey ? h('kbd', {}, hotkey) : null
+  )
+}
 
 const Counter: FC = () => {
   let [clicked, setClicked] = useState(0)
@@ -43,61 +75,35 @@ const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
       'className': 'menu',
       'role': 'menu'
     },
-    h(
-      'a',
-      {
-        'aria-controls': 'page',
-        'aria-current': router === 'home' ? 'page' : undefined,
-        'aria-keyshortcuts': 'h',
-        'className': 'menu_item',
-        'href': '#home',
-        'onClick': (e: MouseEvent) => {
-          e.preventDefault()
-          setRouter('home')
-        },
-        'role': 'menuitem'
-      },
-      'Home',
-      h('kbd', {}, 'h')
-    ),
-    h(
-      'a',
-      {
-        'aria-controls': 'page',
-        'aria-current': router === 'about' ? 'page' : undefined,
-        'aria-keyshortcuts': 'a',
-        'className': 'menu_item',
-        'href': '#about',
-        'onClick': (e: MouseEvent) => {
-          e.preventDefault()
-          setRouter('about')
-        },
-        'role': 'menuitem'
-      },
-      'About',
-      h('kbd', {}, 'a')
-    ),
-    h(
-      'a',
-      {
-        'aria-controls': 'page',
-        'aria-current': router === 'contact' ? 'page' : undefined,
-        'aria-keyshortcuts': 'c',
-        'className': 'menu_item',
-        'href': '#contact',
-        'onClick': (e: MouseEvent) => {
-          e.preventDefault()
-          setRouter('contact')
-        },
-        'role': 'menuitem'
-      },
-      'Contact',
-      h('kbd', {}, 'c')
-    )
+    h(MenuItem, {
+      controls: 'page',
+      hotkey: 'h',
+      route: 'home',
+      router,
+      setRouter
+    }),
+    h(MenuItem, {
+      controls: 'about_menu',
+      hotkey: 'a',
+      route: 'about',
+      router,
+      routes: ['about', 'history', 'team'],
+      setRouter
+    }),
+    h(MenuItem, {
+      controls: 'page',
+      hotkey: 'c',
+      route: 'contact',
+      router,
+      setRouter
+    })
   )
 }
 
-const Page: FC<{ router: string }> = ({ router }) => {
+const Page: FC<{ router: string; setRouter: (value: string) => void }> = ({
+  router,
+  setRouter
+}) => {
   let content = null
   if (router === 'home') {
     content = h(
@@ -115,6 +121,55 @@ const Page: FC<{ router: string }> = ({ router }) => {
         h('li', {}, h('a', { href: '#', role: 'menuitem' }, 'Search result 2'))
       )
     )
+  } else if (router === 'about' || router === 'history' || router === 'team') {
+    content = h(
+      Fragment,
+      {},
+      h(
+        'div',
+        {
+          'aria-hidden': true,
+          'aria-orientation': 'vertical',
+          'className': 'menu',
+          'data-keyux-jump-only': true,
+          'hidden': true,
+          'id': 'about_menu',
+          'role': 'menu'
+        },
+        h(MenuItem, {
+          controls: 'about_subpage',
+          route: 'history',
+          router,
+          setRouter,
+          tabIndex: -1
+        }),
+        h(MenuItem, {
+          controls: 'about_subpage',
+          route: 'team',
+          router,
+          setRouter,
+          tabIndex: -1
+        })
+      ),
+      router === 'history' || router === 'team'
+        ? h(
+            'p',
+            { id: 'about_subpage' },
+            `The ${router} page `,
+            h(
+              'a',
+              {
+                href: '#',
+                onClick: (e: MouseEvent) => {
+                  e.preventDefault()
+                  setRouter('about')
+                }
+              },
+              'Back'
+            )
+          )
+        : h('p', {}, `The ${router} page`)
+    )
   } else {
     content = h('p', {}, `The ${router} page`)
   }
@@ -128,7 +183,7 @@ const App: FC = () => {
     {},
     h(Counter),
     h(Menu, { router, setRouter }),
-    h(Page, { router })
+    h(Page, { router, setRouter })
   )
 }
 

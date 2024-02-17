@@ -1,4 +1,4 @@
-export function jumpKeyUX(interactive = 'a, button, input, [tabindex]') {
+export function jumpKeyUX() {
   return window => {
     let jumps = []
 
@@ -13,8 +13,8 @@ export function jumpKeyUX(interactive = 'a, button, input, [tabindex]') {
     function back() {
       let ref = jumps.pop()
       if (!ref) {
-        window.document.body.focus()
-        window.document.body.blur()
+        window.document.documentElement.focus()
+        window.document.documentElement.blur()
         return
       }
       let el = ref.deref()
@@ -34,7 +34,7 @@ export function jumpKeyUX(interactive = 'a, button, input, [tabindex]') {
           area.dispatchEvent(
             new window.CustomEvent('keyuxJump', { bubbles: true })
           )
-          let next = area.querySelector(interactive)
+          let next = area.querySelector('a, button, input, select, [tabindex]')
           if (next) focus(next)
         }
       }, 1)

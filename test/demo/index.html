@@ -55,6 +55,14 @@
         display: flex;
         margin-top: 1em;
         width: fit-content;
+
+        &[hidden] {
+          display: none;
+        }
+
+        &[aria-orientation='vertical'] {
+          flex-direction: column;
+        }
       }
       .menu_item {
         display: block;
@@ -62,9 +70,17 @@
         color: black;
         &:first-child {
           border-radius: 5px 0 0 5px;
+
+          [aria-orientation='vertical'] & {
+            border-radius: 5px 5px 0 0;
+          }
         }
         &:last-child {
           border-radius: 0 5px 5px 0;
+
+          [aria-orientation='vertical'] & {
+            border-radius: 0 0 5px 5px;
+          }
         }
         &[aria-current='page'] {
           text-decoration: none;

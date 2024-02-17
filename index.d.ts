@@ -80,6 +80,20 @@ export function pressKeyUX(className: string): KeyUXModule
 export function jumpKeyUX(interactives?: string): KeyUXModule
 
 /**
+ * Add support for `aria-hidden` block which can’t be archived by Tab,
+ * only by jump from another block.
+ *
+ * ```js
+ * import { startKeyUX, hiddenKeyUX } from 'keyux'
+ *
+ * startKeyUX(window, [
+ *   hiddenKeyUX()
+ * ])
+ * ```
+ */
+export function hiddenKeyUX(): KeyUXModule
+
+/**
  * Start listeners for key events for better keyboard UX.
  *
  * ```js
@@ -88,14 +102,16 @@ export function jumpKeyUX(interactives?: string): KeyUXModule
  *   hotkeysKeyUX,
  *   menuKeyUX,
  *   pressKeyUX,
- *   jumpKeyUX
+ *   jumpKeyUX,
+ *   hiddenKeyUX
  * } from 'keyux'
  *
  * startKeyUX(window, [
  *   hotkeysKeyUX(),
  *   menuKeyUX(),
  *   pressKeyUX('is-pressed'),
- *   jumpKeyUX()
+ *   jumpKeyUX(),
+ *   hiddenKeyUX()
  * ])
  * ```
  */
