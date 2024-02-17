@@ -12,10 +12,11 @@
   "scripts": {
     "test:lint": "eslint .",
     "test:coverage": "c8 pnpm bnt",
-    "test:build": "vite build test/demo/",
+    "test:build": "pnpm run build",
     "test:size": "size-limit",
     "test": "pnpm run /^test:/",
-    "start": "vite test/demo/"
+    "start": "vite test/demo/",
+    "build": "vite build test/demo/"
   },
   "author": "Andrey Sitnik <andrey@sitnik.ru>",
   "license": "MIT",
