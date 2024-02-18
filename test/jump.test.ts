@@ -36,13 +36,14 @@ test('jumps to next area by click and back by escape', async () => {
     '<div id="step3"><label tabindex="0" aria-controls="step4">' +
     '</label><a href="#"></a></div>' +
     '<div id="step4"><input type="text" aria-controls="step5" /></div>' +
-    '<div id="step5"><a href="#"></a></div>'
+    '<div id="step5"><input type="radio" name="a" value="1">' +
+    ' <input type="radio" name="a" value="2" checked></div>'
 
   let step1 = window.document.querySelector<HTMLElement>('#step1')!
   let step2button = window.document.querySelector('#step2 button')!
   let step3label = window.document.querySelector('#step3 label')!
   let step4input = window.document.querySelector('#step4 input')!
-  let step5link = window.document.querySelector('#step5 a')!
+  let step5checked = window.document.querySelector('#step5 input:last-child')!
 
   step1.focus()
   click(window, step1)
@@ -60,7 +61,7 @@ test('jumps to next area by click and back by escape', async () => {
 
   press(window, 'Enter')
   await setTimeout(10)
-  equal(window.document.activeElement, step5link)
+  equal(window.document.activeElement, step5checked)
 
   press(window, 'Escape')
   equal(window.document.activeElement, step4input)

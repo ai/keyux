@@ -10,7 +10,9 @@ export function hiddenKeyUX() {
         wasHidden = allowed.hidden
         if (wasHidden) allowed.hidden = false
         let first = e.target.querySelector(
-          'a, button, input, select, textarea, [tabindex]'
+          'a, button, select, textarea, ' +
+            'input:not([type=radio]), [type=radio]:checked, ' +
+            '[tabindex]'
         )
         if (first) first.tabIndex = 0
       }

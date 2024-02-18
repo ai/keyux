@@ -35,7 +35,9 @@ export function jumpKeyUX() {
             new window.CustomEvent('keyuxJump', { bubbles: true })
           )
           let next = area.querySelector(
-            'a, button, input, select, textarea, [tabindex]'
+            'a, button, select, textarea, ' +
+              'input:not([type=radio]), [type=radio]:checked, ' +
+              '[tabindex]'
           )
           if (next) focus(next)
         }
