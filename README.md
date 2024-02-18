@@ -263,8 +263,6 @@ To enable this feature call `hiddenKeyUX`.
 ```js
 import { menuKeyUX, jumpKeyUX, hiddenKeyUX } from 'keyux'
 
-const overrides = {}
-
 startKeyUX(window, [
   menuKeyUX(),
   jumpKeyUX(),
