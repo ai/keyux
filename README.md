@@ -187,8 +187,6 @@ To enable this feature call `menuKeyUX`.
 ```js
 import { menuKeyUX } from 'keyux'
 
-const overrides = {}
-
 startKeyUX(window, [
   menuKeyUX()
 ])
