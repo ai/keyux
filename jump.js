@@ -7,7 +7,7 @@ export function jumpKeyUX() {
       if (current && current !== window.document.body) {
         jumps.push(new WeakRef(current))
       }
-      next.focus()
+      next.focus({ focusVisible: true })
     }
 
     function back() {
@@ -37,7 +37,7 @@ export function jumpKeyUX() {
           let next = area.querySelector(
             'a, button, select, textarea, ' +
               'input:not([type=radio]), [type=radio]:checked, ' +
-              '[tabindex]'
+              '[tabindex]:not([tabindex="-1"])'
           )
           if (next) focus(next)
         }

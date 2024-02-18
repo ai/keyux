@@ -12,7 +12,7 @@ export function hiddenKeyUX() {
         let first = e.target.querySelector(
           'a, button, select, textarea, ' +
             'input:not([type=radio]), [type=radio]:checked, ' +
-            '[tabindex]'
+            '[tabindex]:not([tabindex="-1"])'
         )
         if (first) first.tabIndex = 0
       }
