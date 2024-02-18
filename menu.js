@@ -33,12 +33,16 @@ export function menuKeyUX() {
       }
 
       if (event.key === nextKey) {
+        event.preventDefault()
         focus(event.target, items[index + 1] || items[0])
       } else if (event.key === prevKey) {
+        event.preventDefault()
         focus(event.target, items[index - 1] || items[items.length - 1])
       } else if (event.key === 'Home') {
+        event.preventDefault()
         focus(event.target, items[0])
       } else if (event.key === 'End') {
+        event.preventDefault()
         focus(event.target, items[items.length - 1])
       }
     }
