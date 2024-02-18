@@ -227,8 +227,6 @@ To enable this feature call `jumpKeyUX`.
 ```js
 import { menuKeyUX, jumpKeyUX } from 'keyux'
 
-const overrides = {}
-
 startKeyUX(window, [
   menuKeyUX(),
   jumpKeyUX()
