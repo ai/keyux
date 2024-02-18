@@ -40,13 +40,13 @@ test('supports nested hidden menus', async () => {
   step1.focus()
 
   click(window, step1)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step2.querySelector('a')!)
   equal(step2.getAttribute('aria-hidden'), 'false')
   equal(step2.hidden, false)
 
   press(window, 'Escape')
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step1)
   equal(step2.getAttribute('aria-hidden'), 'true')
   equal(step2.hidden, true)
@@ -69,14 +69,14 @@ test('works with visible menus too', async () => {
   step1.focus()
 
   click(window, step1)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step2a)
   equal(step2.getAttribute('aria-hidden'), 'false')
   equal(step2a.tabIndex, 0)
   equal(step2b.tabIndex, -1)
 
   press(window, 'Escape')
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step1)
   equal(step2.getAttribute('aria-hidden'), 'true')
   equal(step2.hidden, false)
@@ -98,7 +98,7 @@ test('stops event tracking', async () => {
 
   stop()
   click(window, step1)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step1)
   equal(step2.getAttribute('aria-hidden'), 'true')
 })

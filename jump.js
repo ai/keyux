@@ -41,7 +41,7 @@ export function jumpKeyUX() {
           )
           if (next) focus(next)
         }
-      }, 1)
+      }, 10)
     }
 
     function click(event) {

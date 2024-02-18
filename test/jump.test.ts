@@ -48,19 +48,19 @@ test('jumps to next area by click and back by escape', async () => {
   step1.focus()
   click(window, step1)
   equal(window.document.activeElement, step1)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step2button)
 
   click(window, step2button)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step3label)
 
   click(window, step3label)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step4input)
 
   press(window, 'Enter')
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step5checked)
 
   press(window, 'Escape')
@@ -90,7 +90,7 @@ test('stops event tracking', async () => {
   stop()
 
   click(window, step1)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
 })
 
@@ -105,11 +105,11 @@ test('ignores mouse click', async () => {
   let step2button = window.document.querySelector('#step2 button')!
 
   click(window, step1, { clientX: 0, clientY: 10 })
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
 
   click(window, step1)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step2button)
 })
 
@@ -120,7 +120,7 @@ test('ignores links without data attribute', async () => {
     '<a id="step1" href="#"></a>' + '<div id="step2"><button></button></div>'
 
   click(window, window.document.querySelector('#step1')!)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
 })
 
@@ -131,14 +131,14 @@ test('is ready for missed next area', async () => {
   window.document.body.innerHTML =
     '<a id="step1" href="#" aria-controls="step2"></a>'
   click(window, window.document.querySelector('#step1')!)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
 
   window.document.body.innerHTML =
     '<a id="step1" href="#" aria-controls="step2"></a>' +
     '<div id="step2"></div>'
   click(window, window.document.querySelector('#step1')!)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
 })
 
@@ -156,15 +156,15 @@ test('is ready for missed previous area', async () => {
 
   step1.focus()
   click(window, step1)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step2link)
 
   click(window, step2link)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(window.document.activeElement, step3link)
 
   step2link.remove()
-  await setTimeout(10)
+  await setTimeout(50)
   press(window, 'Escape')
   equal(window.document.activeElement, step1)
 })
@@ -184,6 +184,6 @@ test('fires event on jump', async () => {
   })
 
   click(window, window.document.querySelector('#step1')!)
-  await setTimeout(10)
+  await setTimeout(50)
   equal(jumped, 1)
 })
