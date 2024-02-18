@@ -1,7 +1,16 @@
 const NON_ENGLISH_LAYOUT = /^[^\x00-\x7F]$/
 
+const IGNORE_INPUTS = {
+  checkbox: true,
+  file: true,
+  radio: true
+}
+
 function ignoreHotkeysIn(target) {
-  return target.tagName === 'TEXTAREA' || target.tagName === 'INPUT'
+  return (
+    target.tagName === 'TEXTAREA' ||
+    (target.tagName === 'INPUT' && !IGNORE_INPUTS[target.type])
+  )
 }
 
 function checkHotkey(where, code, overrides) {

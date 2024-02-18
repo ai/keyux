@@ -85,6 +85,7 @@ test('ignores hot keys when focus is inside text fields', () => {
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
     '<input type="text">' +
+    '<input type="radio">' +
     '<textarea></textarea>' +
     '<a></a>' +
     '<button aria-keyshortcuts="b"></button>'
@@ -94,7 +95,7 @@ test('ignores hot keys when focus is inside text fields', () => {
     clicked += 1
   })
 
-  press(window, { key: 'b' }, window.document.querySelector('input')!)
+  press(window, { key: 'b' }, window.document.querySelector('[type=text]')!)
   equal(clicked, 0)
 
   press(window, { key: 'b' }, window.document.querySelector('textarea')!)
@@ -102,6 +103,9 @@ test('ignores hot keys when focus is inside text fields', () => {
 
   press(window, { key: 'b' }, window.document.querySelector('a')!)
   equal(clicked, 1)
+
+  press(window, { key: 'b' }, window.document.querySelector('[type=radio]')!)
+  equal(clicked, 2)
 })
 
 test('supports non-English keyboard layouts', () => {
