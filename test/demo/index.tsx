@@ -92,7 +92,7 @@ const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
         hotkey="a"
         route="about"
         router={router}
-        routes={['about', 'history', 'team']}
+        routes={['about', 'history', 'team', 'treasury']}
         setRouter={setRouter}
       />
       <MenuItem
@@ -130,7 +130,12 @@ const Page: FC<{
         </ul>
       </>
     )
-  } else if (router === 'about' || router === 'history' || router === 'team') {
+  } else if (
+    router === 'about' ||
+    router === 'history' ||
+    router === 'team' ||
+    router === 'treasury'
+  ) {
     content = (
       <>
         <div
@@ -156,8 +161,15 @@ const Page: FC<{
             setRouter={setRouter}
             tabIndex={-1}
           />
+          <MenuItem
+            controls="about_subpage"
+            route="treasury"
+            router={router}
+            setRouter={setRouter}
+            tabIndex={-1}
+          />
         </div>
-        {router === 'history' || router === 'team' ? (
+        {router === 'history' || router === 'team' || router === 'treasury' ? (
           <p id="about_subpage">
             The {router} page{' '}
             <a

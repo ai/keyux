@@ -1,6 +1,9 @@
-export function menuKeyUX() {
+export function menuKeyUX(options) {
   return window => {
     let inMenu = false
+    let typingDelayMs = options?.typingDelayMs || 300
+    let lastTimeTyped = 0
+    let searchPrefix = ''
 
     function focus(current, next) {
       next.tabIndex = 0
@@ -44,6 +47,22 @@ export function menuKeyUX() {
       } else if (event.key === 'End') {
         event.preventDefault()
         focus(event.target, items[items.length - 1])
+      } else if (event.key.length === 1) {
+        let curTime = new Date().getTime()
+        if (curTime - lastTimeTyped <= typingDelayMs) {
+          searchPrefix += event.key.toLowerCase()
+        } else {
+          searchPrefix = event.key.toLowerCase()
+        }
+        lastTimeTyped = curTime
+        
+        let nextItem = Array.from(items).find(
+          item => item.textContent?.trim()?.toLowerCase()?.startsWith(searchPrefix)
+        )
+        if (nextItem) {
+          event.preventDefault()
+          focus(event.target, nextItem)
+        }
       }
     }
 

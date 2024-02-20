@@ -1,6 +1,7 @@
 import { type DOMWindow, JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
+import { setTimeout } from 'node:timers/promises'
 
 import { menuKeyUX, startKeyUX } from '../index.js'
 
@@ -111,6 +112,48 @@ test('supports horizontal menus', () => {
 
   press(window, 'ArrowLeft')
   equal(window.document.activeElement, items[0])
+})
+
+test('moves focus by typing item name', async () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [menuKeyUX({
+    typingDelayMs: 100
+  })])
+
+  window.document.body.innerHTML =
+    '<nav role="menu">' +
+    '<a href="#" role="menuitem">HOME</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem"> agh  </a>' +
+    '<a href="#" role="menuitem">Backspace</a>' +
+    '</nav>'
+  let items = window.document.querySelectorAll('a')
+  items[0].focus()
+
+  press(window, 'a')
+  equal(window.document.activeElement, items[1])
+
+  await setTimeout(50)
+  press(window, 'G')
+  equal(window.document.activeElement, items[2])
+
+  await setTimeout(100)
+  press(window, 'h')
+  equal(window.document.activeElement, items[0])
+  
+  press(window, 'a')
+  equal(window.document.activeElement, items[0])
+  
+  await setTimeout(100)
+  press(window, 'a')
+  equal(window.document.activeElement, items[1])
+  
+  await setTimeout(100)
+  press(window, 'Backspace')
+  equal(window.document.activeElement, items[1])
+  
+  press(window, 'b')
+  equal(window.document.activeElement, items[3])
 })
 
 test('supports RTL locales', () => {
