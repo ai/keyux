@@ -1,6 +1,9 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.2.1
+* Fixed `menu` typing search and hotkeys conflict.
+
 ## 0.2.0
 * Added typing search for `menu` (by @VladBrok).
 
