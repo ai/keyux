@@ -1,6 +1,9 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.2.0
+* Added typing search for `menu` (by @VladBrok).
+
 ## 0.1.2
 * Fixed scroll on up/down keys in `menu`.
 * Fixed jumps in real apps with slower render.
