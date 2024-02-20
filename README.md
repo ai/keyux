@@ -180,7 +180,7 @@ with arrows navigation.
 ```
 
 Users will use Tab to go inside menu and will use either arrows and <kbd>Home</kbd>,
-<kbd>End</kbd> or a name of some an item to navigate inside.
+<kbd>End</kbd> or a name of some item to navigate inside.
 
 To enable this feature call `menuKeyUX`.
 
