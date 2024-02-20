@@ -9,7 +9,8 @@ const IGNORE_INPUTS = {
 function ignoreHotkeysIn(target) {
   return (
     target.tagName === 'TEXTAREA' ||
-    (target.tagName === 'INPUT' && !IGNORE_INPUTS[target.type])
+    (target.tagName === 'INPUT' && !IGNORE_INPUTS[target.type]) ||
+    target.role === 'menuitem'
   )
 }
 

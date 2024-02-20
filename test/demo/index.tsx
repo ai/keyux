@@ -119,12 +119,12 @@ const Page: FC<{
         <ul id="results" role="menu">
           <li>
             <a href="#" role="menuitem">
-              Search result 1
+              First
             </a>
           </li>
           <li>
             <a href="#" role="menuitem">
-              Search result 2
+              Second
             </a>
           </li>
         </ul>

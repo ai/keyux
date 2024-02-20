@@ -3,7 +3,7 @@ import { equal } from 'node:assert'
 import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
-import { menuKeyUX, startKeyUX } from '../index.js'
+import { hotkeyKeyUX, menuKeyUX, startKeyUX } from '../index.js'
 
 function press(window: DOMWindow, key: string): void {
   let down = new window.KeyboardEvent('keydown', { bubbles: true, key })
@@ -117,18 +117,26 @@ test('supports horizontal menus', () => {
 test('moves focus by typing item name', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [
+    hotkeyKeyUX(),
     menuKeyUX({
       searchDelayMs: 100
     })
   ])
 
   window.document.body.innerHTML =
+    '<button aria-keyshortcuts="h">Button</button>' +
     '<nav role="menu">' +
     '<a href="#" role="menuitem">HOME</a>' +
     '<a href="#" role="menuitem">About</a>' +
     '<a href="#" role="menuitem"> agh  </a>' +
     '<a href="#" role="menuitem">Backspace</a>' +
     '</nav>'
+
+  let clicked = 0
+  window.document.querySelector('button')!.addEventListener('click', () => {
+    clicked++
+  })
+
   let items = window.document.querySelectorAll('a')
   items[0].focus()
 
@@ -142,6 +150,7 @@ test('moves focus by typing item name', async () => {
   await setTimeout(100)
   press(window, 'h')
   equal(window.document.activeElement, items[0])
+  equal(clicked, 0)
 
   press(window, 'a')
   equal(window.document.activeElement, items[0])
