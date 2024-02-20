@@ -30,17 +30,10 @@ export interface KeyUXModule {
 
 export interface MenuKeyUXOptions {
   /**
-   * Maximum allowed pause between key presses when searching for a list item by name.
-   * Default is 300.
-   *
-   * @example
-   * let's say `typingDelayMs` is equal to 100:
-   * a — looking for a
-   * b after 100ms — looking for ab
-   * c after 50ms — looking for abc
-   * d after 5000ms — looking for d
+   * Maximum allowed pause between key presses when searching
+   * for a list item by name. Default is 300.
    */
-  typingDelayMs?: number
+  searchDelayMs?: number
 }
 
 export type HotkeyOverride = Record<string, string>

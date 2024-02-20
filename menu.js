@@ -1,8 +1,8 @@
 export function menuKeyUX(options) {
   return window => {
     let inMenu = false
-    let typingDelayMs = options?.typingDelayMs || 300
-    let lastTimeTyped = 0
+    let typingDelayMs = options?.searchDelayMs || 300
+    let lastTyped = 0
     let searchPrefix = ''
 
     function focus(current, next) {
@@ -48,20 +48,23 @@ export function menuKeyUX(options) {
         event.preventDefault()
         focus(event.target, items[items.length - 1])
       } else if (event.key.length === 1) {
-        let curTime = new Date().getTime()
-        if (curTime - lastTimeTyped <= typingDelayMs) {
+        let now = Date.now()
+        if (now - lastTyped <= typingDelayMs) {
           searchPrefix += event.key.toLowerCase()
         } else {
           searchPrefix = event.key.toLowerCase()
         }
-        lastTimeTyped = curTime
-        
-        let nextItem = Array.from(items).find(
-          item => item.textContent?.trim()?.toLowerCase()?.startsWith(searchPrefix)
-        )
-        if (nextItem) {
+        lastTyped = now
+
+        let found = Array.from(items).find(item => {
+          return item.textContent
+            ?.trim()
+            ?.toLowerCase()
+            ?.startsWith(searchPrefix)
+        })
+        if (found) {
           event.preventDefault()
-          focus(event.target, nextItem)
+          focus(event.target, found)
         }
       }
     }

@@ -116,9 +116,11 @@ test('supports horizontal menus', () => {
 
 test('moves focus by typing item name', async () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX({
-    typingDelayMs: 100
-  })])
+  startKeyUX(window, [
+    menuKeyUX({
+      searchDelayMs: 100
+    })
+  ])
 
   window.document.body.innerHTML =
     '<nav role="menu">' +
@@ -140,18 +142,18 @@ test('moves focus by typing item name', async () => {
   await setTimeout(100)
   press(window, 'h')
   equal(window.document.activeElement, items[0])
-  
+
   press(window, 'a')
   equal(window.document.activeElement, items[0])
-  
+
   await setTimeout(100)
   press(window, 'a')
   equal(window.document.activeElement, items[1])
-  
+
   await setTimeout(100)
   press(window, 'Backspace')
   equal(window.document.activeElement, items[1])
-  
+
   press(window, 'b')
   equal(window.document.activeElement, items[3])
 })
