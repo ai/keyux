@@ -46,7 +46,7 @@ export function menuKeyUX() {
         focus(event.target, items[items.length - 1])
       } else {
         let nextItem = Array.from(items).find(
-          item => item.textContent?.[0]?.toLowerCase() === event.key.toLowerCase()
+          item => item.textContent?.trim()?.[0]?.toLowerCase() === event.key.toLowerCase()
         )
         if (nextItem) {
           event.preventDefault()

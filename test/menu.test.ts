@@ -121,7 +121,7 @@ test('moves focus by typing first letter of an item', () => {
     '<nav role="menu">' +
     '<a href="#" role="menuitem">Home</a>' +
     '<a href="#" role="menuitem">About</a>' +
-    '<a href="#" role="menuitem">Contact</a>' +
+    '<a href="#" role="menuitem"> Contact</a>' +
     '</nav>'
   let items = window.document.querySelectorAll('a')
   items[0].focus()
