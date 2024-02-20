@@ -113,6 +113,35 @@ test('supports horizontal menus', () => {
   equal(window.document.activeElement, items[0])
 })
 
+test('moves focus by typing first letter of an item', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [menuKeyUX()])
+
+  window.document.body.innerHTML =
+    '<nav role="menu">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
+  let items = window.document.querySelectorAll('a')
+  items[0].focus()
+
+  press(window, 'a')
+  equal(window.document.activeElement, items[1])
+
+  press(window, 'h')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'h')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'C')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'q')
+  equal(window.document.activeElement, items[2])
+})
+
 test('supports RTL locales', () => {
   let window = new JSDOM().window
   startKeyUX(window, [menuKeyUX()])
