@@ -28,6 +28,21 @@ export interface KeyUXModule {
   (window: MinimalWindow): () => void
 }
 
+export interface MenuKeyUXOptions {
+  /**
+   * Maximum allowed pause between key presses when searching for a list item by name.
+   * Default is 300.
+   *
+   * @example
+   * let's say `typingDelayMs` is equal to 100:
+   * a — looking for a
+   * b after 100ms — looking for ab
+   * c after 50ms — looking for abc
+   * d after 5000ms — looking for d
+   */
+  typingDelayMs?: number
+}
+
 export type HotkeyOverride = Record<string, string>
 
 /**
@@ -54,7 +69,7 @@ export function hotkeyKeyUX(overrides?: HotkeyOverride): KeyUXModule
  * ])
  * ```
  */
-export function menuKeyUX(): KeyUXModule
+export function menuKeyUX(options?: MenuKeyUXOptions): KeyUXModule
 
 /**
  * Add pressed style on button activation from keyboard.
