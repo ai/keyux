@@ -179,8 +179,8 @@ with arrows navigation.
 </nav>
 ```
 
-Users will use Tab to go inside menu and will use arrows and <kbd>Home</kbd>,
-<kbd>End</kbd> to navigate inside.
+Users will use Tab to go inside menu and will use either arrows and <kbd>Home</kbd>,
+<kbd>End</kbd> or the first letter of each item to navigate inside.
 
 To enable this feature call `menuKeyUX`.
 
