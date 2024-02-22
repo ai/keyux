@@ -4,11 +4,12 @@ JS library to improve keyboard UI of web apps. It was designed not only
 for **a11y** but also to create **professions tools** where users prefer
 using keyboard.
 
-* Add **hotkeys** support by `aria-keyshortcuts`.
-* Show button’s `:active` state when user press hotkey.
-* Enable **arrows navigation** in `role="menu"` lists.
-* Jump to next section according to `aria-controls` and back by <kbd>Esc</kbd>.
-* Show/hide submenus of `role="menu"`.
+* Add **hotkeys** by `aria-keyshortcuts`.
+* Show a button’s `:active` state when a hotkey is pressed.
+* Enable **navigation with keyboard arrows** in `role="menu"` lists.
+* Jump to the next section according to `aria-controls` and back
+  with <kbd>Esc</kbd>.
+* Show and hide submenus of `role="menu"`.
 * Allows users to **override hotkeys**.
 * **1 KB** (minified and brotlied). No dependencies.
 * Vanilla JS and works with any framework including React, Vue, Svelte.
