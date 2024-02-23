@@ -30,10 +30,10 @@ export function getHotKeyHint(window, code, overrides = {}) {
   if (window.navigator.platform.indexOf('Mac') === 0) {
     return prettyParts
       .join('')
-      .replace(/(.*)Meta(.*)/, '⌘$1$2')
-      .replace(/(.*)Shift(.*)/, '⇧$1$2')
-      .replace(/(.*)Alt(.*)/, '⌥$1$2')
-      .replace(/(.*)Ctrl(.*)/, '⌃$1$2')
+      .replace(/(.*)Meta(.*)/, '⌘ $1$2')
+      .replace(/(.*)Shift(.*)/, '⇧ $1$2')
+      .replace(/(.*)Alt(.*)/, '⌥ $1$2')
+      .replace(/(.*)Ctrl(.*)/, '⌃ $1$2')
   } else {
     return prettyParts.join(' + ')
   }

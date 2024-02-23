@@ -38,6 +38,6 @@ test('makes hotkey hint prettier', () => {
 })
 
 test('makes mac hotkey hint prettier', () => {
-  equal(getHotKeyHint(MAC_WINDOW, 'alt+b'), '⌥B')
-  equal(getHotKeyHint(MAC_WINDOW, 'meta+ctrl+shift+alt+b'), '⌃⌥⇧⌘B')
+  equal(getHotKeyHint(MAC_WINDOW, 'alt+b'), '⌥ B')
+  equal(getHotKeyHint(MAC_WINDOW, 'meta+ctrl+shift+alt+b'), '⌃ ⌥ ⇧ ⌘ B')
 })
