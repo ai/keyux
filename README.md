@@ -1,16 +1,16 @@
 # KeyUX
 
-JS library to improve keyboard UI of web apps. It was designed not only
-for **a11y** but also to create **professions tools** where users prefer
-using keyboard.
+JS library to improve the keyboard UI of web apps. It is designed not only
+for **a11y**, but also to create **professions tools** where users prefer
+to use the keyboard.
 
-* Add **hotkeys** by `aria-keyshortcuts`.
+* Add **hotkeys** with `aria-keyshortcuts`.
 * Show a button’s `:active` state when a hotkey is pressed.
 * Enable **navigation with keyboard arrows** in `role="menu"` lists.
 * Jump to the next section according to `aria-controls` and back
   with <kbd>Esc</kbd>.
 * Show and hide submenus of `role="menu"`.
-* Allows users to **override hotkeys**.
+* Allow users to **override hotkeys**.
 * **1 KB** (minified and brotlied). No dependencies.
 * Vanilla JS and works with any framework including React, Vue, Svelte.
 
@@ -39,7 +39,7 @@ and [example](./test/demo/index.tsx).
 npm install keyux
 ```
 
-Then add `startKeyUX` call with necessary features to main JS file.
+Then add the `startKeyUX` call with the necessary features to the main JS file.
 
 ```js
 import {
@@ -67,8 +67,8 @@ startKeyUX(window, [
 
 ### Hotkeys
 
-If user will press hotkey, KeyUX will click on button or link
-with `aria-keyshortcuts` with the same hotkey.
+When the user presses a hotkey, KeyUX will click on the button or link
+with the same hotkey in `aria-keyshortcuts`.
 
 For instance, KeyUX will click on this button if user press
 <kbd>Alt</kbd>+<kbd>B</kbd> or <kbd>⌥</kbd>+<kbd>B</kbd>.
@@ -77,9 +77,9 @@ For instance, KeyUX will click on this button if user press
 <button aria-keyshortcuts="alt+b">Bold</button>
 ```
 
-The hotkey pattern should have modifiers like `meta+ctrl+shift+alt+b` in exact order.
+The hotkey pattern should contain modifiers like `meta+ctrl+shift+alt+b` in this exact order.
 
-To enable this feature, you need to call `hotkeyKeyUX`:
+To enable this feature, call `hotkeyKeyUX`:
 
 ```js
 import { hotkeyKeyUX, startKeyUX } from 'keyux'
@@ -92,7 +92,7 @@ startKeyUX(window, [
 
 ### Hotkeys Hint
 
-You can render hotkey hint from `aria-keyshortcuts` pattern in a prettier way:
+You can render the hotkey hint from the `aria-keyshortcuts` pattern in a prettier way:
 
 ```jsx
 import { likelyWithKeyboard, getHotKeyHint } from 'keyux'
@@ -105,19 +105,19 @@ export const Button = ({ hokey, children }) => {
 }
 ```
 
-`likelyWithKeyboard()` returns `false` on mobile devices where user likely
-will not be able to use hotkeys (but it is still possible by connecting
+`likelyWithKeyboard()` returns `false` on mobile devices where user are unlikely
+to be able to use hotkeys (but it is still possible by connecting an
 external keyboard).
 
-`getHotKeyHint()` will replace modifiers for Mac and make text more pretty.
-For instance, for `alt+b` it will return `Alt + B` on Windows/Linux or `⌥ + B`
+`getHotKeyHint()` replaces modifiers for Mac and makes text prettier.
+For instance, for `alt+b` it will return `Alt + B` on Windows/Linux or `⌥ B`
 on Mac.
 
 
 ### Pressed State
 
-KeyUX can set class to show pressed state for button when user
-will press hotkey. It will make UI more responsible.
+KeyUX can set class to show pressed state for a button when user
+presses a hotkey. It will make the UI more responsive.
 
 ```js
 import { hotkeyKeyUX, startKeyUX, pressKeyUX } from 'keyux'
@@ -145,12 +145,12 @@ to automatically add class for every `:active` state in your CSS.
 ### Hotkeys Override
 
 Many users want to override hotkeys because your hotkeys can conflict with
-browser’s extensions, system, or screen reader.
+their browser’s extensions, system, or screen reader.
 
-KeyUX allows to override hotkeys by `overrides` object. Both `hotkeyKeyUX()`
-and `getHotKeyHint()` accepts it as argument.
+KeyUX allows to override hotkeys using the `overrides` object. Both `hotkeyKeyUX()`
+and `getHotKeyHint()` accept it as an argument.
 
-You will need to create some UI for user to fill this object like:
+You will need to create some UI for users to fill this object like:
 
 ```js
 const overrides = {
@@ -158,19 +158,19 @@ const overrides = {
 }
 ```
 
-Then KeyUX will click on `aria-keyshortcuts="b"` on <kbd>Alt</kbd>+<kbd>B</kbd>
-press and `getHotKeyHint(window, 'b', overrides)` will return `Alt + B`/`⌥ + B`.
+Then KeyUX will click on `aria-keyshortcuts="b"` when <kbd>Alt</kbd>+<kbd>B</kbd>
+is pressed, and `getHotKeyHint(window, 'b', overrides)` will return `Alt + B`/`⌥ B`.
 
 
 ### Menu
 
 Using only <kbd>Tab</kbd> for navigation is not very useful. User may need to
-press it to many to get their button (also non-screen-reader users don’t
+press it too many times to get to their button (also non-screen-reader users don’t
 have quick navigation).
 
 To reduce Tab-list you can group some related things (tabs or website’s menu)
 into [`role="menu"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/menu_role)
-with arrows navigation.
+with arrow navigation.
 
 ```html
 <nav role="menu">
@@ -180,10 +180,10 @@ with arrows navigation.
 </nav>
 ```
 
-Users will use Tab to go inside menu and will use either arrows and <kbd>Home</kbd>,
-<kbd>End</kbd> or a name of some item to navigate inside.
+Users will use <kbd>Tab</kbd> to get inside the menu, and will use either arrows or <kbd>Home</kbd>,
+<kbd>End</kbd> or an item name to navigate inside.
 
-To enable this feature call `menuKeyUX`.
+To enable this feature, call `menuKeyUX`.
 
 ```js
 import { menuKeyUX } from 'keyux'
@@ -196,12 +196,12 @@ startKeyUX(window, [
 
 ### Jumps
 
-After finishing in one section, you can move user’s focus on next step to save
-time. For instance, you can move cursor to the page after user select it
-in the menu. Or you can move focus to item’s form after user select item
+After finishing in one section, you can move user’s focus to the next step to save
+time. For example, you can move the cursor to the page after the user selects it
+from the menu. Or, you can move the focus to the item’s form after the user selects an item
 in the list.
 
-You can control where to move focus next by `aria-controls`.
+You can control where the focus moves next with `aria-controls`.
 
 ```jsx
 <div role="menu">
@@ -215,15 +215,15 @@ You can control where to move focus next by `aria-controls`.
 </div>
 ```
 
-On <kbd>Esc</kbd> focus will jump back.
+On <kbd>Esc</kbd> the focus will jump back.
 
-You can add `aria-controls` to `<input>` to jump focus on <kbd>Enter</kbd>.
+You can add `aria-controls` to `<input>` to make the focus jump on <kbd>Enter</kbd>.
 
 ```html
 <input type="search" aria-controls="search_results" />
 ```
 
-To enable this feature call `jumpKeyUX`.
+To enable this feature, call `jumpKeyUX`.
 
 ```js
 import { menuKeyUX, jumpKeyUX } from 'keyux'
@@ -237,7 +237,7 @@ startKeyUX(window, [
 
 ### Nested Menu
 
-You can make nested menus with KeyUX by `aria-controls`
+You can make nested menus with KeyUX with `aria-controls`
 and `aria-hidden="true"`.
 
 ```html
@@ -254,10 +254,10 @@ and `aria-hidden="true"`.
 </div>
 ```
 
-You can make visible nested menu by avoiding setting `hidden`, but you will
-need to set `tabindex="-1"` manually.
+You can make the nested menu visible by diabling `hidden`, but you will
+have to set `tabindex="-1"` manually.
 
-To enable this feature call `hiddenKeyUX`.
+To enable this feature, call `hiddenKeyUX`.
 
 ```js
 import { menuKeyUX, jumpKeyUX, hiddenKeyUX } from 'keyux'
