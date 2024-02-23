@@ -143,11 +143,10 @@ test('moves focus by typing item name', async () => {
   press(window, 'a')
   equal(window.document.activeElement, items[1])
 
-  await setTimeout(50)
   press(window, 'G')
   equal(window.document.activeElement, items[2])
 
-  await setTimeout(100)
+  await setTimeout(150)
   press(window, 'h')
   equal(window.document.activeElement, items[0])
   equal(clicked, 0)
@@ -155,11 +154,11 @@ test('moves focus by typing item name', async () => {
   press(window, 'a')
   equal(window.document.activeElement, items[0])
 
-  await setTimeout(100)
+  await setTimeout(150)
   press(window, 'a')
   equal(window.document.activeElement, items[1])
 
-  await setTimeout(100)
+  await setTimeout(150)
   press(window, 'Backspace')
   equal(window.document.activeElement, items[1])
 
