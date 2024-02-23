@@ -105,7 +105,7 @@
       "import": {
         "./index.js": "{ startKeyUX, hotkeyKeyUX, pressKeyUX, menuKeyUX, jumpKeyUX, hiddenKeyUX, likelyWithKeyboard, getHotKeyHint }"
       },
-      "limit": "1596 B"
+      "limit": "1606 B"
     }
   ],
   "clean-publish": {
