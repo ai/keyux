@@ -15,7 +15,7 @@ to use the keyboard.
 * Vanilla JS and works with any framework including React, Vue, Svelte.
 
 ```jsx
-export const Button = ({ hokey, children }) => {
+export const Button = ({ hotkey, children }) => {
   return <button aria-keyshortcuts={hotkey}>
     {children}
     {likelyWithKeyboard(window) && <kbd>{getHotKeyHint(window, hotkey)}</kbd>}
