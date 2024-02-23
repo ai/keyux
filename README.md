@@ -71,7 +71,7 @@ When the user presses a hotkey, KeyUX will click on the button or link
 with the same hotkey in `aria-keyshortcuts`.
 
 For instance, KeyUX will click on this button if user press
-<kbd>Alt</kbd>+<kbd>B</kbd> or <kbd>⌥</kbd> <kbd>B</kbd>.
+<kbd>Alt</kbd>+<kbd>B</kbd> or <kbd>⌥</kbd> <kbd>B</kbd>.
 
 ```js
 <button aria-keyshortcuts="alt+b">Bold</button>
@@ -110,7 +110,7 @@ to be able to use hotkeys (but it is still possible by connecting an
 external keyboard).
 
 `getHotKeyHint()` replaces modifiers for Mac and makes text prettier.
-For instance, for `alt+b` it will return `Alt + B` on Windows/Linux or `⌥ B`
+For instance, for `alt+b` it will return `Alt + B` on Windows/Linux or `⌥ B`
 on Mac.
 
 
@@ -159,7 +159,7 @@ const overrides = {
 ```
 
 Then KeyUX will click on `aria-keyshortcuts="b"` when <kbd>Alt</kbd>+<kbd>B</kbd>
-is pressed, and `getHotKeyHint(window, 'b', overrides)` will return `Alt + B`/`⌥ B`.
+is pressed, and `getHotKeyHint(window, 'b', overrides)` will return `Alt + B`/`⌥ B`.
 
 
 ### Menu
