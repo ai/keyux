@@ -71,7 +71,7 @@ When the user presses a hotkey, KeyUX will click on the button or link
 with the same hotkey in `aria-keyshortcuts`.
 
 For instance, KeyUX will click on this button if user press
-<kbd>Alt</kbd>+<kbd>B</kbd> or <kbd>⌥</kbd>+<kbd>B</kbd>.
+<kbd>Alt</kbd>+<kbd>B</kbd> or <kbd>⌥</kbd> <kbd>B</kbd>.
 
 ```js
 <button aria-keyshortcuts="alt+b">Bold</button>
