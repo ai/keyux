@@ -30,6 +30,14 @@ test('detects keyboard', () => {
 test('makes hotkey hint prettier', () => {
   let window = new JSDOM().window
   equal(getHotKeyHint(window, 'alt+b'), 'Alt + B')
+  equal(
+    getHotKeyHint(window, 'meta+ctrl+shift+alt+b'),
+    'Meta + Ctrl + Shift + Alt + B'
+  )
   equal(getHotKeyHint(window, 'alt+b', { b: 'alt+b' }), 'B')
-  equal(getHotKeyHint(MAC_WINDOW, 'alt+b'), '⌥ + B')
+})
+
+test('makes mac hotkey hint prettier', () => {
+  equal(getHotKeyHint(MAC_WINDOW, 'alt+b'), '⌥ B')
+  equal(getHotKeyHint(MAC_WINDOW, 'meta+ctrl+shift+alt+b'), '⌃ ⌥ ⇧ ⌘ B')
 })

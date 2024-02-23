@@ -24,17 +24,17 @@ export function getHotKeyHint(window, code, overrides = {}) {
       break
     }
   }
-  let pretty = realCode
+  let prettyParts = realCode
     .split('+')
     .map(part => part[0].toUpperCase() + part.slice(1))
-    .join(' + ')
   if (window.navigator.platform.indexOf('Mac') === 0) {
-    return pretty
-      .replace('Meta', '⌘')
-      .replace('Ctrl', '⌃')
-      .replace('Alt', '⌥')
-      .replace('Shift', '⇧')
+    return prettyParts
+      .join('')
+      .replace(/(.*)Meta(.*)/, '⌘ $1$2')
+      .replace(/(.*)Shift(.*)/, '⇧ $1$2')
+      .replace(/(.*)Alt(.*)/, '⌥ $1$2')
+      .replace(/(.*)Ctrl(.*)/, '⌃ $1$2')
   } else {
-    return pretty
+    return prettyParts.join(' + ')
   }
 }
