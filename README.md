@@ -77,7 +77,7 @@ For instance, KeyUX will click on this button if user press
 <button aria-keyshortcuts="alt+b">Bold</button>
 ```
 
-The hotkey pattern should modifiers like `meta+ctrl+shift+alt+b` in exact order.
+The hotkey pattern should have modifiers like `meta+ctrl+shift+alt+b` in exact order.
 
 To enable this feature, you need to call `hotkeyKeyUX`:
 
