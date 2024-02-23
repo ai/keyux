@@ -28,25 +28,13 @@ export function getHotKeyHint(window, code, overrides = {}) {
     .split('+')
     .map(part => part[0].toUpperCase() + part.slice(1))
   if (window.navigator.platform.indexOf('Mac') === 0) {
-    return sortMacKeys(prettyParts)
-      .join(' ')
-      .replace('Meta', '⌘')
-      .replace('Ctrl', '⌃')
-      .replace('Alt', '⌥')
-      .replace('Shift', '⇧')
+    return prettyParts
+      .join('')
+      .replace(/(.*)Meta(.*)/, '⌘$1$2')
+      .replace(/(.*)Shift(.*)/, '⇧$1$2')
+      .replace(/(.*)Alt(.*)/, '⌥$1$2')
+      .replace(/(.*)Ctrl(.*)/, '⌃$1$2')
   } else {
     return prettyParts.join(' + ')
   }
-}
-
-function sortMacKeys(keys) {
-  let keyOrder = ['Ctrl', 'Alt', 'Shift', 'Meta']
-  return keys.sort((a, b) => {
-    let aIndex = keyOrder.indexOf(a)
-    let bIndex = keyOrder.indexOf(b)
-    return (
-      (aIndex >= 0 ? aIndex : keyOrder.length) -
-      (bIndex >= 0 ? bIndex : keyOrder.length)
-    )
-  })
 }
