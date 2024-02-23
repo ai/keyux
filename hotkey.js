@@ -24,8 +24,8 @@ function findHotKey(event, where, overrides) {
   let prefix = ''
   if (event.metaKey) prefix += 'meta+'
   if (event.ctrlKey) prefix += 'ctrl+'
-  if (event.shiftKey) prefix += 'shift+'
   if (event.altKey) prefix += 'alt+'
+  if (event.shiftKey) prefix += 'shift+'
 
   let code = prefix
   if (event.key === '+') {

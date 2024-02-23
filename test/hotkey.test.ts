@@ -23,7 +23,7 @@ test('adds hot keys to buttons and links', () => {
     '<button aria-keyshortcuts="b">1</button>' +
     '<button aria-keyshortcuts="Ctrl+B">10</button>' +
     '<button aria-keyshortcuts="plus">100</button>' +
-    '<a href="#" aria-keyshortcuts="meta+ctrl+shift+alt+b">1000</a>'
+    '<a href="#" aria-keyshortcuts="meta+ctrl+alt+shift+b">1000</a>'
 
   let result = 0
   let buttons = window.document.querySelectorAll('button, a')
