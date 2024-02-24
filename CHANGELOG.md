@@ -1,6 +1,12 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.0
+* Changed modifier order for Windows canonical order (by @myandrienko).
+* Improved MacOS X support in `getHotKeyHint` (by @myandrienko).
+* Fixed listeners leak in `pressKeyUX` (by @ilyhryh).
+* Fixed docs (by @myandrienko, @lentsd, and @maximal).
+
 ## 0.2.1
 * Fixed `menu` typing search and hotkeys conflict.
 
