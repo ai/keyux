@@ -1,16 +1,17 @@
 export function pressKeyUX(pressedClass) {
-  let pressed
+  let pressedElement
+  let classes = pressedClass.split(' ')
 
   function keyUp() {
-    if (pressed) {
-      pressed.classList.remove(...pressedClass.split(' '))
+    if (pressedElement) {
+      pressedElement.classList.remove(...classes)
     }
   }
 
   function click(event) {
     if (event.clientX === 0 && event.clientY === 0) {
-      event.target.classList.add(...pressedClass.split(' '))
-      pressed = event.target
+      event.target.classList.add(...classes)
+      pressedElement = event.target
     }
   }
 
@@ -18,8 +19,8 @@ export function pressKeyUX(pressedClass) {
     window.addEventListener('keyup', keyUp)
     window.addEventListener('click', click)
     return () => {
-      window.removeEventListener('click', keyUp)
       window.removeEventListener('keyup', keyUp)
+      window.removeEventListener('click', click)
     }
   }
 }
