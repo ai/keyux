@@ -1,6 +1,9 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.1
+* Fixed jumps for slow client-render apps.
+
 ## 0.3.0
 * Changed modifier order for Windows canonical order (by @myandrienko).
 * Improved MacOS X support in `getHotKeyHint` (by @myandrienko).
