@@ -1,4 +1,6 @@
 const NON_ENGLISH_LAYOUT = /^[^\x00-\x7F]$/
+const IGNORE_ATTR = 'data-keyux-ignore-hotkeys'
+const NOT_IGNOR_ATTR = 'data-keyux-hotkeys'
 
 const IGNORE_INPUTS = {
   checkbox: true,
@@ -14,11 +16,55 @@ function ignoreHotkeysIn(target) {
   )
 }
 
+function choseTheElement(list, current) {
+  let arr = [...list];
+  
+  for (let j = 0; j < arr.length;) {
+    let element = arr[j];
+    
+    while (true) {
+      if (
+        element.parentElement === current ||
+        element.parentElement == null
+      ) {
+        return arr[j]
+      }
+      if (
+        element.parentElement.hasAttribute(IGNORE_ATTR) &&
+        !element.parentElement.hasAttribute(NOT_IGNOR_ATTR)
+      ) {
+        j++
+        break
+      } else {
+        element = element.parentElement
+      }
+    }
+  }
+
+  return null;
+}
+
 function checkHotkey(where, code, overrides) {
   let codeOverride = overrides[code]
   if (Object.values(overrides).includes(code) && !codeOverride) return false
-  return where.querySelector(`[aria-keyshortcuts="${codeOverride || code}" i]`)
+  let current = where.activeElement;
+  let list = current.querySelectorAll(`[aria-keyshortcuts="${codeOverride || code}" i]`)
+  let elementWithHotKey = null;
+
+  elementWithHotKey = choseTheElement(list, current)
+
+  if (current.hasAttribute(NOT_IGNOR_ATTR)) {
+    return choseTheElement(list, current)
+  }
+
+  if (elementWithHotKey == null) {
+    list = where.querySelectorAll(`[aria-keyshortcuts="${codeOverride || code}" i]`)
+    return choseTheElement(list, where)
+  }
+
+  return elementWithHotKey
 }
+
 
 function findHotKey(event, where, overrides) {
   let prefix = ''

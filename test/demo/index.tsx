@@ -225,6 +225,42 @@ const App: FC = () => {
           setUpdate({})
         }}
       />
+
+      <ul>
+        <li data-keyux-ignore-hotkeys tabIndex={0}>
+          Item 1 (data-keyux-ignore-hotkeys)
+          <button aria-keyshortcuts="v">Validate</button>
+          <HotKeyHint hotkey="v" />
+        </li>
+
+        <li data-keyux-hotkeys data-keyux-ignore-hotkeys tabIndex={0}>
+          Item 2 (data-keyux-ignore-hotkeys, data-keyux-hotkeys)
+          <button aria-keyshortcuts="v">Validate</button>
+          <HotKeyHint hotkey="v" />
+          <button aria-keyshortcuts="h">Validate</button>
+          <HotKeyHint hotkey="h" />
+        </li>
+
+        <li tabIndex={0}>
+          Item 3
+          <button aria-keyshortcuts="v">Validate</button>
+          <HotKeyHint hotkey="v" />
+        </li>
+
+      </ul >
+
+      <ul data-keyux-hotkeys tabIndex={0}>
+        <li>
+          Item 4
+          <button aria-keyshortcuts="h">Validate</button>
+          <HotKeyHint hotkey="h" />
+        </li>
+        <li>
+          Item 5
+          <button aria-keyshortcuts="a">Validate</button>
+          <HotKeyHint hotkey="a" />
+        </li>
+      </ul >
     </>
   )
 }
