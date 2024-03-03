@@ -45,8 +45,8 @@ function getEnabledSelector(elements) {
 function getFocusedElement(where, code) {
   let activeElement = where.activeElement;
 
-  return getEnabledSelector(Array.from(activeElement.querySelectorAll(getKeyShortCutsSelector(code)))) ||
-  getEnabledSelector(Array.from(where.querySelectorAll(getKeyShortCutsSelector(code))))
+  return getEnabledSelector(activeElement.querySelectorAll(getKeyShortCutsSelector(code))) ||
+  getEnabledSelector(where.querySelectorAll(getKeyShortCutsSelector(code)))
 }
 
 function checkHotkey(where, code, overrides) {
