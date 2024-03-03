@@ -16,7 +16,9 @@ function ignoreHotkeysIn(target) {
   )
 }
 
-function choseTheElement(list, current) {
+function choseTheElement(current, selector) {
+  let list = current.querySelectorAll(selector)
+
   for (let j = 0; j < list.length; j++) {
     let closestElement = list[j].closest(`[${IGNORE_ATTR}]`)
     if (closestElement === current || closestElement == null) {
@@ -31,20 +33,23 @@ function checkHotkey(where, code, overrides) {
   if (Object.values(overrides).includes(code) && !codeOverride) return false
   let current = where.activeElement
   let cssSelector = `[aria-keyshortcuts="${codeOverride || code}" i]`
-  let list = where.querySelectorAll(cssSelector)
   let elementWithHotKey = null
-  elementWithHotKey = choseTheElement(list, where)
+  
+  
+  if(choseTheElement(current, cssSelector) != null) {
+    elementWithHotKey = choseTheElement(current, cssSelector)
+  } else {
+    elementWithHotKey = choseTheElement(where, cssSelector)
+  }
 
   if (current.hasAttribute(IGNORE_ATTR) && !current.hasAttribute(NOT_IGNOR_ATTR)) {
-    list = current.querySelectorAll(cssSelector)
-    elementWithHotKey = choseTheElement(list, current)
+    elementWithHotKey = choseTheElement(current, cssSelector)
   }
 
   if (current.hasAttribute(NOT_IGNOR_ATTR)) {
     let id = current.getAttribute(NOT_IGNOR_ATTR)
     let newCurrent = where.getElementById(id)
-    list = newCurrent.querySelectorAll(cssSelector)
-    elementWithHotKey = choseTheElement(list, newCurrent)
+    elementWithHotKey = choseTheElement(newCurrent, cssSelector)
   }
 
   return elementWithHotKey
