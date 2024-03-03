@@ -102,6 +102,13 @@ const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
         router={router}
         setRouter={setRouter}
       />
+      <MenuItem
+        controls="page"
+        hotkey="l"
+        route="list"
+        router={router}
+        setRouter={setRouter}
+      />
     </nav>
   )
 }
@@ -129,6 +136,22 @@ const Page: FC<{
           </li>
         </ul>
       </>
+    )
+  } else if(router === 'list') {
+    content = (
+      <ul>
+        <li data-keyux-hotkeys="second-button" data-keyux-ignore-hotkeys tabIndex={0}>
+          <button aria-keyshortcuts="v">First button</button>
+          <button aria-keyshortcuts="v" id="second-button">Second button</button>
+        </li>
+        <li data-keyux-ignore-hotkeys tabIndex={0}>
+          <button aria-keyshortcuts="v">First button</button>
+        </li>
+        <li data-keyux-hotkeys="forth-button" data-keyux-ignore-hotkeys tabIndex={0}>
+          <button aria-keyshortcuts="v" >Thrid button</button>
+          <button aria-keyshortcuts="v" id='forth-button'>Forth button</button>
+        </li>
+      </ul>
     )
   } else if (
     router === 'about' ||

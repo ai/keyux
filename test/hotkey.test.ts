@@ -152,23 +152,18 @@ test('allows to override hotkeys', () => {
   equal(clicked, 'bqb')
 })
 
-test('supports tapping on active list element', () => {
+test('should ignore data-keyux-ignore-hotkeys element and call after focus on it', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
-    '<div>' +
     '<ul>' + 
-    '<li tabindex="0" >' +
-    '<div>' +
+    '<li tabindex="0" data-keyux-ignore-hotkeys>' +
     '<button aria-keyshortcuts="v">v1</button>' +
-    '</div>' +
     '</li>' +
-    '<li tabindex="0">' +
+    '<li>' +
     '<button aria-keyshortcuts="v">v2</button>' +
     '</li>' +
-    '</ul>' +
-    '<button>btn</button>' +
-    '</div>'
+    '</ul>'
 
   let clicked = ''
   for (let button of window.document.querySelectorAll('button')) {
@@ -177,33 +172,23 @@ test('supports tapping on active list element', () => {
     })
   }
 
-  let list = Array.from(window.document.querySelectorAll('ul li'));
+  press(window, { key: 'v' })
+  equal(clicked, 'v2');
+
+  (window.document.querySelector('ul li') as HTMLLIElement).focus()
 
   press(window, { key: 'v' })
-  equal(clicked, 'v1');
-
-  (list[0] as HTMLLIElement).focus()
-  press(window, { key: 'v' })
-  equal(clicked, 'v1v1');
-
-
-  (list[1] as HTMLLIElement).focus()
-  press(window, { key: 'v' })
-  equal(clicked, 'v1v1v2');
-
-  window.document.querySelectorAll('button')[2].focus()
-  press(window, { key: 'v' })
-  equal(clicked, 'v1v1v2v1')
-
+  equal(clicked, 'v2v1');
 })
 
-test('supports ignoring element by data-keyux-ignore-hotkeys attribute', () => {
+test('should call element with "data-keyux-hotkeys" in container', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
     '<ul>' + 
-    '<li tabindex="0" data-keyux-ignore-hotkeys>' +
+    '<li tabindex="0" data-keyux-ignore-hotkeys data-keyux-hotkeys="test">' +
     '<button tabindex="0" aria-keyshortcuts="v">v1</button>' +
+    '<button id="test" tabindex="0" aria-keyshortcuts="v">v2</button>' +
     '</li>' +
     '</ul>'
 
@@ -216,49 +201,8 @@ test('supports ignoring element by data-keyux-ignore-hotkeys attribute', () => {
 
   press(window, { key: 'v' })
   equal(clicked, '');
-})
 
-test('supports clicking on element if it has data-keyux-ignore-hotkeys and data-keyux-hotkeys', () => {
-  let window = new JSDOM().window
-  startKeyUX(window, [hotkeyKeyUX()])
-  window.document.body.innerHTML =
-    '<ul>' + 
-    '<li id="testid" tabindex="0" data-keyux-ignore-hotkeys data-keyux-hotkeys="testid">' +
-    '<button tabindex="0" aria-keyshortcuts="v">v1</button>' +
-    '</li>' +
-    '</ul>'
-
-  let clicked = ''
-  for (let button of window.document.querySelectorAll('button')) {
-    button.addEventListener('click', () => {
-      clicked += button.textContent
-    })
-  }
-
-  press(window, { key: 'v' })
-  equal(clicked, 'v1');
-})
-
-
-test('supports selecting not disabled element in order', () => {
-  let window = new JSDOM().window
-  startKeyUX(window, [hotkeyKeyUX()])
-  window.document.body.innerHTML =
-    '<ul>' + 
-    '<li tabindex="0" data-keyux-ignore-hotkeys>' +
-    '<button tabindex="0" aria-keyshortcuts="v">v1</button>' +
-    '</li>' +
-    '<li tabindex="0">' +
-    '<button tabindex="0" aria-keyshortcuts="v">v2</button>' +
-    '</li>' +
-    '</ul>'
-
-  let clicked = ''
-  for (let button of window.document.querySelectorAll('button')) {
-    button.addEventListener('click', () => {
-      clicked += button.textContent
-    })
-  }
+  window.document.querySelector('li')?.focus()
 
   press(window, { key: 'v' })
   equal(clicked, 'v2');
