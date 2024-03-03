@@ -87,7 +87,6 @@ export function hotkeyKeyUX(overrides = {}) {
     function keyDown(event) {
       if (ignoreHotkeysIn(event.target)) return
       let press = findHotKey(event, window.document, overrides)
-
       if (press) press.click()
     }
 
