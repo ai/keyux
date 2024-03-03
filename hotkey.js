@@ -32,15 +32,17 @@ function checkHotkey(where, code, overrides) {
   let current = where.activeElement
   let cssSelector = `[aria-keyshortcuts="${codeOverride || code}" i]`
   let elementWithHotKey = null
-  
-  
-  if(choseTheElement(current, cssSelector)) {
+
+  if (choseTheElement(current, cssSelector)) {
     elementWithHotKey = choseTheElement(current, cssSelector)
   } else {
     elementWithHotKey = choseTheElement(where, cssSelector)
   }
 
-  if (current.hasAttribute('data-keyux-ignore-hotkeys') && !current.hasAttribute('data-keyux-hotkeys')) {
+  if (
+    current.hasAttribute('data-keyux-ignore-hotkeys') &&
+    !current.hasAttribute('data-keyux-hotkeys')
+  ) {
     elementWithHotKey = choseTheElement(current, cssSelector)
   }
 
@@ -52,8 +54,13 @@ function checkHotkey(where, code, overrides) {
 
   return elementWithHotKey
 }
-
-
+// let click = findInside(where.byId(current.dataKeyuxHotkeys))
+// if (!click) {
+//   click = findInside(current)
+//   if (!lclick) {
+//     click = findInside(where)
+//   }
+// }
 function findHotKey(event, where, overrides) {
   let prefix = ''
   if (event.metaKey) prefix += 'meta+'
