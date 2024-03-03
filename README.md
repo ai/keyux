@@ -270,7 +270,6 @@ startKeyUX(window, [
 ```
 
 ### data-keyux-ignore-hotkeys attribute
-It disables search this element. Also, if the element is in focuse, then the search is first start inside it, if it does not find it, then it searches on the pages
+
 
 ### data-keyux-hotkeys attribute
-It ignore data-keys-ignore-hotkeys. Also, if the element is in focuse, then the search on the it

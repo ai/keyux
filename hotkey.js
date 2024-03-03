@@ -17,49 +17,34 @@ function ignoreHotkeysIn(target) {
 }
 
 function choseTheElement(list, current) {
-  let arr = [...list];
-  
-  for (let j = 0; j < arr.length;) {
-    let element = arr[j];
-    
-    while (true) {
-      if (
-        element.parentElement === current ||
-        element.parentElement == null
-      ) {
-        return arr[j]
-      }
-      if (
-        element.parentElement.hasAttribute(IGNORE_ATTR) &&
-        !element.parentElement.hasAttribute(NOT_IGNOR_ATTR)
-      ) {
-        j++
-        break
-      } else {
-        element = element.parentElement
-      }
+  for (let j = 0; j < list.length; j++) {
+    let closestElement = list[j].closest(`[${IGNORE_ATTR}]`)
+    if (closestElement === current || closestElement == null) {
+      return list[j]
     }
   }
-
-  return null;
+  return null
 }
 
 function checkHotkey(where, code, overrides) {
   let codeOverride = overrides[code]
   if (Object.values(overrides).includes(code) && !codeOverride) return false
-  let current = where.activeElement;
-  let list = current.querySelectorAll(`[aria-keyshortcuts="${codeOverride || code}" i]`)
-  let elementWithHotKey = null;
+  let current = where.activeElement
+  let cssSelector = `[aria-keyshortcuts="${codeOverride || code}" i]`
+  let list = where.querySelectorAll(cssSelector)
+  let elementWithHotKey = null
+  elementWithHotKey = choseTheElement(list, where)
 
-  elementWithHotKey = choseTheElement(list, current)
-
-  if (current.hasAttribute(NOT_IGNOR_ATTR)) {
-    return choseTheElement(list, current)
+  if (current.hasAttribute(IGNORE_ATTR) && !current.hasAttribute(NOT_IGNOR_ATTR)) {
+    list = current.querySelectorAll(cssSelector)
+    elementWithHotKey = choseTheElement(list, current)
   }
 
-  if (elementWithHotKey == null) {
-    list = where.querySelectorAll(`[aria-keyshortcuts="${codeOverride || code}" i]`)
-    return choseTheElement(list, where)
+  if (current.hasAttribute(NOT_IGNOR_ATTR)) {
+    let id = current.getAttribute(NOT_IGNOR_ATTR)
+    let newCurrent = where.getElementById(id)
+    list = newCurrent.querySelectorAll(cssSelector)
+    elementWithHotKey = choseTheElement(list, newCurrent)
   }
 
   return elementWithHotKey
