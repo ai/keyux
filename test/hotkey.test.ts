@@ -151,3 +151,56 @@ test('allows to override hotkeys', () => {
   press(window, { code: 'KeyQ', key: 'й' })
   equal(clicked, 'bqb')
 })
+
+test('supports tapping on active list element', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<div>' +
+    '<ul>' + 
+    '<li tabindex="0">' +
+    '<div>' +
+    '<button tabindex="0" aria-keyshortcuts="v">v1</button>' +
+    '</div>' +
+    '</li>' +
+    '<li tabindex="0">' +
+    '<button tabindex="0" aria-keyshortcuts="v">v2</button>' +
+    '</li>' +
+    '</ul>' +
+    '<button>btn</button>' +
+    '</div>'
+
+  let clicked = ''
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += button.textContent
+    })
+  }
+
+  let list = Array.from(window.document.querySelectorAll('ul li'));
+  let listButtons =  Array.from(window.document.querySelectorAll('ul li button'));
+
+  press(window, { key: 'v' })
+  equal(clicked, 'v1');
+
+  (list[0] as HTMLLIElement).focus()
+  press(window, { key: 'v' })
+  equal(clicked, 'v1v1');
+
+  (listButtons[0] as HTMLButtonElement).focus()
+  press(window, { key: 'v' })
+  equal(clicked, 'v1v1v1');
+
+  (list[1] as HTMLLIElement).focus()
+  press(window, { key: 'v' })
+  equal(clicked, 'v1v1v1v2');
+
+  (listButtons[1] as HTMLButtonElement).focus()
+  press(window, { key: 'v' })
+  equal(clicked, 'v1v1v1v2v2')
+
+  window.document.querySelectorAll('button')[2].focus()
+  press(window, { key: 'v' })
+  equal(clicked, 'v1v1v1v2v2v1')
+
+})

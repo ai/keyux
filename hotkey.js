@@ -6,6 +6,7 @@ const IGNORE_INPUTS = {
   radio: true
 }
 
+
 function ignoreHotkeysIn(target) {
   return (
     target.tagName === 'TEXTAREA' ||
@@ -14,10 +15,38 @@ function ignoreHotkeysIn(target) {
   )
 }
 
+function getKeyShortCutsSelector(code) {
+  return `[aria-keyshortcuts="${code}" i]`
+}
+
+function findUpTheFirstListElement(node) {
+    if(node.tagName === 'BODY') return null;
+    if(node.tagName === 'LI') return node;
+
+    return findUpTheFirstListElement(node.parentNode);
+}
+
+function getFocusedElement(where, code) {
+  let activeElement = where.activeElement
+
+  let element = activeElement.querySelector(getKeyShortCutsSelector(code))
+
+  if(element) return element;
+
+  if(activeElement.getAttribute('aria-keyshortcuts') === code) {
+    element = activeElement;
+  } else {
+    let validLi = findUpTheFirstListElement(where.activeElement)
+    if(validLi !== null) element = validLi
+  }
+
+  return element || where.querySelector(getKeyShortCutsSelector(code))
+}
+
 function checkHotkey(where, code, overrides) {
   let codeOverride = overrides[code]
   if (Object.values(overrides).includes(code) && !codeOverride) return false
-  return where.querySelector(`[aria-keyshortcuts="${codeOverride || code}" i]`)
+  return getFocusedElement(where, codeOverride || code)
 }
 
 function findHotKey(event, where, overrides) {
