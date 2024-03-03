@@ -1,6 +1,4 @@
 const NON_ENGLISH_LAYOUT = /^[^\x00-\x7F]$/
-const IGNORE_ATTR = 'data-keyux-ignore-hotkeys'
-const NOT_IGNOR_ATTR = 'data-keyux-hotkeys'
 
 const IGNORE_INPUTS = {
   checkbox: true,
@@ -19,10 +17,10 @@ function ignoreHotkeysIn(target) {
 function choseTheElement(current, selector) {
   let list = current.querySelectorAll(selector)
 
-  for (let j = 0; j < list.length; j++) {
-    let closestElement = list[j].closest(`[${IGNORE_ATTR}]`)
-    if (closestElement === current || closestElement == null) {
-      return list[j]
+  for (let el of list) {
+    let closestElement = el.closest('data-keyux-ignore-hotkeys')
+    if (closestElement === current || !closestElement) {
+      return el
     }
   }
   return null
@@ -36,18 +34,18 @@ function checkHotkey(where, code, overrides) {
   let elementWithHotKey = null
   
   
-  if(choseTheElement(current, cssSelector) != null) {
+  if(choseTheElement(current, cssSelector)) {
     elementWithHotKey = choseTheElement(current, cssSelector)
   } else {
     elementWithHotKey = choseTheElement(where, cssSelector)
   }
 
-  if (current.hasAttribute(IGNORE_ATTR) && !current.hasAttribute(NOT_IGNOR_ATTR)) {
+  if (current.hasAttribute('data-keyux-ignore-hotkeys') && !current.hasAttribute('data-keyux-hotkeys')) {
     elementWithHotKey = choseTheElement(current, cssSelector)
   }
 
-  if (current.hasAttribute(NOT_IGNOR_ATTR)) {
-    let id = current.getAttribute(NOT_IGNOR_ATTR)
+  if (current.hasAttribute('data-keyux-hotkeys')) {
+    let id = current.getAttribute('data-keyux-hotkeys')
     let newCurrent = where.getElementById(id)
     elementWithHotKey = choseTheElement(newCurrent, cssSelector)
   }
