@@ -6,6 +6,13 @@ const IGNORE_INPUTS = {
   radio: true
 }
 
+const IGNORE_HOTKEYS_ATTR = 'data-keyux-ignore-hotkeys'
+const HOTKEYS_ATTR = 'data-keyux-hotkeys'
+
+function getKeyShortCutsSelector(code) {
+  return `[aria-keyshortcuts="${code}" i]`
+}
+
 function ignoreHotkeysIn(target) {
   return (
     target.tagName === 'TEXTAREA' ||
@@ -14,32 +21,32 @@ function ignoreHotkeysIn(target) {
   )
 }
 
-function getKeyShortCutsSelector(code) {
-  return `[aria-keyshortcuts="${code}" i]`
+function findUpFirstIgnoredElement(node) {
+    if(node.tagName === 'BODY') return null;
+    if(node.hasAttribute(IGNORE_HOTKEYS_ATTR)) return node;
+
+    return findUpFirstIgnoredElement(node.parentNode);
 }
 
-function findUpTheFirstListElement(node) {
-    if(node.tagName === 'BODY') return null;
-    if(node.tagName === 'LI') return node;
+function getEnabledSelector(elements) {
+  for(let element of elements) {
+    let ignored = findUpFirstIgnoredElement(element)
 
-    return findUpTheFirstListElement(node.parentNode);
+    if(!ignored) return element;
+
+    if(ignored.getAttribute(HOTKEYS_ATTR) === ignored.id) {
+      return element
+    }
+  }
+
+  return null;
 }
 
 function getFocusedElement(where, code) {
-  let activeElement = where.activeElement
+  let activeElement = where.activeElement;
 
-  let element = activeElement.querySelector(getKeyShortCutsSelector(code))
-
-  if(element) return element;
-
-  if(activeElement.getAttribute('aria-keyshortcuts') === code) {
-    element = activeElement;
-  } else {
-    let validLi = findUpTheFirstListElement(where.activeElement)
-    if(validLi !== null) element = validLi
-  }
-
-  return element || where.querySelector(getKeyShortCutsSelector(code))
+  return getEnabledSelector(Array.from(activeElement.querySelectorAll(getKeyShortCutsSelector(code)))) ||
+  getEnabledSelector(Array.from(where.querySelectorAll(getKeyShortCutsSelector(code))))
 }
 
 function checkHotkey(where, code, overrides) {
@@ -80,6 +87,7 @@ export function hotkeyKeyUX(overrides = {}) {
     function keyDown(event) {
       if (ignoreHotkeysIn(event.target)) return
       let press = findHotKey(event, window.document, overrides)
+
       if (press) press.click()
     }
 
