@@ -216,18 +216,6 @@ const App: FC = () => {
 
   return (
     <>
-    <ul>
-      <li tabIndex={0}>
-        <div>
-        Item 1
-        <button aria-keyshortcuts="v">Validate</button>
-        </div>
-      </li>
-      <li tabIndex={0}>
-        Item 2
-        <button aria-keyshortcuts="v">Validateeeee</button>
-      </li>
-    </ul>
       <Counter />
       <Menu router={router} setRouter={setRouter} />
       <Page

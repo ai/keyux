@@ -6,7 +6,6 @@ const IGNORE_INPUTS = {
   radio: true
 }
 
-
 function ignoreHotkeysIn(target) {
   return (
     target.tagName === 'TEXTAREA' ||
