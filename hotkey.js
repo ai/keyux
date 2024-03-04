@@ -41,18 +41,17 @@ function getActiveElementInRange(activeElement, elements, container) {
 }
 
 function getFocusedElement(where, code) {
-  let activeElement = getActiveElementInRange(
-    where.activeElement,
-    where.activeElement.querySelectorAll(`[aria-keyshortcuts="${code}" i]`),
-    where
-  )
-
-  if(activeElement) return activeElement
-
-  return getActiveElementInRange(
-    where.activeElement,
-    where.querySelectorAll(`[aria-keyshortcuts="${code}" i]`),
-    where
+  return (
+    getActiveElementInRange(
+      where.activeElement,
+      where.activeElement.querySelectorAll(`[aria-keyshortcuts="${code}" i]`),
+      where
+    ) ||
+    getActiveElementInRange(
+      where.activeElement,
+      where.querySelectorAll(`[aria-keyshortcuts="${code}" i]`),
+      where
+    )
   )
 }
 
