@@ -1,6 +1,9 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.0
+* Added hotkeys for list items (by Fedorov Ignatij).
+
 ## 0.3.1
 * Fixed jumps for slow client-render apps.
 
