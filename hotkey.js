@@ -22,7 +22,7 @@ function isElementIsIgnoredInRange(parent, node) {
   return isElementIsIgnoredInRange(parent, node.parentNode)
 }
 
-function findNonIgnoredElement(activeElement, elements) {
+function findNonIgnored(activeElement, elements) {
   for (let element of elements) {
     if (isElementIsIgnoredInRange(activeElement, element)) continue
     return element
@@ -45,21 +45,21 @@ function checkHotkey(where, code, overrides) {
   let attr = where.activeElement.getAttribute('data-keyux-hotkeys')
 
   if (attr) {
-    let elementInContainer = where.querySelector(`#${attr}`).querySelector(
-      `[aria-keyshortcuts="${codeOverride || code}" i]`
-    )
+    let elementInContainer = where
+      .querySelector(`#${attr}`)
+      .querySelector(`[aria-keyshortcuts="${codeOverride || code}" i]`)
 
     if (elementInContainer) return elementInContainer
   }
 
   return (
-    findNonIgnoredElement(
+    findNonIgnored(
       where.activeElement,
       where.activeElement.querySelectorAll(
         `[aria-keyshortcuts="${codeOverride || code}" i]`
       )
     ) ||
-    findNonIgnoredElement(
+    findNonIgnored(
       where,
       where.querySelectorAll(`[aria-keyshortcuts="${codeOverride || code}" i]`)
     )
