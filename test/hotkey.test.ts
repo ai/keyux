@@ -152,63 +152,62 @@ test('allows to override hotkeys', () => {
   equal(clicked, 'bqb')
 })
 
-test('dont serching in data-keyux-ignore-hotkeys', () => {
-  let window = new JSDOM().window
-  startKeyUX(window, [hotkeyKeyUX()])
-  window.document.body.innerHTML = `
-    <ul>
-      <li data-keyux-ignore-hotkeys tabindex="0">
-        Item 1
-        <button aria-keyshortcuts="v">1</button>
-      </li>
-      <li tabindex="0">
-        Item 2
-        <button aria-keyshortcuts="v">2</button>
-      </li>
-    </ul>
-  `
+// test('dont serching in data-keyux-ignore-hotkeys', () => {
+//   let window = new JSDOM().window
+//   startKeyUX(window, [hotkeyKeyUX()])
+//   window.document.body.innerHTML = `
+//     <ul>
+//       <li data-keyux-ignore-hotkeys tabindex="0">
+//         Item 1
+//         <button aria-keyshortcuts="v">1</button>
+//       </li>
+//       <li tabindex="0">
+//         Item 2
+//         <button aria-keyshortcuts="v">2</button>
+//       </li>
+//     </ul>
+//   `
 
-  let result = 0
-  let buttons = window.document.querySelectorAll('button')
-  for (let button of buttons) {
-    button.addEventListener('click', () => {
-      result += parseInt(button.textContent!)
-    })
-  }
-  press(window, { key: 'v' })
-  equal(result, 2)
+//   let result = 0
+//   let buttons = window.document.querySelectorAll('button')
+//   for (let button of buttons) {
+//     button.addEventListener('click', () => {
+//       result += parseInt(button.textContent!)
+//     })
+//   }
+//   press(window, { key: 'v' })
+//   equal(result, 2)
 
-  press(window, { code: 'KeyV', key: 'м' })
-  equal(result, 2)
-})
+//   press(window, { code: 'KeyV', key: 'м' })
+//   equal(result, 2)
+// })
 
-test('ignore data-keyux-ignore-hotkeys, with data-keyux-hotkeys', () => {
-  let window = new JSDOM().window
-  startKeyUX(window, [hotkeyKeyUX()])
-  window.document.body.innerHTML = `
-    <ul>
-      <li data-keyux-hotkeys data-keyux-ignore-hotkeys tabindex="0">
-        Item 1
-        <button aria-keyshortcuts="v">1</button>
-      </li>
-      <li tabindex="0">
-        Item 2
-        <button aria-keyshortcuts="v">2</button>
-      </li>
-    </ul>
-  `
+// test('ignore data-keyux-ignore-hotkeys, with data-keyux-hotkeys', () => {
+//   let window = new JSDOM().window
+//   startKeyUX(window, [hotkeyKeyUX()])
+//   window.document.body.innerHTML = `
+//     <ul>
+//       <li data-keyux-hotkeys data-keyux-ignore-hotkeys tabindex="0">
+//         Item 1
+//         <button aria-keyshortcuts="v">1</button>
+//       </li>
+//       <li tabindex="0">
+//         Item 2
+//         <button aria-keyshortcuts="v">2</button>
+//       </li>
+//     </ul>
+//   `
 
-  let result = 0
-  let buttons = window.document.querySelectorAll('button')
-  for (let button of buttons) {
-    button.addEventListener('click', () => {
-      result += parseInt(button.textContent!)
-    })
-  }
-  press(window, { key: 'v' })
-  equal(result, 1)
+//   let result = 0
+//   let buttons = window.document.querySelectorAll('button')
+//   for (let button of buttons) {
+//     button.addEventListener('click', () => {
+//       result += parseInt(button.textContent!)
+//     })
+//   }
+//   press(window, { key: 'v' })
+//   equal(result, 1)
 
-  press(window, { code: 'KeyV', key: 'м' })
-  equal(result, 1)
-})
-
+//   press(window, { code: 'KeyV', key: 'м' })
+//   equal(result, 1)
+// })

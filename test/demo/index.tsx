@@ -246,8 +246,8 @@ const App: FC = () => {
         <li data-keyux-ignore-hotkeys id="item3" tabIndex={0}>
           Item 3
           <div>
-            <button  aria-keyshortcuts="v" >Validate</button>
-            <HotKeyHint hotkey="v" />
+            {/* <button  aria-keyshortcuts="v" >Validate</button>
+            <HotKeyHint hotkey="v" /> */}
           </div>
         </li>
       </ul >
