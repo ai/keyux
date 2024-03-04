@@ -102,6 +102,20 @@ const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
         router={router}
         setRouter={setRouter}
       />
+      <MenuItem
+        controls="page"
+        hotkey="l"
+        route="list1"
+        router={router}
+        setRouter={setRouter}
+      />
+      <MenuItem
+        controls="page"
+        hotkey="k"
+        route="list2"
+        router={router}
+        setRouter={setRouter}
+      />
     </nav>
   )
 }
@@ -128,6 +142,41 @@ const Page: FC<{
             </a>
           </li>
         </ul>
+      </>
+    )
+  } else if (router === 'list1') {
+    content = (
+      <>
+        <h2>Ignore unfocused buttons in a list</h2>
+        <ul>
+          <li data-keyux-ignore-hotkeys tabIndex={0}>
+            <button aria-keyshortcuts="v">First button</button>
+          </li>
+          <li data-keyux-ignore-hotkeys tabIndex={0}>
+            <button aria-keyshortcuts="v">Second button</button>
+          </li>
+        </ul>
+        <button aria-keyshortcuts="v">Outside button</button>
+      </>
+    )
+  } else if (router === 'list2') {
+    content = (
+      <>
+        <h2>
+          Click on panel element if focused on element with "data-keyux-hotkeys"
+        </h2>
+        <ul>
+          <li data-keyux-hotkeys="panel" tabIndex={0}>
+            First item
+          </li>
+          <li data-keyux-hotkeys="panel" tabIndex={0}>
+            Second item
+          </li>
+        </ul>
+
+        <div data-keyux-ignore-hotkeys id="panel" tabIndex={0}>
+          <button aria-keyshortcuts="v">Click on panel button</button>
+        </div>
       </>
     )
   } else if (

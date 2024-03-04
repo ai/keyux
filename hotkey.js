@@ -14,10 +14,56 @@ function ignoreHotkeysIn(target) {
   )
 }
 
+function isElementIsIgnoredInRange(parent, node) {
+  if (node.tagName === 'BODY') return null
+  if (parent === node) return null
+  if (node.hasAttribute('data-keyux-ignore-hotkeys')) return node
+
+  return isElementIsIgnoredInRange(parent, node.parentNode)
+}
+
+function findNonIgnored(activeElement, elements) {
+  for (let element of elements) {
+    if (isElementIsIgnoredInRange(activeElement, element)) continue
+    return element
+  }
+
+  return null
+}
+
 function checkHotkey(where, code, overrides) {
   let codeOverride = overrides[code]
   if (Object.values(overrides).includes(code) && !codeOverride) return false
-  return where.querySelector(`[aria-keyshortcuts="${codeOverride || code}" i]`)
+
+  if (
+    where.activeElement.getAttribute('aria-keyshortcuts') ===
+    (codeOverride || code)
+  ) {
+    return where.activeElement
+  }
+
+  let attr = where.activeElement.getAttribute('data-keyux-hotkeys')
+
+  if (attr) {
+    let elementInContainer = where
+      .querySelector(`#${attr}`)
+      .querySelector(`[aria-keyshortcuts="${codeOverride || code}" i]`)
+
+    if (elementInContainer) return elementInContainer
+  }
+
+  return (
+    findNonIgnored(
+      where.activeElement,
+      where.activeElement.querySelectorAll(
+        `[aria-keyshortcuts="${codeOverride || code}" i]`
+      )
+    ) ||
+    findNonIgnored(
+      where,
+      where.querySelectorAll(`[aria-keyshortcuts="${codeOverride || code}" i]`)
+    )
+  )
 }
 
 function findHotKey(event, where, overrides) {

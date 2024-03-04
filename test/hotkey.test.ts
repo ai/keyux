@@ -151,3 +151,169 @@ test('allows to override hotkeys', () => {
   press(window, { code: 'KeyQ', key: 'й' })
   equal(clicked, 'bqb')
 })
+
+test('ignores data-keyux-ignore-hotkeys and call after focus on it', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<ul>' +
+    '<li tabindex="0" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">v1</button>' +
+    '</li>' +
+    '<li>' +
+    '<button aria-keyshortcuts="v">v2</button>' +
+    '</li>' +
+    '</ul>'
+
+  let clicked = ''
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += button.textContent
+    })
+  }
+
+  press(window, { key: 'v' })
+  equal(clicked, 'v2')
+  window.document.querySelector<HTMLLIElement>('ul li')?.focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'v2v1')
+})
+
+test('calls element with "data-keyux-hotkeys" outside a container', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<ul>' +
+    '<li tabindex="0" data-keyux-hotkeys="click-on-third" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">First button</button>' +
+    '</li>' +
+    '<li tabindex="0" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">Second button </button>' +
+    '</li>' +
+    '</ul>' +
+    '<div id="click-on-third" data-keyux-ignore-hotkeys tabindex="0">' +
+    '<button aria-keyshortcuts="v">Third button </button>' +
+    '</div>'
+
+  let clicked = ''
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += button.textContent
+    })
+  }
+
+  press(window, { key: 'v' })
+  equal(clicked, '')
+
+  window.document.querySelectorAll('li')[0].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Third button ')
+
+  window.document.querySelectorAll('li')[1].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Third button Second button ')
+
+  window.document.querySelector('div')?.focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Third button Second button Third button ')
+})
+
+test('clicks on global element which occured before focused without ignore attr', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<ul>' +
+    '<li tabindex="0" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">First button</button>' +
+    '</li>' +
+    '</ul>' +
+    '<button aria-keyshortcuts="v">Second button </button>' +
+    '<button>Focus element</button>'
+
+  let clicked = ''
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += button.textContent
+    })
+  }
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Second button ')
+
+  window.document.querySelectorAll('button')[1].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Second button Second button ')
+
+  window.document.querySelectorAll('button')[2].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Second button Second button Second button ')
+})
+
+test('calls element in "data-keyux-hotkeys" container', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<ul>' +
+    '<li tabindex="0" data-keyux-hotkeys="panel" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">First button</button>' +
+    '</li>' +
+    '</ul>' +
+    '<div id="panel" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">Panel button </button>' +
+    '</div>'
+
+  let clicked = ''
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += button.textContent
+    })
+  }
+
+  press(window, { key: 'v' })
+  equal(clicked, '')
+
+  window.document.querySelectorAll('li')[0].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Panel button ')
+
+  window.document.querySelectorAll('button')[0].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Panel button First button')
+})
+
+test('calls current focused element if there are no valid aria-keyshortcuts', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<ul>' +
+    '<li tabindex="0" data-keyux-hotkeys="panel" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">First button</button>' +
+    '</li>' +
+    '</ul>' +
+    '<div id="panel" data-keyux-ignore-hotkeys>' +
+    '<button>Panel button</button>' +
+    '</div>'
+
+  let clicked = ''
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += button.textContent
+    })
+  }
+
+  press(window, { key: 'v' })
+  equal(clicked, '')
+
+  window.document.querySelectorAll('li')[0].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'First button')
+})
