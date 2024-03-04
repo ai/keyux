@@ -22,39 +22,35 @@ function ignoreHotkeysIn(target) {
 }
 
 function isElementIsIgnoredInRange(parent, node) {
-    if(node.tagName === 'BODY') return null;
-    if(parent === node) return null;
-    if(node.hasAttribute(IGNORE_HOTKEYS_ATTR)) return node;
+  if (node.tagName === 'BODY') return null
+  if (parent === node) return null
+  if (node.hasAttribute(IGNORE_HOTKEYS_ATTR)) return node
 
-    return isElementIsIgnoredInRange(parent, node.parentNode);
+  return isElementIsIgnoredInRange(parent, node.parentNode)
 }
 
 function getActiveElementInRange(activeElement, elements, container) {
-  for(let element of elements) {
+  for (let element of elements) {
     let ignoreElement = isElementIsIgnoredInRange(activeElement, element)
 
-    if(ignoreElement) {
-      continue;
-    }
+    if (ignoreElement) continue
 
-    if(activeElement.hasAttribute(HOTKEYS_ATTR)) {
+    if (activeElement.hasAttribute(HOTKEYS_ATTR)) {
       let id = activeElement.getAttribute(HOTKEYS_ATTR)
 
-      if(id) return container.getElementById(id);
+      if (id) return container.getElementById(id)
     }
 
     return element
   }
 
-  return null;
+  return null
 }
 
 function getFocusedElement(where, code) {
-  let activeElement = where.activeElement
-
   return getActiveElementInRange(
-    activeElement, 
-    activeElement.querySelectorAll(getKeyShortCutsSelector(code)),
+    where.activeElement,
+    where.activeElement.querySelectorAll(getKeyShortCutsSelector(code)),
     where
   )
 }

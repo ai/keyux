@@ -156,7 +156,7 @@ test('should ignore data-keyux-ignore-hotkeys element and call after focus on it
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
-    '<ul>' + 
+    '<ul>' +
     '<li tabindex="0" data-keyux-ignore-hotkeys>' +
     '<button aria-keyshortcuts="v">v1</button>' +
     '</li>' +
@@ -173,24 +173,29 @@ test('should ignore data-keyux-ignore-hotkeys element and call after focus on it
   }
 
   press(window, { key: 'v' })
-  equal(clicked, 'v2');
+  equal(clicked, 'v2')
 
-  (window.document.querySelector('ul li') as HTMLLIElement).focus()
+  ;(window.document.querySelector('ul li') as HTMLLIElement).focus()
 
   press(window, { key: 'v' })
-  equal(clicked, 'v2v1');
+  equal(clicked, 'v2v1')
 })
 
-test('should call element with "data-keyux-hotkeys" in container', () => {
+test('should call element with "data-keyux-hotkeys" outside a container', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
-    '<ul>' + 
-    '<li tabindex="0" data-keyux-ignore-hotkeys data-keyux-hotkeys="test">' +
-    '<button tabindex="0" aria-keyshortcuts="v">v1</button>' +
-    '<button id="test" tabindex="0" aria-keyshortcuts="v">v2</button>' +
+    '<ul>' +
+    '<li tabindex="0" data-keyux-hotkeys="click-on-third" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">First button</button>' +
     '</li>' +
-    '</ul>'
+    '<li tabindex="0" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">Second button </button>' +
+    '</li>' +
+    '</ul>' +
+    '<div data-keyux-ignore-hotkeys tabindex="0">' +
+    '<button aria-keyshortcuts="v" id="click-on-third">Third button </button>' +
+    '</div>'
 
   let clicked = ''
   for (let button of window.document.querySelectorAll('button')) {
@@ -200,10 +205,20 @@ test('should call element with "data-keyux-hotkeys" in container', () => {
   }
 
   press(window, { key: 'v' })
-  equal(clicked, '');
+  equal(clicked, '')
 
-  window.document.querySelector('li')?.focus()
+  window.document.querySelectorAll('li')[0].focus()
 
   press(window, { key: 'v' })
-  equal(clicked, 'v2');
+  equal(clicked, 'Third button ')
+
+  window.document.querySelectorAll('li')[1].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Third button Second button ')
+
+  window.document.querySelector('div')?.focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Third button Second button Third button ')
 })

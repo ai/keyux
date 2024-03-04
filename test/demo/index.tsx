@@ -105,7 +105,14 @@ const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
       <MenuItem
         controls="page"
         hotkey="l"
-        route="list"
+        route="list 1"
+        router={router}
+        setRouter={setRouter}
+      />
+      <MenuItem
+        controls="page"
+        hotkey="k"
+        route="list 2"
         router={router}
         setRouter={setRouter}
       />
@@ -137,21 +144,42 @@ const Page: FC<{
         </ul>
       </>
     )
-  } else if(router === 'list') {
+  } else if (router === 'list 1') {
     content = (
-      <ul>
-        <li data-keyux-hotkeys="second-button" data-keyux-ignore-hotkeys tabIndex={0}>
-          <button aria-keyshortcuts="v">First button</button>
-          <button aria-keyshortcuts="v" id="second-button">Second button</button>
-        </li>
-        <li data-keyux-ignore-hotkeys tabIndex={0}>
-          <button aria-keyshortcuts="v">First button</button>
-        </li>
-        <li data-keyux-hotkeys="forth-button" data-keyux-ignore-hotkeys tabIndex={0}>
-          <button aria-keyshortcuts="v" >Thrid button</button>
-          <button aria-keyshortcuts="v" id='forth-button'>Forth button</button>
-        </li>
-      </ul>
+      <>
+        <h2>Ignore unfocused buttons in a list</h2>
+        <ul>
+          <li data-keyux-ignore-hotkeys tabIndex={0}>
+            <button aria-keyshortcuts="v">First button</button>
+          </li>
+          <li data-keyux-ignore-hotkeys tabIndex={0}>
+            <button aria-keyshortcuts="v">Second button</button>
+          </li>
+        </ul>
+      </>
+    )
+  } else if (router === 'list 2') {
+    content = (
+      <>
+        <h2>Ignore unfocused elements and click outside a container</h2>
+        <ul>
+          <li
+            data-keyux-hotkeys="click-on-first"
+            data-keyux-ignore-hotkeys
+            tabIndex={0}
+          >
+            <button aria-keyshortcuts="v">First button</button>
+          </li>
+          <li data-keyux-ignore-hotkeys tabIndex={0}>
+            <button aria-keyshortcuts="v">Second button</button>
+          </li>
+        </ul>
+        <div data-keyux-ignore-hotkeys tabIndex={0}>
+          <button aria-keyshortcuts="v" id="click-on-first">
+            Click on first button
+          </button>
+        </div>
+      </>
     )
   } else if (
     router === 'about' ||
