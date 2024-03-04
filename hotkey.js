@@ -35,28 +35,22 @@ function checkHotkey(where, code, overrides) {
   let codeOverride = overrides[code]
   if (Object.values(overrides).includes(code) && !codeOverride) return false
 
+  let activeElement = where.activeElement
   let actualCode = codeOverride || code
 
-  if (where.activeElement.getAttribute('aria-keyshortcuts') === actualCode) {
-    return where.activeElement
-  }
-
-  let attr = where.activeElement.getAttribute('data-keyux-hotkeys')
-
-  if (attr) {
-    let elementInContainer = where
-      .querySelector(`#${attr}`)
-      .querySelector(`[aria-keyshortcuts="${actualCode}" i]`)
-
-    if (elementInContainer) return elementInContainer
+  let areaId = activeElement.getAttribute('data-keyux-hotkeys')
+  if (areaId) {
+    let area = where.querySelector(`#${areaId}`)
+    if (area) {
+      let element = area.querySelector(`[aria-keyshortcuts="${actualCode}" i]`)
+      if (element) return element
+    }
   }
 
   return (
     findNonIgnored(
-      where.activeElement,
-      where.activeElement.querySelectorAll(
-        `[aria-keyshortcuts="${actualCode}" i]`
-      )
+      activeElement,
+      activeElement.querySelectorAll(`[aria-keyshortcuts="${actualCode}" i]`)
     ) ||
     findNonIgnored(
       where,

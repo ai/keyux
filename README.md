@@ -11,7 +11,7 @@ to use the keyboard.
   with <kbd>Esc</kbd>.
 * Show and hide submenus of `role="menu"`.
 * Allow users to **override hotkeys**.
-* **1 KB** (minified and brotlied). No dependencies.
+* **2 KB** (minified and brotlied). No dependencies.
 * Vanilla JS and works with any framework including React, Vue, Svelte.
 
 ```jsx

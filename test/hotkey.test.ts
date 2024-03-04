@@ -174,8 +174,8 @@ test('ignores data-keyux-ignore-hotkeys and call after focus on it', () => {
 
   press(window, { key: 'v' })
   equal(clicked, 'v2')
-  window.document.querySelector<HTMLLIElement>('ul li')?.focus()
 
+  window.document.querySelector<HTMLElement>('li:first-child')!.focus()
   press(window, { key: 'v' })
   equal(clicked, 'v2v1')
 })
@@ -206,23 +206,20 @@ test('calls element with data-keyux-hotkeys outside a container', () => {
   press(window, { key: 'v' })
   equal(clicked, '')
 
-  window.document.querySelectorAll('li')[0].focus()
-
+  window.document.querySelector<HTMLElement>('li:first-child')!.focus()
   press(window, { key: 'v' })
   equal(clicked, 'Third button ')
 
-  window.document.querySelectorAll('li')[1].focus()
-
+  window.document.querySelector<HTMLElement>('li:last-child')!.focus()
   press(window, { key: 'v' })
   equal(clicked, 'Third button Second button ')
 
-  window.document.querySelector('div')?.focus()
-
+  window.document.querySelector<HTMLElement>('div')!.focus()
   press(window, { key: 'v' })
   equal(clicked, 'Third button Second button Third button ')
 })
 
-test('calls element in "data-keyux-hotkeys" container', () => {
+test('calls element in data-keyux-hotkeys container', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
@@ -245,15 +242,9 @@ test('calls element in "data-keyux-hotkeys" container', () => {
   press(window, { key: 'v' })
   equal(clicked, '')
 
-  window.document.querySelectorAll('li')[0].focus()
-
+  window.document.querySelector<HTMLElement>('li')!.focus()
   press(window, { key: 'v' })
   equal(clicked, 'Panel button ')
-
-  window.document.querySelectorAll('button')[0].focus()
-
-  press(window, { key: 'v' })
-  equal(clicked, 'Panel button First button')
 })
 
 test('looks inside focused after data-keyux-hotkeys', () => {
@@ -279,8 +270,29 @@ test('looks inside focused after data-keyux-hotkeys', () => {
   press(window, { key: 'v' })
   equal(clicked, '')
 
-  window.document.querySelectorAll('li')[0].focus()
-
+  window.document.querySelector<HTMLElement>('li')!.focus()
   press(window, { key: 'v' })
   equal(clicked, 'First button')
+})
+
+test('is ready for missed data-keyux-hotkeys', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<ul>' +
+    '<li tabindex="0" data-keyux-hotkeys="panel">' +
+    '</li>' +
+    '</ul>' +
+    '<button aria-keyshortcuts="v">Global</button>'
+
+  let clicked = ''
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += button.textContent
+    })
+  }
+
+  window.document.querySelector<HTMLElement>('li:first-child')!.focus()
+  press(window, { key: 'v' })
+  equal(clicked, 'Global')
 })
