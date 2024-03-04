@@ -152,7 +152,7 @@ test('allows to override hotkeys', () => {
   equal(clicked, 'bqb')
 })
 
-test('should ignore data-keyux-ignore-hotkeys element and call after focus on it', () => {
+test('ignores data-keyux-ignore-hotkeys and call after focus on it', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
@@ -174,13 +174,13 @@ test('should ignore data-keyux-ignore-hotkeys element and call after focus on it
 
   press(window, { key: 'v' })
   equal(clicked, 'v2')
-  ;(window.document.querySelector('ul li') as HTMLLIElement).focus()
+  window.document.querySelector<HTMLLIElement>('ul li')?.focus()
 
   press(window, { key: 'v' })
   equal(clicked, 'v2v1')
 })
 
-test('should call element with "data-keyux-hotkeys" outside a container', () => {
+test('calls element with "data-keyux-hotkeys" outside a container', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
@@ -222,7 +222,7 @@ test('should call element with "data-keyux-hotkeys" outside a container', () => 
   equal(clicked, 'Third button Second button Third button ')
 })
 
-test('should support clicking on global element which occured before focused without ignore attr', () => {
+test('clicks on global element which occured before focused without ignore attr', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
@@ -255,7 +255,7 @@ test('should support clicking on global element which occured before focused wit
   equal(clicked, 'Second button Second button Second button ')
 })
 
-test('should call element in "data-keyux-hotkeys" container', () => {
+test('calls element in "data-keyux-hotkeys" container', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
@@ -289,7 +289,7 @@ test('should call element in "data-keyux-hotkeys" container', () => {
   equal(clicked, 'Panel button First button')
 })
 
-test('should call current focused element if there are no valid aria-keyshortcuts', () => {
+test('calls current focused element if there are no valid aria-keyshortcuts', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
