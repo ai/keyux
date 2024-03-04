@@ -175,7 +175,7 @@ const Page: FC<{
         </ul>
 
         <div data-keyux-ignore-hotkeys id="panel" tabIndex={0}>
-          <button aria-keyshortcuts="v">Click on first button</button>
+          <button aria-keyshortcuts="v">Click on panel button</button>
         </div>
       </>
     )
