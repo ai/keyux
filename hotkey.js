@@ -33,34 +33,22 @@ function checkHotkey(where, code, overrides) {
   let cssSelector = `[aria-keyshortcuts="${codeOverride || code}" i]`
   let elementWithHotKey = null
 
-  if (choseTheElement(current, cssSelector)) {
+  if (current.hasAttribute('data-keyux-hotkeys')) {
+    let id = current.getAttribute('data-keyux-hotkeys')
+    let newCurrent = where.getElementById(id)
+    elementWithHotKey = choseTheElement(newCurrent, cssSelector)
+  } else if (
+    current.hasAttribute('data-keyux-ignore-hotkeys') &&
+    !current.hasAttribute('data-keyux-hotkeys')
+  ) {
     elementWithHotKey = choseTheElement(current, cssSelector)
   } else {
     elementWithHotKey = choseTheElement(where, cssSelector)
   }
 
-  if (
-    current.hasAttribute('data-keyux-ignore-hotkeys') &&
-    !current.hasAttribute('data-keyux-hotkeys')
-  ) {
-    elementWithHotKey = choseTheElement(current, cssSelector)
-  }
-
-  if (current.hasAttribute('data-keyux-hotkeys')) {
-    let id = current.getAttribute('data-keyux-hotkeys')
-    let newCurrent = where.getElementById(id)
-    elementWithHotKey = choseTheElement(newCurrent, cssSelector)
-  }
-
   return elementWithHotKey
 }
-// let click = findInside(where.byId(current.dataKeyuxHotkeys))
-// if (!click) {
-//   click = findInside(current)
-//   if (!lclick) {
-//     click = findInside(where)
-//   }
-// }
+
 function findHotKey(event, where, overrides) {
   let prefix = ''
   if (event.metaKey) prefix += 'meta+'

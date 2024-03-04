@@ -227,12 +227,8 @@ const App: FC = () => {
       />
 
       <ul>
-        <li data-keyux-ignore-hotkeys tabIndex={0}>
+        <li tabIndex={0}>
           Item 1
-          <div data-keyux-ignore-hotkeys>
-            <button aria-keyshortcuts="v">Validate</button>
-            <HotKeyHint hotkey="v" />
-          </div>
           <div>
             <button aria-keyshortcuts="v">Validate</button>
             <HotKeyHint hotkey="v" />
@@ -247,10 +243,10 @@ const App: FC = () => {
           </div>
         </li>
 
-        <li id="item3" tabIndex={0}>
+        <li data-keyux-ignore-hotkeys id="item3" tabIndex={0}>
           Item 3
           <div>
-            <button aria-keyshortcuts="v">Validate</button>
+            <button  aria-keyshortcuts="v" >Validate</button>
             <HotKeyHint hotkey="v" />
           </div>
         </li>
