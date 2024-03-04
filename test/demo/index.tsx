@@ -147,24 +147,28 @@ const Page: FC<{
   } else if (router === 'list1') {
     content = (
       <>
-        <h2>Ignore unfocused buttons in a list</h2>
+        <h2>List item hotkey</h2>
         <ul>
           <li data-keyux-ignore-hotkeys tabIndex={0}>
-            <button aria-keyshortcuts="v">First button</button>
+            <button aria-keyshortcuts="v">
+              First button <HotKeyHint hotkey="v" />
+            </button>
           </li>
           <li data-keyux-ignore-hotkeys tabIndex={0}>
-            <button aria-keyshortcuts="v">Second button</button>
+            <button aria-keyshortcuts="v">
+              Second button <HotKeyHint hotkey="v" />
+            </button>
           </li>
         </ul>
-        <button aria-keyshortcuts="v">Outside button</button>
+        <button aria-keyshortcuts="v">
+          Outside button <HotKeyHint hotkey="v" />
+        </button>
       </>
     )
   } else if (router === 'list2') {
     content = (
       <>
-        <h2>
-          Click on panel element if focused on element with "data-keyux-hotkeys"
-        </h2>
+        <h2>List item hotkey with panel</h2>
         <ul>
           <li data-keyux-hotkeys="panel" tabIndex={0}>
             First item
@@ -175,7 +179,9 @@ const Page: FC<{
         </ul>
 
         <div data-keyux-ignore-hotkeys id="panel" tabIndex={0}>
-          <button aria-keyshortcuts="v">Click on panel button</button>
+          <button aria-keyshortcuts="v">
+            Click on panel button <HotKeyHint hotkey="v" />
+          </button>
         </div>
       </>
     )
