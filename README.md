@@ -162,6 +162,40 @@ Then KeyUX will click on `aria-keyshortcuts="b"` when <kbd>Alt</kbd>+<kbd>B</kbd
 is pressed, and `getHotKeyHint(window, 'b', overrides)` will return `Alt + B`/`⌥ B`.
 
 
+### Hotkeys for List
+
+Websites may have hotkeys for each list element. For instance, for “Add to card”
+button in shopping list.
+
+To implement it:
+1. Hide list item’s buttons by `data-keyux-ignore-hotkeys` from global search.
+2. Make list item focusable by `tabindex="0"`. When item has a focus,
+   KeyUX ignores `data-keyux-ignore-hotkeys`.
+
+```jsx
+<li data-keyux-ignore-hotkeys tabindex="0">
+  {product.title}
+  <button aria-keyshortcuts="a">Add to card</button>
+</li>
+```
+
+If you have common panel with actions for focused item, you can use
+`data-keyux-hotkeys` with ID of item’s panel.
+
+```js
+<ul>
+  {products.map(product => {
+    return <li data-keyux-hotkeys="panel" tabindex="0" key={product.id}>
+      {product.title}
+    </li>
+  })}
+</ul>
+<div id="panel" data-keyux-ignore-hotkeys>
+  <button aria-keyshortcuts="a">Add to card</button>
+</div>
+```
+
+
 ### Menu
 
 Using only <kbd>Tab</kbd> for navigation is not very useful. User may need to
