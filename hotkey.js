@@ -31,7 +31,8 @@ function getActiveElementInRange(activeElement, elements, container) {
     if (activeElement.hasAttribute('data-keyux-hotkeys')) {
       let id = activeElement.getAttribute('data-keyux-hotkeys')
 
-      if (id) return container.getElementById(id)
+      if (id)
+        {return activeElement.getElementById(id) || container.getElementById(id)}
     }
 
     return element
@@ -40,25 +41,23 @@ function getActiveElementInRange(activeElement, elements, container) {
   return null
 }
 
-function getFocusedElement(where, code) {
+function checkHotkey(where, code, overrides) {
+  let codeOverride = overrides[code]
+  if (Object.values(overrides).includes(code) && !codeOverride) return false
   return (
     getActiveElementInRange(
       where.activeElement,
-      where.activeElement.querySelectorAll(`[aria-keyshortcuts="${code}" i]`),
+      where.activeElement.querySelectorAll(
+        `[aria-keyshortcuts="${codeOverride || code}" i]`
+      ),
       where
     ) ||
     getActiveElementInRange(
       where.activeElement,
-      where.querySelectorAll(`[aria-keyshortcuts="${code}" i]`),
+      where.querySelectorAll(`[aria-keyshortcuts="${codeOverride || code}" i]`),
       where
     )
   )
-}
-
-function checkHotkey(where, code, overrides) {
-  let codeOverride = overrides[code]
-  if (Object.values(overrides).includes(code) && !codeOverride) return false
-  return getFocusedElement(where, codeOverride || code)
 }
 
 function findHotKey(event, where, overrides) {

@@ -156,9 +156,7 @@ const Page: FC<{
             <button aria-keyshortcuts="v">Second button</button>
           </li>
         </ul>
-
         <button aria-keyshortcuts="v">Outside button</button>
-        <button>Focus element</button>
       </>
     )
   } else if (router === 'list 2') {
