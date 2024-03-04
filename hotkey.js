@@ -42,10 +42,10 @@ function checkHotkey(where, code, overrides) {
     return where.activeElement
   }
 
-  if (where.activeElement.getAttribute('data-keyux-hotkeys')) {
-    let el = where.querySelector(
-      `#${where.activeElement.getAttribute('data-keyux-hotkeys')}`
-    )
+  let attr = where.activeElement.getAttribute('data-keyux-hotkeys')
+
+  if (attr) {
+    let el = where.querySelector(`#${attr}`)
 
     if (el.getAttribute('aria-keyshortcuts') === (codeOverride || code)) {
       return el
