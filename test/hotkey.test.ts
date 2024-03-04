@@ -288,3 +288,32 @@ test('should call element in "data-keyux-hotkeys" container', () => {
   press(window, { key: 'v' })
   equal(clicked, 'Panel button First button')
 })
+
+test('should call current focused element if data-keyux-hotkeys id is not found', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<ul>' +
+    '<li tabindex="0" data-keyux-hotkeys="panel" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">First button</button>' +
+    '</li>' +
+    '</ul>' +
+    '<div id="wrong-id" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">Panel button </button>' +
+    '</div>'
+
+  let clicked = ''
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += button.textContent
+    })
+  }
+
+  press(window, { key: 'v' })
+  equal(clicked, '')
+
+  window.document.querySelectorAll('li')[0].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'First button')
+})

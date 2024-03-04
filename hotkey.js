@@ -42,15 +42,21 @@ function checkHotkey(where, code, overrides) {
     return where.activeElement
   }
 
-  if (where.activeElement.hasAttribute('data-keyux-hotkeys')) {
+  if (where.activeElement.getAttribute('data-keyux-hotkeys')) {
     let el = where.querySelector(
       `#${where.activeElement.getAttribute('data-keyux-hotkeys')}`
     )
 
-    if (el.getAttribute('aria-keyshortcuts') === (codeOverride || code)) {
-      return el
-    } else {
-      return el.querySelector(`[aria-keyshortcuts="${codeOverride || code}" i]`)
+    if (el) {
+      if (el.getAttribute('aria-keyshortcuts') === (codeOverride || code)) {
+        return el
+      }
+
+      let elementInContainer = el.querySelector(
+        `[aria-keyshortcuts="${codeOverride || code}" i]`
+      )
+
+      if (elementInContainer) return elementInContainer
     }
   }
 
