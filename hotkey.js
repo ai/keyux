@@ -14,19 +14,19 @@ function ignoreHotkeysIn(target) {
   )
 }
 
-function isElementIsIgnoredInRange(parent, node) {
+function isInsideIgnored(parent, node) {
   if (node.tagName !== 'BODY' && parent !== node) {
     if (node.hasAttribute('data-keyux-ignore-hotkeys')) {
-      return node
+      return true
     } else {
-      return isElementIsIgnoredInRange(parent, node.parentNode)
+      return isInsideIgnored(parent, node.parentNode)
     }
   }
 }
 
 function findNonIgnored(activeElement, elements) {
   for (let element of elements) {
-    if (isElementIsIgnoredInRange(activeElement, element)) continue
+    if (isInsideIgnored(activeElement, element)) continue
     return element
   }
 }
