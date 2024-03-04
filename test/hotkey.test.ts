@@ -289,7 +289,7 @@ test('should call element in "data-keyux-hotkeys" container', () => {
   equal(clicked, 'Panel button First button')
 })
 
-test('should call current focused element if data-keyux-hotkeys id is not found', () => {
+test('should call current focused element if there are no valid aria-keyshortcuts', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
@@ -298,8 +298,8 @@ test('should call current focused element if data-keyux-hotkeys id is not found'
     '<button aria-keyshortcuts="v">First button</button>' +
     '</li>' +
     '</ul>' +
-    '<div id="wrong-id" data-keyux-ignore-hotkeys>' +
-    '<button aria-keyshortcuts="v">Panel button </button>' +
+    '<div id="panel" data-keyux-ignore-hotkeys>' +
+    '<button>Panel button</button>' +
     '</div>'
 
   let clicked = ''
