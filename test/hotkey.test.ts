@@ -192,8 +192,8 @@ test('calls element with "data-keyux-hotkeys" outside a container', () => {
     '<button aria-keyshortcuts="v">Second button </button>' +
     '</li>' +
     '</ul>' +
-    '<div data-keyux-ignore-hotkeys tabindex="0">' +
-    '<button aria-keyshortcuts="v" id="click-on-third">Third button </button>' +
+    '<div id="click-on-third" data-keyux-ignore-hotkeys tabindex="0">' +
+    '<button aria-keyshortcuts="v">Third button </button>' +
     '</div>'
 
   let clicked = ''
