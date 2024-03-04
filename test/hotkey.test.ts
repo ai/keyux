@@ -222,3 +222,37 @@ test('should call element with "data-keyux-hotkeys" outside a container', () => 
   press(window, { key: 'v' })
   equal(clicked, 'Third button Second button Third button ')
 })
+
+test('should support clicking on global element which occured before focused without ignore attr', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<ul>' +
+    '<li tabindex="0" data-keyux-ignore-hotkeys>' +
+    '<button aria-keyshortcuts="v">First button</button>' +
+    '</li>' +
+    '</ul>' +
+    '<button aria-keyshortcuts="v">Second button </button>' +
+    '<button>Focus element</button>'
+
+
+  let clicked = ''
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += button.textContent
+    })
+  }
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Second button ')
+
+  window.document.querySelectorAll('button')[1].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Second button Second button ')
+
+  window.document.querySelectorAll('button')[2].focus()
+
+  press(window, { key: 'v' })
+  equal(clicked, 'Second button Second button Second button ')
+})
