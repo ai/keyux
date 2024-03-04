@@ -37,10 +37,7 @@ function checkHotkey(where, code, overrides) {
     let id = current.getAttribute('data-keyux-hotkeys')
     let newCurrent = where.getElementById(id)
     elementWithHotKey = choseTheElement(newCurrent, cssSelector)
-  } else if (
-    current.hasAttribute('data-keyux-ignore-hotkeys') &&
-    !current.hasAttribute('data-keyux-hotkeys')
-  ) {
+  } else if (current.hasAttribute('data-keyux-ignore-hotkeys')) {
     elementWithHotKey = choseTheElement(current, cssSelector)
   } else {
     elementWithHotKey = choseTheElement(where, cssSelector)
