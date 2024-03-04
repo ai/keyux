@@ -6,13 +6,6 @@ const IGNORE_INPUTS = {
   radio: true
 }
 
-const IGNORE_HOTKEYS_ATTR = 'data-keyux-ignore-hotkeys'
-const HOTKEYS_ATTR = 'data-keyux-hotkeys'
-
-function getKeyShortCutsSelector(code) {
-  return `[aria-keyshortcuts="${code}" i]`
-}
-
 function ignoreHotkeysIn(target) {
   return (
     target.tagName === 'TEXTAREA' ||
@@ -24,7 +17,7 @@ function ignoreHotkeysIn(target) {
 function isElementIsIgnoredInRange(parent, node) {
   if (node.tagName === 'BODY') return null
   if (parent === node) return null
-  if (node.hasAttribute(IGNORE_HOTKEYS_ATTR)) return node
+  if (node.hasAttribute('data-keyux-ignore-hotkeys')) return node
 
   return isElementIsIgnoredInRange(parent, node.parentNode)
 }
@@ -35,8 +28,8 @@ function getActiveElementInRange(activeElement, elements, container) {
 
     if (ignoreElement) continue
 
-    if (activeElement.hasAttribute(HOTKEYS_ATTR)) {
-      let id = activeElement.getAttribute(HOTKEYS_ATTR)
+    if (activeElement.hasAttribute('data-keyux-hotkeys')) {
+      let id = activeElement.getAttribute('data-keyux-hotkeys')
 
       if (id) return container.getElementById(id)
     }
@@ -50,7 +43,7 @@ function getActiveElementInRange(activeElement, elements, container) {
 function getFocusedElement(where, code) {
   return getActiveElementInRange(
     where.activeElement,
-    where.activeElement.querySelectorAll(getKeyShortCutsSelector(code)),
+    where.activeElement.querySelectorAll(`[aria-keyshortcuts="${code}" i]`),
     where
   )
 }
