@@ -22,19 +22,9 @@ function isElementIsIgnoredInRange(parent, node) {
   return isElementIsIgnoredInRange(parent, node.parentNode)
 }
 
-function getActiveElementInRange(activeElement, elements, container) {
+function findNonIgnoredElement(activeElement, elements) {
   for (let element of elements) {
-    let ignoreElement = isElementIsIgnoredInRange(activeElement, element)
-
-    if (ignoreElement) continue
-
-    if (activeElement.hasAttribute('data-keyux-hotkeys')) {
-      let id = activeElement.getAttribute('data-keyux-hotkeys')
-
-      if (id)
-        {return activeElement.getElementById(id) || container.getElementById(id)}
-    }
-
+    if (isElementIsIgnoredInRange(activeElement, element)) continue
     return element
   }
 
@@ -44,18 +34,36 @@ function getActiveElementInRange(activeElement, elements, container) {
 function checkHotkey(where, code, overrides) {
   let codeOverride = overrides[code]
   if (Object.values(overrides).includes(code) && !codeOverride) return false
+
+  if (
+    where.activeElement.getAttribute('aria-keyshortcuts') ===
+    (codeOverride || code)
+  ) {
+    return where.activeElement
+  }
+
+  if (where.activeElement.hasAttribute('data-keyux-hotkeys')) {
+    let el = where.querySelector(
+      `#${where.activeElement.getAttribute('data-keyux-hotkeys')}`
+    )
+
+    if (el.getAttribute('aria-keyshortcuts') === (codeOverride || code)) {
+      return el
+    } else {
+      return el.querySelector(`[aria-keyshortcuts="${codeOverride || code}" i]`)
+    }
+  }
+
   return (
-    getActiveElementInRange(
+    findNonIgnoredElement(
       where.activeElement,
       where.activeElement.querySelectorAll(
         `[aria-keyshortcuts="${codeOverride || code}" i]`
-      ),
-      where
+      )
     ) ||
-    getActiveElementInRange(
-      where.activeElement,
-      where.querySelectorAll(`[aria-keyshortcuts="${codeOverride || code}" i]`),
-      where
+    findNonIgnoredElement(
+      where,
+      where.querySelectorAll(`[aria-keyshortcuts="${codeOverride || code}" i]`)
     )
   )
 }
