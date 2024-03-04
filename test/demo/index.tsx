@@ -162,23 +162,20 @@ const Page: FC<{
   } else if (router === 'list 2') {
     content = (
       <>
-        <h2>Click on panel element if focused on element with "data-keyux-hotkeys"</h2>
+        <h2>
+          Click on panel element if focused on element with "data-keyux-hotkeys"
+        </h2>
         <ul>
-          <li
-            data-keyux-hotkeys="panel"
-            data-keyux-ignore-hotkeys
-            tabIndex={0}
-          >
-            <button aria-keyshortcuts="v">First button</button>
+          <li data-keyux-hotkeys="panel" data-keyux-ignore-hotkeys tabIndex={0}>
+            <button>First button</button>
           </li>
-          <li data-keyux-ignore-hotkeys tabIndex={0}>
-            <button aria-keyshortcuts="v">Second button</button>
+          <li data-keyux-hotkeys="panel" data-keyux-ignore-hotkeys tabIndex={0}>
+            <button>Second button</button>
           </li>
         </ul>
+
         <div data-keyux-ignore-hotkeys id="panel" tabIndex={0}>
-          <button aria-keyshortcuts="v">
-            Click on first button
-          </button>
+          <button aria-keyshortcuts="v">Click on first button</button>
         </div>
       </>
     )
