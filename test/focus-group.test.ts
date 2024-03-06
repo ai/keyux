@@ -309,3 +309,37 @@ test('adds menubar widget', () => {
   press(window, 'ArrowRight')
   equal(window.document.activeElement, items[0])
 })
+
+test('adds listbox widget', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+
+  window.document.body.innerHTML =
+    '<ul role="listbox">' +
+    '<li tabindex="0" role="option">Pizza</li>' +
+    '<li tabindex="0" role="option">Sushi</li>' +
+    '<li tabindex="0" role="option">Ramen</li>' +
+    '</nav>'
+  let items = window.document.querySelectorAll('li')
+  items[0].focus()
+
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[1])
+
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[0])
+})

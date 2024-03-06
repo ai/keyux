@@ -136,7 +136,6 @@ export function isHorizontalOrientation(group) {
   if (!ariaOrientation) {
     let role = group.role;
     return role === "menubar" || role === "tablist"
-  } 
-
+  }
   return false;
 }
