@@ -129,13 +129,14 @@ export function findGroupNodeByEventTarget(eventTarget) {
 }
 
 export function isHorizontalOrientation(group) {
-  let ariaOrientation = group.getAttribute('aria-orientation');
-  if (ariaOrientation === "vertical") return false;
-  if (ariaOrientation === "horizontal") return true;
+  let ariaOrientation = group.getAttribute('aria-orientation')
+  if (ariaOrientation === "vertical") return false
+  if (ariaOrientation === "horizontal") return true
 
   if (!ariaOrientation) {
-    let role = group.role;
+    let role = group.role
     return role === "menubar" || role === "tablist"
   }
-  return false;
+
+  return false
 }

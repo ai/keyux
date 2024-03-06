@@ -3,7 +3,7 @@ import { equal } from 'node:assert'
 import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
-import { isHorizontalOrientation, findGroupNodeByEventTarget } from '../focus-group.js'
+import { findGroupNodeByEventTarget, isHorizontalOrientation } from '../focus-group.js'
 import { focusGroupKeyUX, hotkeyKeyUX, startKeyUX } from '../index.js'
 
 function press(window: DOMWindow, key: string): void {
@@ -272,6 +272,10 @@ test('check isHorizontalOrientation method', () => {
   equal(isHorizontalOrientation(group), true)
 
   window.document.body.innerHTML = '<nav role="menubar" aria-orientation="vertical"></nav>'
+  group = window.document.querySelector("nav")
+  equal(isHorizontalOrientation(group), false)
+
+  window.document.body.innerHTML = '<nav role="menubar" aria-orientation="DiAgOnAl-123"></nav>'
   group = window.document.querySelector("nav")
   equal(isHorizontalOrientation(group), false)
 })
