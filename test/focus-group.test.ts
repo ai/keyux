@@ -3,7 +3,7 @@ import { equal } from 'node:assert'
 import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
-import { hotkeyKeyUX, menuKeyUX, startKeyUX } from '../index.js'
+import { focusGroupKeyUX, hotkeyKeyUX, startKeyUX } from '../index.js'
 
 function press(window: DOMWindow, key: string): void {
   let down = new window.KeyboardEvent('keydown', { bubbles: true, key })
@@ -14,7 +14,7 @@ function press(window: DOMWindow, key: string): void {
 
 test('adds menu navigation', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX()])
+  startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
     '<nav role="menu">' +
@@ -64,7 +64,7 @@ test('adds menu navigation', () => {
 
 test('stops tacking on loosing focus', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX()])
+  startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
     '<nav role="menu">' +
@@ -96,7 +96,7 @@ test('stops tacking on loosing focus', () => {
 
 test('supports horizontal menus', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX()])
+  startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
     '<nav role="menu" aria-orientation="horizontal">' +
@@ -118,7 +118,7 @@ test('moves focus by typing item name', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [
     hotkeyKeyUX(),
-    menuKeyUX({
+    focusGroupKeyUX({
       searchDelayMs: 100
     })
   ])
@@ -168,7 +168,7 @@ test('moves focus by typing item name', async () => {
 
 test('supports RTL locales', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX()])
+  startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.dir = 'rtl'
   window.document.body.innerHTML =
@@ -189,7 +189,7 @@ test('supports RTL locales', () => {
 
 test('stops event tracking', () => {
   let window = new JSDOM().window
-  let stop = startKeyUX(window, [menuKeyUX()])
+  let stop = startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
     '<nav role="menu">' +
@@ -210,7 +210,7 @@ test('stops event tracking', () => {
 
 test('ignores broken DOM', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX()])
+  startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
     '<a href="#" role="menuitem">Home</a>' +

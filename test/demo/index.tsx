@@ -3,12 +3,12 @@ import { createRoot } from 'react-dom/client'
 
 import type { HotkeyOverride } from '../../index.js'
 import {
+  focusGroupKeyUX,
   getHotKeyHint,
   hiddenKeyUX,
   hotkeyKeyUX,
   jumpKeyUX,
   likelyWithKeyboard,
-  menuKeyUX,
   pressKeyUX,
   startKeyUX
 } from '../../index.js'
@@ -17,7 +17,7 @@ let overrides: HotkeyOverride = {}
 
 startKeyUX(window, [
   hotkeyKeyUX(overrides),
-  menuKeyUX(),
+  focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
   hiddenKeyUX()

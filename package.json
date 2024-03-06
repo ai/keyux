@@ -83,7 +83,7 @@
     {
       "name": "All modules",
       "import": {
-        "./index.js": "{ startKeyUX, hotkeyKeyUX, pressKeyUX, menuKeyUX, jumpKeyUX, hiddenKeyUX, likelyWithKeyboard, getHotKeyHint }"
+        "./index.js": "{ startKeyUX, hotkeyKeyUX, pressKeyUX, focusGroupKeyUX, jumpKeyUX, hiddenKeyUX, likelyWithKeyboard, getHotKeyHint }"
       },
       "limit": "1737 B"
     }

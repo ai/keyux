@@ -46,7 +46,7 @@ import {
   hiddenKeyUX,
   hotkeyKeyUX,
   jumpKeyUX,
-  menuKeyUX,
+  focusGroupKeyUX,
   pressKeyUX,
   startKeyUX
 } from 'keyux'
@@ -55,7 +55,7 @@ const overrides = {}
 
 startKeyUX(window, [
   hotkeyKeyUX(overrides),
-  menuKeyUX(),
+  focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
   hiddenKeyUX()
@@ -217,13 +217,13 @@ with arrow navigation.
 Users will use <kbd>Tab</kbd> to get inside the menu, and will use either arrows or <kbd>Home</kbd>,
 <kbd>End</kbd> or an item name to navigate inside.
 
-To enable this feature, call `menuKeyUX`.
+To enable this feature, call `focusGroupKeyUX`.
 
 ```js
-import { menuKeyUX } from 'keyux'
+import { focusGroupKeyUX } from 'keyux'
 
 startKeyUX(window, [
-  menuKeyUX()
+  focusGroupKeyUX()
 ])
 ```
 
@@ -260,10 +260,10 @@ You can add `aria-controls` to `<input>` to make the focus jump on <kbd>Enter</k
 To enable this feature, call `jumpKeyUX`.
 
 ```js
-import { menuKeyUX, jumpKeyUX } from 'keyux'
+import { focusGroupKeyUX, jumpKeyUX } from 'keyux'
 
 startKeyUX(window, [
-  menuKeyUX(),
+  focusGroupKeyUX(),
   jumpKeyUX()
 ])
 ```
@@ -294,10 +294,10 @@ have to set `tabindex="-1"` manually.
 To enable this feature, call `hiddenKeyUX`.
 
 ```js
-import { menuKeyUX, jumpKeyUX, hiddenKeyUX } from 'keyux'
+import { focusGroupKeyUX, jumpKeyUX, hiddenKeyUX } from 'keyux'
 
 startKeyUX(window, [
-  menuKeyUX(),
+  focusGroupKeyUX(),
   jumpKeyUX(),
   hiddenKeyUX()
 ])

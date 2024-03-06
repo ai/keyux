@@ -1,4 +1,4 @@
-export function menuKeyUX(options) {
+export function focusGroupKeyUX(options) {
   return window => {
     let inMenu = false
     let typingDelayMs = options?.searchDelayMs || 300
