@@ -1,8 +1,11 @@
+import { applyCompat, MAC_COMPAT } from './compat.js'
+
 export * from './hotkey.js'
 export * from './hidden.js'
 export * from './press.js'
 export * from './menu.js'
 export * from './jump.js'
+export { MAC_COMPAT }
 
 export function startKeyUX(window, plugins) {
   let unbinds = plugins.map(plugin => plugin(window))
@@ -24,7 +27,7 @@ export function getHotKeyHint(window, code, overrides = {}) {
       break
     }
   }
-  let prettyParts = realCode
+  let prettyParts = applyCompat(realCode, window, overrides, 'reverse')
     .split('+')
     .map(part => part[0].toUpperCase() + part.slice(1))
   if (window.navigator.platform.indexOf('Mac') === 0) {

@@ -1,3 +1,5 @@
+import { applyCompat } from './compat.js'
+
 const NON_ENGLISH_LAYOUT = /^[^\x00-\x7F]$/
 
 const IGNORE_INPUTS = {
@@ -59,14 +61,14 @@ function checkHotkey(where, code, overrides) {
   )
 }
 
-function findHotKey(event, where, overrides) {
+function findHotKey(event, window, where, overrides) {
   let prefix = ''
   if (event.metaKey) prefix += 'meta+'
   if (event.ctrlKey) prefix += 'ctrl+'
   if (event.altKey) prefix += 'alt+'
   if (event.shiftKey) prefix += 'shift+'
 
-  let code = prefix
+  let code = applyCompat(prefix, window, overrides)
   if (event.key === '+') {
     code += 'plus'
   } else {
@@ -90,7 +92,7 @@ export function hotkeyKeyUX(overrides = {}) {
   return window => {
     function keyDown(event) {
       if (ignoreHotkeysIn(event.target)) return
-      let press = findHotKey(event, window.document, overrides)
+      let press = findHotKey(event, window, window.document, overrides)
       if (press) press.click()
     }
 

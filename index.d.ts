@@ -142,7 +142,7 @@ export function likelyWithKeyboard(window: MinimalWindow): boolean
 /**
  * Return text for `<kbd>` element with hint for hot key.
  *
- * It replaced `Ctrl` with `⌘` on Mac and respects overrides.
+ * It replaced `Meta` with `⌘` on Mac and respects overrides.
  *
  * ```js
  * import { getHotKeyHint, likelyWithKeyboard } from 'keyux'
@@ -160,3 +160,18 @@ export function getHotKeyHint(
   code: string,
   overrides?: HotkeyOverride
 ): string
+
+/**
+ * Enables Mac compatibility mode, when hot keys with Meta modifier are treated
+ * as if Ctrl modifier was used.
+ *
+ * ```js
+ * import { startKeyUX, hotkeyKeyUX, MAC_COMPAT } from 'keyux'
+ *
+ * startKeyUX(window, [
+ *   hotkeyKeyUX({ ...MAC_COMPAT })
+ * ])
+ * ```
+ */
+declare const MAC_COMPAT_KEY: unique symbol
+export const MAC_COMPAT: { [MAC_COMPAT_KEY]: true }
