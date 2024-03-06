@@ -24,7 +24,7 @@ export function focusGroupKeyUX(options) {
 
       let nextKey = 'ArrowDown'
       let prevKey = 'ArrowUp'
-      if (group.getAttribute('aria-orientation') === 'horizontal') {
+      if (isHorizontalOrientation(group)) {
         if (window.document.dir === 'rtl') {
           nextKey = 'ArrowLeft'
           prevKey = 'ArrowRight'
@@ -126,4 +126,17 @@ export function findGroupNodeByEventTarget(eventTarget) {
     }
   })
   return result
+}
+
+export function isHorizontalOrientation(group) {
+  let ariaOrientation = group.getAttribute('aria-orientation');
+  if (ariaOrientation === "vertical") return false;
+  if (ariaOrientation === "horizontal") return true;
+
+  if (!ariaOrientation) {
+    let role = group.role;
+    return role === "menubar" || role === "tablist"
+  } 
+
+  return false;
 }

@@ -3,7 +3,7 @@ import { equal } from 'node:assert'
 import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
-import { findGroupNodeByEventTarget } from '../focus-group.js'
+import { isHorizontalOrientation, findGroupNodeByEventTarget } from '../focus-group.js'
 import { focusGroupKeyUX, hotkeyKeyUX, startKeyUX } from '../index.js'
 
 function press(window: DOMWindow, key: string): void {
@@ -251,6 +251,31 @@ test('check findGroupNodeByEventTarget method', () => {
   equal(findGroupNodeByEventTarget(eventTarget), window.document.querySelector("nav"))
 })
 
+test('check isHorizontalOrientation method', () => {
+  let window = new JSDOM().window
+  let group
+
+  window.document.body.innerHTML = '<nav role="menu"></nav>'
+  group = window.document.querySelector("nav")
+  equal(isHorizontalOrientation(group), false)
+
+  window.document.body.innerHTML = '<nav role="menu" aria-orientation="horizontal"></nav>'
+  group = window.document.querySelector("nav")
+  equal(isHorizontalOrientation(group), true)
+
+  window.document.body.innerHTML = '<nav role="menubar"></nav>'
+  group = window.document.querySelector("nav")
+  equal(isHorizontalOrientation(group), true)
+
+  window.document.body.innerHTML = '<nav role="menubar" aria-orientation="horizontal"></nav>'
+  group = window.document.querySelector("nav")
+  equal(isHorizontalOrientation(group), true)
+
+  window.document.body.innerHTML = '<nav role="menubar" aria-orientation="vertical"></nav>'
+  group = window.document.querySelector("nav")
+  equal(isHorizontalOrientation(group), false)
+})
+
 test('adds menubar widget', () => {
   let window = new JSDOM().window
   startKeyUX(window, [focusGroupKeyUX()])
@@ -266,10 +291,10 @@ test('adds menubar widget', () => {
 
   equal(window.document.activeElement, items[0])
 
-  press(window, 'ArrowDown')
+  press(window, 'ArrowRight')
   equal(window.document.activeElement, items[1])
 
-  press(window, 'ArrowUp')
+  press(window, 'ArrowLeft')
   equal(window.document.activeElement, items[0])
 
   press(window, 'End')
@@ -278,9 +303,9 @@ test('adds menubar widget', () => {
   press(window, 'Home')
   equal(window.document.activeElement, items[0])
 
-  press(window, 'ArrowUp')
+  press(window, 'ArrowLeft')
   equal(window.document.activeElement, items[2])
 
-  press(window, 'ArrowDown')
+  press(window, 'ArrowRight')
   equal(window.document.activeElement, items[0])
 })
