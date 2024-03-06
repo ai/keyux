@@ -1,6 +1,6 @@
 export function focusGroupKeyUX(options) {
   return window => {
-    let inMenu = false
+    let inGroup = false
     let typingDelayMs = options?.searchDelayMs || 300
     let lastTyped = 0
     let searchPrefix = ''
@@ -12,20 +12,19 @@ export function focusGroupKeyUX(options) {
     }
 
     function keyDown(event) {
-      if (event.target.role !== 'menuitem') {
+      let group = findGroupNodeByEventTarget(event.target);
+
+      if (!group) {
         stop()
         return
       }
 
-      let menu = event.target.closest('[role="menu"]')
-      if (!menu) return
-
-      let items = menu.querySelectorAll('[role="menuitem"]')
+      let items = group.querySelectorAll(`[role=${event.target.role}]`)
       let index = Array.from(items).indexOf(event.target)
 
       let nextKey = 'ArrowDown'
       let prevKey = 'ArrowUp'
-      if (menu.getAttribute('aria-orientation') === 'horizontal') {
+      if (group.getAttribute('aria-orientation') === 'horizontal') {
         if (window.document.dir === 'rtl') {
           nextKey = 'ArrowLeft'
           prevKey = 'ArrowRight'
@@ -70,26 +69,25 @@ export function focusGroupKeyUX(options) {
     }
 
     function stop() {
-      inMenu = false
+      inGroup = false
       window.removeEventListener('keydown', keyDown)
     }
 
     function focusIn(event) {
-      if (event.target.role === 'menuitem') {
-        let menu = event.target.closest('[role="menu"]')
-        if (!menu) return
+      let group = findGroupNodeByEventTarget(event.target);
+      if (group) {
 
-        if (!inMenu) {
-          inMenu = true
+        if (!inGroup) {
+          inGroup = true
           window.addEventListener('keydown', keyDown)
         }
-        let items = menu.querySelectorAll('[role="menuitem"]')
+        let items = group.querySelectorAll(`[role=${event.target.role}]`)
         for (let item of items) {
           if (item !== event.target) {
             item.setAttribute('tabindex', -1)
           }
         }
-      } else if (inMenu) {
+      } else if (inGroup) {
         stop()
       }
     }
@@ -108,4 +106,24 @@ export function focusGroupKeyUX(options) {
       window.removeEventListener('focusout', focusOut)
     }
   }
+}
+
+export function findGroupNodeByEventTarget(eventTarget) {
+  let supportedRoles = {
+    'menuitem': ["menu", "menubar"],
+    'option': ["listbox"],
+    'tab': ["tablist"]
+  }
+  let itemRole = eventTarget.role
+  let groupRoles = supportedRoles[itemRole]
+  if (!groupRoles) return null
+
+  let result
+  groupRoles.forEach((role) => {
+    let node = eventTarget.closest(`[role=${role}]`)
+    if (node) {
+      result = node
+    }
+  })
+  return result
 }

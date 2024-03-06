@@ -3,6 +3,7 @@ import { equal } from 'node:assert'
 import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
+import { findGroupNodeByEventTarget } from '../focus-group.js'
 import { focusGroupKeyUX, hotkeyKeyUX, startKeyUX } from '../index.js'
 
 function press(window: DOMWindow, key: string): void {
@@ -234,4 +235,52 @@ test('ignores broken DOM', () => {
   window.document.querySelector('nav')!.role = ''
   press(window, 'ArrowDown')
   equal(window.document.activeElement, another[0])
+})
+
+test('check findGroupNodeByEventTarget method', () => {
+  let window = new JSDOM().window
+
+  window.document.body.innerHTML =
+    '<nav role="menu">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
+
+  let eventTarget = window.document.querySelector('a');
+  equal(findGroupNodeByEventTarget(eventTarget), window.document.querySelector("nav"))
+})
+
+test('adds menubar widget', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+
+  window.document.body.innerHTML =
+    '<nav role="menubar">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
+  let items = window.document.querySelectorAll('a')
+  items[0].focus()
+
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[1])
+
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[0])
 })
