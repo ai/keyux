@@ -343,3 +343,60 @@ test('adds listbox widget', () => {
   press(window, 'ArrowDown')
   equal(window.document.activeElement, items[0])
 })
+
+test('adds tablist widget', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div role="tablist">' +
+    '<button role="tab">Home</button>' +
+    '<button role="tab">About</button>' +
+    '<button role="tab">Contact</button>' +
+    '</div>'
+  let items = window.document.querySelectorAll('button')
+  items[0].focus()
+
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, items[1])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, items[0])
+})
+
+test('node with role "tablist" should not support moving focus by search', async () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [
+    hotkeyKeyUX(),
+    focusGroupKeyUX({
+      searchDelayMs: 100
+    })
+  ])
+
+  window.document.body.innerHTML =
+    '<div role="tablist">' +
+    '<button role="tab">Home</button>' +
+    '<button role="tab">About</button>' +
+    '<button role="tab">Contact</button>' +
+    '</div>'
+
+  let items = window.document.querySelectorAll('button')
+  items[0].focus()
+
+  press(window, 'A')
+  await setTimeout(150)
+  equal(window.document.activeElement, items[0])
+})

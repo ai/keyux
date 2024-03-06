@@ -46,7 +46,7 @@ export function focusGroupKeyUX(options) {
       } else if (event.key === 'End') {
         event.preventDefault()
         focus(event.target, items[items.length - 1])
-      } else if (event.key.length === 1) {
+      } else if (event.key.length === 1 && group.role !== "tablist") {
         let now = Date.now()
         if (now - lastTyped <= typingDelayMs) {
           searchPrefix += event.key.toLowerCase()
