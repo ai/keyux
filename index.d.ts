@@ -28,7 +28,7 @@ export interface KeyUXModule {
   (window: MinimalWindow): () => void
 }
 
-export interface focusGroupKeyUXOptions {
+export interface FocusGroupKeyUXOptions {
   /**
    * Maximum allowed pause between key presses when searching
    * for a list item by name. Default is 300.
@@ -62,7 +62,7 @@ export function hotkeyKeyUX(overrides?: HotkeyOverride): KeyUXModule
  * ])
  * ```
  */
-export function focusGroupKeyUX(options?: focusGroupKeyUXOptions): KeyUXModule
+export function focusGroupKeyUX(options?: FocusGroupKeyUXOptions): KeyUXModule
 
 /**
  * Add pressed style on button activation from keyboard.
