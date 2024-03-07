@@ -3,7 +3,6 @@ import { equal } from 'node:assert'
 import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
-import { findGroupNodeByEventTarget, isHorizontalOrientation } from '../focus-group.js'
 import { focusGroupKeyUX, hotkeyKeyUX, startKeyUX } from '../index.js'
 
 function press(window: DOMWindow, key: string): void {
@@ -97,6 +96,7 @@ test('stops tacking on loosing focus', () => {
 
 test('supports horizontal menus', () => {
   let window = new JSDOM().window
+  let items
   startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
@@ -105,13 +105,50 @@ test('supports horizontal menus', () => {
     '<a href="#" role="menuitem">About</a>' +
     '<a href="#" role="menuitem">Contact</a>' +
     '</nav>'
-  let items = window.document.querySelectorAll('a')
+  items = window.document.querySelectorAll('a')
   items[0].focus()
-
   press(window, 'ArrowRight')
   equal(window.document.activeElement, items[1])
-
   press(window, 'ArrowLeft')
+  equal(window.document.activeElement, items[0])
+
+  window.document.body.innerHTML =
+    '<nav role="menubar">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
+  items = window.document.querySelectorAll('a')
+  items[0].focus()
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, items[1])
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, items[0])
+
+  window.document.body.innerHTML =
+  '<nav role="menubar" aria-orientation="vertical">' +
+  '<a href="#" role="menuitem">Home</a>' +
+  '<a href="#" role="menuitem">About</a>' +
+  '<a href="#" role="menuitem">Contact</a>' +
+  '</nav>'
+  items = window.document.querySelectorAll('a')
+  items[0].focus()
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[1])
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, items[0])
+
+  window.document.body.innerHTML =
+    '<nav role="menu" aria-orientation="broken-bad-orientation">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
+  items = window.document.querySelectorAll('a')
+  items[0].focus()
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[1])
+  press(window, 'ArrowUp')
   equal(window.document.activeElement, items[0])
 })
 
@@ -235,49 +272,6 @@ test('ignores broken DOM', () => {
   window.document.querySelector('nav')!.role = ''
   press(window, 'ArrowDown')
   equal(window.document.activeElement, another[0])
-})
-
-test('check findGroupNodeByEventTarget method', () => {
-  let window = new JSDOM().window
-
-  window.document.body.innerHTML =
-    '<nav role="menu">' +
-    '<a href="#" role="menuitem">Home</a>' +
-    '<a href="#" role="menuitem">About</a>' +
-    '<a href="#" role="menuitem">Contact</a>' +
-    '</nav>'
-
-  let eventTarget = window.document.querySelector('a');
-  equal(findGroupNodeByEventTarget(eventTarget), window.document.querySelector("nav"))
-})
-
-test('check isHorizontalOrientation method', () => {
-  let window = new JSDOM().window
-  let group
-
-  window.document.body.innerHTML = '<nav role="menu"></nav>'
-  group = window.document.querySelector("nav")
-  equal(isHorizontalOrientation(group), false)
-
-  window.document.body.innerHTML = '<nav role="menu" aria-orientation="horizontal"></nav>'
-  group = window.document.querySelector("nav")
-  equal(isHorizontalOrientation(group), true)
-
-  window.document.body.innerHTML = '<nav role="menubar"></nav>'
-  group = window.document.querySelector("nav")
-  equal(isHorizontalOrientation(group), true)
-
-  window.document.body.innerHTML = '<nav role="menubar" aria-orientation="horizontal"></nav>'
-  group = window.document.querySelector("nav")
-  equal(isHorizontalOrientation(group), true)
-
-  window.document.body.innerHTML = '<nav role="menubar" aria-orientation="vertical"></nav>'
-  group = window.document.querySelector("nav")
-  equal(isHorizontalOrientation(group), false)
-
-  window.document.body.innerHTML = '<nav role="menubar" aria-orientation="DiAgOnAl-123"></nav>'
-  group = window.document.querySelector("nav")
-  equal(isHorizontalOrientation(group), false)
 })
 
 test('adds menubar widget', () => {

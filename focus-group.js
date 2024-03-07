@@ -1,35 +1,11 @@
-const supportedRoles = {
-  'menuitem': ["menu", "menubar"],
-  'option': ["listbox"],
-  'tab': ["tablist"]
-}
-
-export function findGroupNodeByEventTarget(eventTarget) {
-  let itemRole = eventTarget.role
-  let groupRoles = supportedRoles[itemRole]
-  if (!groupRoles) return null
-
-  for (let role of groupRoles) {
-    let node = eventTarget.closest(`[role=${role}]`)
-    if (node) return node
-  }
-}
-
-export function isHorizontalOrientation(group) {
-  let ariaOrientation = group.getAttribute('aria-orientation')
-  if (ariaOrientation === "vertical") return false
-  if (ariaOrientation === "horizontal") return true
-
-  if (!ariaOrientation) {
-    let role = group.role
-    return role === "menubar" || role === "tablist"
-  }
-
-  return false
-}
-
 export function focusGroupKeyUX(options) {
   return window => {
+    const supportedRoles = {
+      'menuitem': ["menu", "menubar"],
+      'option': ["listbox"],
+      'tab': ["tablist"]
+    }
+
     let inGroup = false
     let typingDelayMs = options?.searchDelayMs || 300
     let lastTyped = 0
@@ -40,6 +16,31 @@ export function focusGroupKeyUX(options) {
       next.focus()
       current.tabIndex = -1
     }
+
+    function findGroupNodeByEventTarget(eventTarget) {
+      let itemRole = eventTarget.role
+      let groupRoles = supportedRoles[itemRole]
+      if (!groupRoles) return null
+
+      for (let role of groupRoles) {
+        let node = eventTarget.closest(`[role=${role}]`)
+        if (node) return node
+      }
+    }
+
+    function isHorizontalOrientation(group) {
+      let ariaOrientation = group.getAttribute('aria-orientation')
+      if (ariaOrientation === "vertical") return false
+      if (ariaOrientation === "horizontal") return true
+
+      if (!ariaOrientation) {
+        let role = group.role
+        return role === "menubar" || role === "tablist"
+      }
+
+      return false
+    }
+
 
     function keyDown(event) {
       let group = findGroupNodeByEventTarget(event.target);
