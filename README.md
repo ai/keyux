@@ -228,6 +228,62 @@ startKeyUX(window, [
 ```
 
 
+### Listbox
+
+The [`role="listbox"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role)
+is used for lists from which a user may select one or
+more items which are static and, unlike HTML <select> elements, may contain images.
+
+```html
+<ul role="listbox">
+  <li tabindex="0" role="option">Pizza</li>
+  <li tabindex="0" role="option">Sushi</li>
+  <li tabindex="0" role="option">Ramen</li>
+</ul>
+```
+
+Users will use <kbd>Tab</kbd> to get inside the menu, and will use either arrows or <kbd>Home</kbd>,
+<kbd>End</kbd> or an item name to navigate inside.
+
+To enable this feature, call `focusGroupKeyUX`.
+
+```js
+import { focusGroupKeyUX } from 'keyux'
+
+startKeyUX(window, [
+  focusGroupKeyUX()
+])
+```
+
+
+### Tablist
+
+The [`role="tablist"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tablist_role)
+identifies the element that serves as the container for a set of tabs.
+The tab content are referred to as tabpanel elements.
+
+```html
+<div role="tablist">
+  <button role="tab">Home</button>
+  <button role="tab">About</button>
+  <button role="tab">Contact</button>
+</div>
+```
+
+Users will use <kbd>Tab</kbd> to get inside the menu, and will use either arrows or <kbd>Home</kbd>,
+<kbd>End</kbd>.
+
+To enable this feature, call `focusGroupKeyUX`.
+
+```js
+import { focusGroupKeyUX } from 'keyux'
+
+startKeyUX(window, [
+  focusGroupKeyUX()
+])
+```
+
+
 ### Jumps
 
 After finishing in one section, you can move user’s focus to the next step to save

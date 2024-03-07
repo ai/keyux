@@ -317,7 +317,7 @@ test('adds listbox widget', () => {
     '<li tabindex="0" role="option">Pizza</li>' +
     '<li tabindex="0" role="option">Sushi</li>' +
     '<li tabindex="0" role="option">Ramen</li>' +
-    '</nav>'
+    '</ul>'
   let items = window.document.querySelectorAll('li')
   items[0].focus()
 
