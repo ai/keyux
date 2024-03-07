@@ -1,11 +1,11 @@
+const supportedRoles = {
+  'menuitem': ["menu", "menubar"],
+  'option': ["listbox"],
+  'tab': ["tablist"]
+}
+
 export function focusGroupKeyUX(options) {
   return window => {
-    const supportedRoles = {
-      'menuitem': ["menu", "menubar"],
-      'option': ["listbox"],
-      'tab': ["tablist"]
-    }
-
     let inGroup = false
     let typingDelayMs = options?.searchDelayMs || 300
     let lastTyped = 0
