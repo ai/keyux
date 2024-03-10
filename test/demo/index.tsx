@@ -130,14 +130,14 @@ const Page: FC<{
     content = (
       <>
         <input aria-controls="results" placeholder="Search" type="search" />
-        <ul id="results" role="menu">
+        <ul id="results" role="listbox">
           <li>
-            <a href="#" role="menuitem">
+            <a href="#" role="option">
               First
             </a>
           </li>
           <li>
-            <a href="#" role="menuitem">
+            <a href="#" role="option">
               Second
             </a>
           </li>
@@ -148,13 +148,13 @@ const Page: FC<{
     content = (
       <>
         <h2>List item hotkey</h2>
-        <ul>
-          <li data-keyux-ignore-hotkeys tabIndex={0}>
+        <ul role="listbox">
+          <li role="option" data-keyux-ignore-hotkeys tabIndex={0}>
             <button aria-keyshortcuts="v">
               First button <HotKeyHint hotkey="v" />
             </button>
           </li>
-          <li data-keyux-ignore-hotkeys tabIndex={0}>
+          <li role="option" data-keyux-ignore-hotkeys tabIndex={0}>
             <button aria-keyshortcuts="v">
               Second button <HotKeyHint hotkey="v" />
             </button>
@@ -169,11 +169,11 @@ const Page: FC<{
     content = (
       <>
         <h2>List item hotkey with panel</h2>
-        <ul>
-          <li data-keyux-hotkeys="panel" tabIndex={0}>
+        <ul role="listbox">
+          <li role="option" data-keyux-hotkeys="panel" tabIndex={0}>
             First item
           </li>
-          <li data-keyux-hotkeys="panel" tabIndex={0}>
+          <li role="option" data-keyux-hotkeys="panel" tabIndex={0}>
             Second item
           </li>
         </ul>

@@ -1,4 +1,4 @@
-const supportedRoles = {
+const Roles = {
   'menuitem': ["menu", "menubar"],
   'option': ["listbox"],
   'tab': ["tablist"]
@@ -19,7 +19,7 @@ export function focusGroupKeyUX(options) {
 
     function findGroupNodeByEventTarget(eventTarget) {
       let itemRole = eventTarget.role
-      let groupRoles = supportedRoles[itemRole]
+      let groupRoles = Roles[itemRole]
       if (!groupRoles) return null
 
       for (let role of groupRoles) {
