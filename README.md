@@ -260,7 +260,7 @@ startKeyUX(window, [
 
 The [`role="tablist"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tablist_role)
 identifies the element that serves as the container for a set of tabs.
-The tab content are referred to as tabpanel elements.
+The tab content should be marked by `[role="tabpanel']`.
 
 ```html
 <div role="tablist">
