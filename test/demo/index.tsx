@@ -74,6 +74,20 @@ const Counter: FC = () => {
   )
 }
 
+const Tablist: FC = () => {
+  return (
+    <div className="tablist_container">
+      <span>Tablist:</span>
+
+      <div role="tablist">
+        <button role="tab" className="tablist_tab">Home</button>
+        <button role="tab" className="tablist_tab">About</button>
+        <button role="tab" className="tablist_tab">Contact</button>
+      </div>
+    </div>
+  )
+}
+
 const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
   router,
   setRouter
@@ -272,6 +286,7 @@ const App: FC = () => {
   return (
     <>
       <Counter />
+      <Tablist />
       <Menu router={router} setRouter={setRouter} />
       <Page
         router={router}
