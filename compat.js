@@ -2,7 +2,7 @@ export function macCompat() {
   return (code, window, dir) => {
     if (
       window.navigator.platform.indexOf('Mac') === 0 &&
-      code.indexOf('meta+ctrl') === -1
+      !code.includes('meta+ctrl')
     ) {
       return code.replace(...(dir ? ['ctrl', 'meta'] : ['meta', 'ctrl']))
     }
