@@ -38,6 +38,12 @@ export interface MenuKeyUXOptions {
 
 export type HotkeyOverride = Record<string, string>
 
+export type Tranformer = (
+  code: string,
+  window: MinimalWindow,
+  dir: 'r' | undefined
+) => string
+
 /**
  * Press button/a according to `aria-keyshortcuts`.
  *
@@ -49,7 +55,10 @@ export type HotkeyOverride = Record<string, string>
  * ])
  * ```
  */
-export function hotkeyKeyUX(overrides?: HotkeyOverride): KeyUXModule
+export function hotkeyKeyUX(
+  overrides?: HotkeyOverride,
+  transformers?: Tranformer[]
+): KeyUXModule
 
 /**
  * Add arrow-navigation on `role="menu"`.
@@ -158,7 +167,8 @@ export function likelyWithKeyboard(window: MinimalWindow): boolean
 export function getHotKeyHint(
   window: MinimalWindow,
   code: string,
-  overrides?: HotkeyOverride
+  overrides?: HotkeyOverride,
+  transformers?: Tranformer[]
 ): string
 
 /**
@@ -166,12 +176,11 @@ export function getHotKeyHint(
  * as if Ctrl modifier was used.
  *
  * ```js
- * import { startKeyUX, hotkeyKeyUX, MAC_COMPAT } from 'keyux'
+ * import { macCompat } from 'keyux'
  *
  * startKeyUX(window, [
- *   hotkeyKeyUX({ ...MAC_COMPAT })
+ *   hotkeyKeyUX({}, [macCompat()])
  * ])
  * ```
  */
-declare const MAC_COMPAT_KEY: unique symbol
-export const MAC_COMPAT: { [MAC_COMPAT_KEY]: true }
+export const macCompat: Tranformer

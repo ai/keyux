@@ -1,5 +1,3 @@
-import { applyCompat } from './compat.js'
-
 const NON_ENGLISH_LAYOUT = /^[^\x00-\x7F]$/
 
 const IGNORE_INPUTS = {
@@ -61,38 +59,39 @@ function checkHotkey(where, code, overrides) {
   )
 }
 
-function findHotKey(event, window, where, overrides) {
+function findHotKey(event, window, overrides, transformers) {
   let prefix = ''
   if (event.metaKey) prefix += 'meta+'
   if (event.ctrlKey) prefix += 'ctrl+'
   if (event.altKey) prefix += 'alt+'
   if (event.shiftKey) prefix += 'shift+'
 
-  let code = applyCompat(prefix, window, overrides)
+  let code = prefix
   if (event.key === '+') {
     code += 'plus'
   } else {
     code += event.key.toLowerCase()
   }
 
-  let hotkey = checkHotkey(where, code, overrides)
+  transformers.forEach(transform => (code = transform(code, window)))
+  let hotkey = checkHotkey(window.document, code, overrides)
   if (
     !hotkey &&
     NON_ENGLISH_LAYOUT.test(event.key) &&
     /^Key.$/.test(event.code)
   ) {
     let enKey = event.code.replace(/^Key/, '').toLowerCase()
-    hotkey = checkHotkey(where, prefix + enKey, overrides)
+    hotkey = checkHotkey(window.document, prefix + enKey, overrides)
   }
 
   return hotkey
 }
 
-export function hotkeyKeyUX(overrides = {}) {
+export function hotkeyKeyUX(overrides = {}, transformers = []) {
   return window => {
     function keyDown(event) {
       if (ignoreHotkeysIn(event.target)) return
-      let press = findHotKey(event, window, window.document, overrides)
+      let press = findHotKey(event, window, overrides, transformers)
       if (press) press.click()
     }
 

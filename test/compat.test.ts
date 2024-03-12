@@ -2,7 +2,7 @@ import { JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
 
-import { applyCompat, MAC_COMPAT } from '../compat.js'
+import { macCompat } from '../compat.js'
 import type { MinimalWindow } from '../index.js'
 
 const MAC_WINDOW = {
@@ -12,42 +12,17 @@ const MAC_WINDOW = {
   }
 } as MinimalWindow
 
-const COMPAT_OVERRIDES = { ...MAC_COMPAT }
-
-test('applies compatibility for Mac platform', () => {
-  equal(
-    applyCompat('meta+shift+b', MAC_WINDOW, COMPAT_OVERRIDES),
-    'ctrl+shift+b'
-  )
-  equal(
-    applyCompat('meta+ctrl+shift+b', MAC_WINDOW, COMPAT_OVERRIDES),
-    'meta+ctrl+shift+b'
-  )
+test('applies hotkey compatibility for Mac platform', () => {
+  equal(macCompat()('meta+shift+b', MAC_WINDOW), 'ctrl+shift+b')
+  equal(macCompat()('meta+ctrl+shift+b', MAC_WINDOW), 'meta+ctrl+shift+b')
 })
 
-test('applies reverse compatibility for Mac platform', () => {
-  equal(
-    applyCompat('ctrl+shift+b', MAC_WINDOW, COMPAT_OVERRIDES, 'reverse'),
-    'meta+shift+b'
-  )
-  equal(
-    applyCompat('meta+ctrl+shift+b', MAC_WINDOW, COMPAT_OVERRIDES, 'reverse'),
-    'meta+ctrl+shift+b'
-  )
+test('applies hint compatibility for Mac platform', () => {
+  equal(macCompat()('ctrl+shift+b', MAC_WINDOW, 'r'), 'meta+shift+b')
+  equal(macCompat()('meta+ctrl+shift+b', MAC_WINDOW, 'r'), 'meta+ctrl+shift+b')
 })
 
 test('does nothing for non-Mac platform', () => {
-  equal(
-    applyCompat('meta+shift+b', new JSDOM().window, COMPAT_OVERRIDES),
-    'meta+shift+b'
-  )
-  equal(
-    applyCompat(
-      'ctrl+shift+b',
-      new JSDOM().window,
-      COMPAT_OVERRIDES,
-      'reverse'
-    ),
-    'ctrl+shift+b'
-  )
+  equal(macCompat()('meta+shift+b', new JSDOM().window), 'meta+shift+b')
+  equal(macCompat()('ctrl+shift+b', new JSDOM().window, 'r'), 'ctrl+shift+b')
 })

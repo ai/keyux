@@ -12,11 +12,12 @@ import {
   pressKeyUX,
   startKeyUX
 } from '../../index.js'
+import { macCompat } from '../../compat.js'
 
 let overrides: HotkeyOverride = {}
 
 startKeyUX(window, [
-  hotkeyKeyUX(overrides),
+  hotkeyKeyUX(overrides, [macCompat()]),
   menuKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
@@ -25,7 +26,7 @@ startKeyUX(window, [
 
 const HotKeyHint: FC<{ hotkey: string }> = ({ hotkey }) => {
   return likelyWithKeyboard(window) ? (
-    <kbd>{getHotKeyHint(window, hotkey, overrides)}</kbd>
+    <kbd>{getHotKeyHint(window, hotkey, overrides, [macCompat()])}</kbd>
   ) : null
 }
 
@@ -63,13 +64,13 @@ const Counter: FC = () => {
   let [clicked, setClicked] = useState(0)
   return (
     <button
-      aria-keyshortcuts="alt+b"
+      aria-keyshortcuts="ctrl+b"
       onClick={() => {
         setClicked(clicked + 1)
       }}
     >
       Clicked <strong>{clicked}</strong>
-      <HotKeyHint hotkey="alt+b" />
+      <HotKeyHint hotkey="ctrl+b" />
     </button>
   )
 }

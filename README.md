@@ -311,12 +311,18 @@ Window and Linux usually favor the Ctrl key. To provide familiar experience on
 all platforms, enable the Mac compatibility mode:
 
 ```js
-import { hotkeyKeyUX, startKeyUX, MAC_COMPAT } from 'keyux'
+import { macCompat } from 'keyux'
 
-startKeyUX(window, [
-  hotkeyKeyUX({ ...MAC_COMPAT })
-])
+startKeyUX(window, [hotkeyKeyUX(overrides, [macCompat()])])
 ```
 
 Hotkeys pressed with the Meta modifier will work as if the Ctrl modifier was
 pressed.
+
+This also works for getting hotkey hints:
+
+```js
+import { macCompat } from 'keyux'
+
+getHotKeyHint(window, 'ctrl+b', overrides, [macCompat()])
+```
