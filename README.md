@@ -302,3 +302,27 @@ startKeyUX(window, [
   hiddenKeyUX()
 ])
 ```
+
+
+### Mac Compatibility Mode
+
+It's common to use the Meta (<kbd>⌘</kbd>) modifier for hotkeys on Mac, while
+Window and Linux usually favor the Ctrl key. To provide familiar experience on
+all platforms, enable the Mac compatibility mode:
+
+```js
+import { macCompat } from 'keyux'
+
+startKeyUX(window, [hotkeyKeyUX(overrides, [macCompat()])])
+```
+
+Hotkeys pressed with the Meta modifier will work as if the Ctrl modifier was
+pressed.
+
+This also works for getting hotkey hints:
+
+```js
+import { macCompat } from 'keyux'
+
+getHotKeyHint(window, 'ctrl+b', overrides, [macCompat()])
+```

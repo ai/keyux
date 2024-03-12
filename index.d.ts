@@ -38,6 +38,12 @@ export interface MenuKeyUXOptions {
 
 export type HotkeyOverride = Record<string, string>
 
+export type Tranformer = (
+  code: string,
+  window: MinimalWindow,
+  dir: 'r' | undefined
+) => string
+
 /**
  * Press button/a according to `aria-keyshortcuts`.
  *
@@ -49,7 +55,10 @@ export type HotkeyOverride = Record<string, string>
  * ])
  * ```
  */
-export function hotkeyKeyUX(overrides?: HotkeyOverride): KeyUXModule
+export function hotkeyKeyUX(
+  overrides?: HotkeyOverride,
+  transformers?: Tranformer[]
+): KeyUXModule
 
 /**
  * Add arrow-navigation on `role="menu"`.
@@ -142,7 +151,7 @@ export function likelyWithKeyboard(window: MinimalWindow): boolean
 /**
  * Return text for `<kbd>` element with hint for hot key.
  *
- * It replaced `Ctrl` with `⌘` on Mac and respects overrides.
+ * It replaced `Meta` with `⌘` on Mac and respects overrides.
  *
  * ```js
  * import { getHotKeyHint, likelyWithKeyboard } from 'keyux'
@@ -158,5 +167,20 @@ export function likelyWithKeyboard(window: MinimalWindow): boolean
 export function getHotKeyHint(
   window: MinimalWindow,
   code: string,
-  overrides?: HotkeyOverride
+  overrides?: HotkeyOverride,
+  transformers?: Tranformer[]
 ): string
+
+/**
+ * Enables Mac compatibility mode, when hot keys with Meta modifier are treated
+ * as if Ctrl modifier was used.
+ *
+ * ```js
+ * import { macCompat } from 'keyux'
+ *
+ * startKeyUX(window, [
+ *   hotkeyKeyUX({}, [macCompat()])
+ * ])
+ * ```
+ */
+export const macCompat: Tranformer

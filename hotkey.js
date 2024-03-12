@@ -59,7 +59,7 @@ function checkHotkey(where, code, overrides) {
   )
 }
 
-function findHotKey(event, where, overrides) {
+function findHotKey(event, window, overrides, transformers) {
   let prefix = ''
   if (event.metaKey) prefix += 'meta+'
   if (event.ctrlKey) prefix += 'ctrl+'
@@ -73,24 +73,25 @@ function findHotKey(event, where, overrides) {
     code += event.key.toLowerCase()
   }
 
-  let hotkey = checkHotkey(where, code, overrides)
+  transformers.forEach(transform => (code = transform(code, window)))
+  let hotkey = checkHotkey(window.document, code, overrides)
   if (
     !hotkey &&
     NON_ENGLISH_LAYOUT.test(event.key) &&
     /^Key.$/.test(event.code)
   ) {
     let enKey = event.code.replace(/^Key/, '').toLowerCase()
-    hotkey = checkHotkey(where, prefix + enKey, overrides)
+    hotkey = checkHotkey(window.document, prefix + enKey, overrides)
   }
 
   return hotkey
 }
 
-export function hotkeyKeyUX(overrides = {}) {
+export function hotkeyKeyUX(overrides = {}, transformers = []) {
   return window => {
     function keyDown(event) {
       if (ignoreHotkeysIn(event.target)) return
-      let press = findHotKey(event, window.document, overrides)
+      let press = findHotKey(event, window, overrides, transformers)
       if (press) press.click()
     }
 
