@@ -75,14 +75,30 @@ const Counter: FC = () => {
 }
 
 const Tablist: FC = () => {
+  let [tab, setTab] = useState("Home")
   return (
     <div className="tablist_container">
       <span>Tablist:</span>
 
-      <div role="tablist">
-        <button role="tab" className="tablist_tab">Home</button>
-        <button role="tab" className="tablist_tab">About</button>
-        <button role="tab" className="tablist_tab">Contact</button>
+      <div role="tablist" className="tablist">
+        <button className="tablist_tab" role="tab" onFocus={e => setTab("Home")}>Home Tab</button>
+        <button className="tablist_tab" role="tab" onFocus={e => setTab("About")}>About Tab</button>
+        <button className="tablist_tab" role="tab" onFocus={e => setTab("Contact")}>Contact Tab</button>
+      </div>
+
+      <div className={"tabcontent" + (tab === "Home" ? "tabcontent--current" : "")}>
+        <h3>Home Content</h3>
+        <input type="text" placeholder="Home input"/>
+      </div>
+
+      <div className={"tabcontent" + (tab === "About" ? "tabcontent--current" : "")}>
+        <h3>About Content</h3>
+        <input type="text" placeholder="About input"/>
+      </div>
+
+      <div className={"tabcontent" + (tab === "Contact" ? "tabcontent--current" : "")}>
+        <h3>Contact Content</h3>
+        <input type="text" placeholder="Contact input"/>
       </div>
     </div>
   )
@@ -163,12 +179,12 @@ const Page: FC<{
       <>
         <h2>List item hotkey</h2>
         <ul role="listbox">
-          <li role="option" data-keyux-ignore-hotkeys tabIndex={0}>
+          <li data-keyux-ignore-hotkeys role="option" tabIndex={0}>
             <button aria-keyshortcuts="v">
               First button <HotKeyHint hotkey="v" />
             </button>
           </li>
-          <li role="option" data-keyux-ignore-hotkeys tabIndex={0}>
+          <li data-keyux-ignore-hotkeys role="option" tabIndex={0}>
             <button aria-keyshortcuts="v">
               Second button <HotKeyHint hotkey="v" />
             </button>
@@ -184,10 +200,10 @@ const Page: FC<{
       <>
         <h2>List item hotkey with panel</h2>
         <ul role="listbox">
-          <li role="option" data-keyux-hotkeys="panel" tabIndex={0}>
+          <li data-keyux-hotkeys="panel" role="option" tabIndex={0}>
             First item
           </li>
-          <li role="option" data-keyux-hotkeys="panel" tabIndex={0}>
+          <li data-keyux-hotkeys="panel" role="option" tabIndex={0}>
             Second item
           </li>
         </ul>
