@@ -80,25 +80,25 @@ const Tablist: FC = () => {
     <div className="tablist_container">
       <span>Tablist:</span>
 
-      <div role="tablist" className="tablist">
-        <button className="tablist_tab" role="tab" onFocus={e => setTab("Home")}>Home Tab</button>
-        <button className="tablist_tab" role="tab" onFocus={e => setTab("About")}>About Tab</button>
-        <button className="tablist_tab" role="tab" onFocus={e => setTab("Contact")}>Contact Tab</button>
+      <div className="tablist" role="tablist" >
+        <button className="tablist_tab" onFocus={() => {setTab("Home")}} role="tab">Home Tab</button>
+        <button className="tablist_tab" onFocus={() => {setTab("About")}} role="tab">About Tab</button>
+        <button className="tablist_tab" onFocus={() => {setTab("Contact")}} role="tab">Contact Tab</button>
       </div>
 
       <div className={"tabcontent" + (tab === "Home" ? "tabcontent--current" : "")}>
         <h3>Home Content</h3>
-        <input type="text" placeholder="Home input"/>
+        <input placeholder="Home input" type="text"/>
       </div>
 
       <div className={"tabcontent" + (tab === "About" ? "tabcontent--current" : "")}>
         <h3>About Content</h3>
-        <input type="text" placeholder="About input"/>
+        <input placeholder="About input" type="text"/>
       </div>
 
       <div className={"tabcontent" + (tab === "Contact" ? "tabcontent--current" : "")}>
         <h3>Contact Content</h3>
-        <input type="text" placeholder="Contact input"/>
+        <input placeholder="Contact input" type="text"/>
       </div>
     </div>
   )

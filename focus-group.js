@@ -1,4 +1,4 @@
-const Roles = {
+const ROLES = {
   'menuitem': ["menu", "menubar"],
   'option': ["listbox"],
   'tab': ["tablist"]
@@ -19,7 +19,7 @@ export function focusGroupKeyUX(options) {
 
     function findGroupNodeByEventTarget(eventTarget) {
       let itemRole = eventTarget.role
-      let groupRoles = Roles[itemRole]
+      let groupRoles = ROLES[itemRole]
       if (!groupRoles) return null
 
       for (let role of groupRoles) {
@@ -33,12 +33,8 @@ export function focusGroupKeyUX(options) {
       if (ariaOrientation === "vertical") return false
       if (ariaOrientation === "horizontal") return true
 
-      if (!ariaOrientation) {
-        let role = group.role
-        return role === "menubar" || role === "tablist"
-      }
-
-      return false
+      let role = group.role
+      return role === "menubar" || role === "tablist";
     }
 
 
