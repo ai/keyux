@@ -74,15 +74,15 @@ const Counter: FC = () => {
   )
 }
 
-const Tablist: FC = () => {
+const Tabs: FC = () => {
   let [tab, setTab] = useState('home')
   return (
     <>
-      <div className="tablist" role="tablist">
+      <div className="tabs_list" role="tablist">
         <button
-          className="tablist_tab"
-          aria-selected={tab === 'home' ? 'true' : undefined}
           aria-controls="tab_home"
+          aria-selected={tab === 'home' ? 'true' : undefined}
+          className="tabs_tab"
           onFocus={() => {
             setTab('home')
           }}
@@ -91,9 +91,9 @@ const Tablist: FC = () => {
           Home Tab
         </button>
         <button
-          className="tablist_tab"
-          aria-selected={tab === 'about' ? 'true' : undefined}
           aria-controls="tab_about"
+          aria-selected={tab === 'about' ? 'true' : undefined}
+          className="tabs_tab"
           onFocus={() => {
             setTab('about')
           }}
@@ -102,9 +102,9 @@ const Tablist: FC = () => {
           About Tab
         </button>
         <button
-          className="tablist_tab"
-          aria-selected={tab === 'contact' ? 'true' : undefined}
           aria-controls="tab_contact"
+          aria-selected={tab === 'contact' ? 'true' : undefined}
+          className="tabs_tab"
           onFocus={() => {
             setTab('contact')
           }}
@@ -115,24 +115,30 @@ const Tablist: FC = () => {
       </div>
 
       <div
-        className={'tabcontent ' + (tab === 'home' ? 'is-current' : '')}
+        className="tabs_body"
+        hidden={tab !== 'home'}
         id="tab_home"
+        role="tabpanel"
       >
         <div>Home Content</div>
         <input placeholder="Home input" type="text" />
       </div>
 
       <div
-        className={'tabcontent ' + (tab === 'about' ? 'is-current' : '')}
+        className="tabs_body"
+        hidden={tab !== 'about'}
         id="tab_about"
+        role="tabpanel"
       >
         <div>About Content</div>
         <input placeholder="About input" type="text" />
       </div>
 
       <div
-        className={'tabcontent ' + (tab === 'contact' ? 'is-current' : '')}
+        className="tabs_body"
+        hidden={tab !== 'contact'}
         id="tab_contact"
+        role="tabpanel"
       >
         <div>Contact Content</div>
         <input placeholder="Contact input" type="text" />
@@ -347,7 +353,7 @@ const App: FC = () => {
           setUpdate({})
         }}
       />
-      <Tablist />
+      <Tabs />
     </>
   )
 }
