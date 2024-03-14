@@ -126,11 +126,11 @@ test('supports horizontal menus', () => {
   equal(window.document.activeElement, items[0])
 
   window.document.body.innerHTML =
-  '<nav role="menubar" aria-orientation="vertical">' +
-  '<a href="#" role="menuitem">Home</a>' +
-  '<a href="#" role="menuitem">About</a>' +
-  '<a href="#" role="menuitem">Contact</a>' +
-  '</nav>'
+    '<nav role="menubar" aria-orientation="vertical">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
   items = window.document.querySelectorAll('a')
   items[0].focus()
   press(window, 'ArrowDown')
@@ -397,4 +397,29 @@ test('node with role "tablist" should not support moving focus by search', async
   press(window, 'A')
   await setTimeout(150)
   equal(window.document.activeElement, items[0])
+})
+
+test('is ready to click after focus', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+
+  window.document.body.innerHTML =
+    '<nav role="menu">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
+  let items = window.document.querySelectorAll('a')
+
+  items[0].focus()
+  items[1].click()
+
+  equal(
+    window.document.body.innerHTML,
+    '<nav role="menu">' +
+      '<a href="#" role="menuitem" tabindex="-1">Home</a>' +
+      '<a href="#" role="menuitem" tabindex="0">About</a>' +
+      '<a href="#" role="menuitem" tabindex="-1">Contact</a>' +
+      '</nav>'
+  )
 })
