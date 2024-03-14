@@ -3,7 +3,7 @@ import { equal } from 'node:assert'
 import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
-import { hotkeyKeyUX, menuKeyUX, startKeyUX } from '../index.js'
+import { focusGroupKeyUX, hotkeyKeyUX, startKeyUX } from '../index.js'
 
 function press(window: DOMWindow, key: string): void {
   let down = new window.KeyboardEvent('keydown', { bubbles: true, key })
@@ -14,7 +14,7 @@ function press(window: DOMWindow, key: string): void {
 
 test('adds menu navigation', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX()])
+  startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
     '<nav role="menu">' +
@@ -64,7 +64,7 @@ test('adds menu navigation', () => {
 
 test('stops tacking on loosing focus', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX()])
+  startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
     '<nav role="menu">' +
@@ -96,7 +96,8 @@ test('stops tacking on loosing focus', () => {
 
 test('supports horizontal menus', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX()])
+  let items
+  startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
     '<nav role="menu" aria-orientation="horizontal">' +
@@ -104,13 +105,50 @@ test('supports horizontal menus', () => {
     '<a href="#" role="menuitem">About</a>' +
     '<a href="#" role="menuitem">Contact</a>' +
     '</nav>'
-  let items = window.document.querySelectorAll('a')
+  items = window.document.querySelectorAll('a')
   items[0].focus()
-
   press(window, 'ArrowRight')
   equal(window.document.activeElement, items[1])
-
   press(window, 'ArrowLeft')
+  equal(window.document.activeElement, items[0])
+
+  window.document.body.innerHTML =
+    '<nav role="menubar">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
+  items = window.document.querySelectorAll('a')
+  items[0].focus()
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, items[1])
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, items[0])
+
+  window.document.body.innerHTML =
+  '<nav role="menubar" aria-orientation="vertical">' +
+  '<a href="#" role="menuitem">Home</a>' +
+  '<a href="#" role="menuitem">About</a>' +
+  '<a href="#" role="menuitem">Contact</a>' +
+  '</nav>'
+  items = window.document.querySelectorAll('a')
+  items[0].focus()
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[1])
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, items[0])
+
+  window.document.body.innerHTML =
+    '<nav role="menu" aria-orientation="broken-bad-orientation">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
+  items = window.document.querySelectorAll('a')
+  items[0].focus()
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[1])
+  press(window, 'ArrowUp')
   equal(window.document.activeElement, items[0])
 })
 
@@ -118,7 +156,7 @@ test('moves focus by typing item name', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [
     hotkeyKeyUX(),
-    menuKeyUX({
+    focusGroupKeyUX({
       searchDelayMs: 100
     })
   ])
@@ -168,7 +206,7 @@ test('moves focus by typing item name', async () => {
 
 test('supports RTL locales', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX()])
+  startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.dir = 'rtl'
   window.document.body.innerHTML =
@@ -189,7 +227,7 @@ test('supports RTL locales', () => {
 
 test('stops event tracking', () => {
   let window = new JSDOM().window
-  let stop = startKeyUX(window, [menuKeyUX()])
+  let stop = startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
     '<nav role="menu">' +
@@ -210,7 +248,7 @@ test('stops event tracking', () => {
 
 test('ignores broken DOM', () => {
   let window = new JSDOM().window
-  startKeyUX(window, [menuKeyUX()])
+  startKeyUX(window, [focusGroupKeyUX()])
 
   window.document.body.innerHTML =
     '<a href="#" role="menuitem">Home</a>' +
@@ -234,4 +272,129 @@ test('ignores broken DOM', () => {
   window.document.querySelector('nav')!.role = ''
   press(window, 'ArrowDown')
   equal(window.document.activeElement, another[0])
+})
+
+test('adds menubar widget', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+
+  window.document.body.innerHTML =
+    '<nav role="menubar">' +
+    '<a href="#" role="menuitem">Home</a>' +
+    '<a href="#" role="menuitem">About</a>' +
+    '<a href="#" role="menuitem">Contact</a>' +
+    '</nav>'
+  let items = window.document.querySelectorAll('a')
+  items[0].focus()
+
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, items[1])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, items[0])
+})
+
+test('adds listbox widget', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+
+  window.document.body.innerHTML =
+    '<ul role="listbox">' +
+    '<li tabindex="0" role="option">Pizza</li>' +
+    '<li tabindex="0" role="option">Sushi</li>' +
+    '<li tabindex="0" role="option">Ramen</li>' +
+    '</ul>'
+  let items = window.document.querySelectorAll('li')
+  items[0].focus()
+
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[1])
+
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, items[0])
+})
+
+test('adds tablist widget', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div role="tablist">' +
+    '<button role="tab">Home</button>' +
+    '<button role="tab">About</button>' +
+    '<button role="tab">Contact</button>' +
+    '</div>'
+  let items = window.document.querySelectorAll('button')
+  items[0].focus()
+
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, items[1])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, items[0])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, items[2])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, items[0])
+})
+
+test('node with role "tablist" should not support moving focus by search', async () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [
+    hotkeyKeyUX(),
+    focusGroupKeyUX({
+      searchDelayMs: 100
+    })
+  ])
+
+  window.document.body.innerHTML =
+    '<div role="tablist">' +
+    '<button role="tab">Home</button>' +
+    '<button role="tab">About</button>' +
+    '<button role="tab">Contact</button>' +
+    '</div>'
+
+  let items = window.document.querySelectorAll('button')
+  items[0].focus()
+
+  press(window, 'A')
+  await setTimeout(150)
+  equal(window.document.activeElement, items[0])
 })

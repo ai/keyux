@@ -28,7 +28,7 @@ export interface KeyUXModule {
   (window: MinimalWindow): () => void
 }
 
-export interface MenuKeyUXOptions {
+export interface FocusGroupKeyUXOptions {
   /**
    * Maximum allowed pause between key presses when searching
    * for a list item by name. Default is 300.
@@ -55,14 +55,14 @@ export function hotkeyKeyUX(overrides?: HotkeyOverride): KeyUXModule
  * Add arrow-navigation on `role="menu"`.
  *
  * ```js
- * import { startKeyUX, menuKeyUX } from 'keyux'
+ * import { startKeyUX, focusGroupKeyUX } from 'keyux'
  *
  * startKeyUX(window, [
- *   menuKeyUX()
+ *   focusGroupKeyUX()
  * ])
  * ```
  */
-export function menuKeyUX(options?: MenuKeyUXOptions): KeyUXModule
+export function focusGroupKeyUX(options?: FocusGroupKeyUXOptions): KeyUXModule
 
 /**
  * Add pressed style on button activation from keyboard.
@@ -111,7 +111,7 @@ export function hiddenKeyUX(): KeyUXModule
  * import {
  *   startKeyUX,
  *   hotkeyKeyUX,
- *   menuKeyUX,
+ *   focusGroupKeyUX,
  *   pressKeyUX,
  *   jumpKeyUX,
  *   hiddenKeyUX
@@ -119,7 +119,7 @@ export function hiddenKeyUX(): KeyUXModule
  *
  * startKeyUX(window, [
  *   hotkeyKeyUX(),
- *   menuKeyUX(),
+ *   focusGroupKeyUX(),
  *   pressKeyUX('is-pressed'),
  *   jumpKeyUX(),
  *   hiddenKeyUX()

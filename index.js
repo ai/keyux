@@ -1,7 +1,7 @@
+export * from './focus-group.js'
 export * from './hotkey.js'
 export * from './hidden.js'
 export * from './press.js'
-export * from './menu.js'
 export * from './jump.js'
 
 export function startKeyUX(window, plugins) {

@@ -3,12 +3,12 @@ import { createRoot } from 'react-dom/client'
 
 import type { HotkeyOverride } from '../../index.js'
 import {
+  focusGroupKeyUX,
   getHotKeyHint,
   hiddenKeyUX,
   hotkeyKeyUX,
   jumpKeyUX,
   likelyWithKeyboard,
-  menuKeyUX,
   pressKeyUX,
   startKeyUX
 } from '../../index.js'
@@ -17,7 +17,7 @@ let overrides: HotkeyOverride = {}
 
 startKeyUX(window, [
   hotkeyKeyUX(overrides),
-  menuKeyUX(),
+  focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
   hiddenKeyUX()
@@ -71,6 +71,36 @@ const Counter: FC = () => {
       Clicked <strong>{clicked}</strong>
       <HotKeyHint hotkey="alt+b" />
     </button>
+  )
+}
+
+const Tablist: FC = () => {
+  let [tab, setTab] = useState("Home")
+  return (
+    <div className="tablist_container">
+      <span>Tablist:</span>
+
+      <div className="tablist" role="tablist" >
+        <button className="tablist_tab" onFocus={() => {setTab("Home")}} role="tab">Home Tab</button>
+        <button className="tablist_tab" onFocus={() => {setTab("About")}} role="tab">About Tab</button>
+        <button className="tablist_tab" onFocus={() => {setTab("Contact")}} role="tab">Contact Tab</button>
+      </div>
+
+      <div className={"tabcontent" + (tab === "Home" ? "tabcontent--current" : "")}>
+        <h3>Home Content</h3>
+        <input placeholder="Home input" type="text"/>
+      </div>
+
+      <div className={"tabcontent" + (tab === "About" ? "tabcontent--current" : "")}>
+        <h3>About Content</h3>
+        <input placeholder="About input" type="text"/>
+      </div>
+
+      <div className={"tabcontent" + (tab === "Contact" ? "tabcontent--current" : "")}>
+        <h3>Contact Content</h3>
+        <input placeholder="Contact input" type="text"/>
+      </div>
+    </div>
   )
 }
 
@@ -130,14 +160,14 @@ const Page: FC<{
     content = (
       <>
         <input aria-controls="results" placeholder="Search" type="search" />
-        <ul id="results" role="menu">
+        <ul id="results" role="listbox">
           <li>
-            <a href="#" role="menuitem">
+            <a href="#" role="option">
               First
             </a>
           </li>
           <li>
-            <a href="#" role="menuitem">
+            <a href="#" role="option">
               Second
             </a>
           </li>
@@ -148,13 +178,13 @@ const Page: FC<{
     content = (
       <>
         <h2>List item hotkey</h2>
-        <ul>
-          <li data-keyux-ignore-hotkeys tabIndex={0}>
+        <ul role="listbox">
+          <li data-keyux-ignore-hotkeys role="option" tabIndex={0}>
             <button aria-keyshortcuts="v">
               First button <HotKeyHint hotkey="v" />
             </button>
           </li>
-          <li data-keyux-ignore-hotkeys tabIndex={0}>
+          <li data-keyux-ignore-hotkeys role="option" tabIndex={0}>
             <button aria-keyshortcuts="v">
               Second button <HotKeyHint hotkey="v" />
             </button>
@@ -169,11 +199,11 @@ const Page: FC<{
     content = (
       <>
         <h2>List item hotkey with panel</h2>
-        <ul>
-          <li data-keyux-hotkeys="panel" tabIndex={0}>
+        <ul role="listbox">
+          <li data-keyux-hotkeys="panel" role="option" tabIndex={0}>
             First item
           </li>
-          <li data-keyux-hotkeys="panel" tabIndex={0}>
+          <li data-keyux-hotkeys="panel" role="option" tabIndex={0}>
             Second item
           </li>
         </ul>
@@ -272,6 +302,7 @@ const App: FC = () => {
   return (
     <>
       <Counter />
+      <Tablist />
       <Menu router={router} setRouter={setRouter} />
       <Page
         router={router}

@@ -46,7 +46,7 @@ import {
   hiddenKeyUX,
   hotkeyKeyUX,
   jumpKeyUX,
-  menuKeyUX,
+  focusGroupKeyUX,
   pressKeyUX,
   startKeyUX
 } from 'keyux'
@@ -55,7 +55,7 @@ const overrides = {}
 
 startKeyUX(window, [
   hotkeyKeyUX(overrides),
-  menuKeyUX(),
+  focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
   hiddenKeyUX()
@@ -217,13 +217,69 @@ with arrow navigation.
 Users will use <kbd>Tab</kbd> to get inside the menu, and will use either arrows or <kbd>Home</kbd>,
 <kbd>End</kbd> or an item name to navigate inside.
 
-To enable this feature, call `menuKeyUX`.
+To enable this feature, call `focusGroupKeyUX`.
 
 ```js
-import { menuKeyUX } from 'keyux'
+import { focusGroupKeyUX } from 'keyux'
 
 startKeyUX(window, [
-  menuKeyUX()
+  focusGroupKeyUX()
+])
+```
+
+
+### Listbox
+
+The [`role="listbox"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role)
+is used for lists from which a user may select one or
+more items which are static and, unlike HTML <select> elements, may contain images.
+
+```html
+<ul role="listbox">
+  <li tabindex="0" role="option">Pizza</li>
+  <li tabindex="0" role="option">Sushi</li>
+  <li tabindex="0" role="option">Ramen</li>
+</ul>
+```
+
+Users will use <kbd>Tab</kbd> to get inside the menu, and will use either arrows or <kbd>Home</kbd>,
+<kbd>End</kbd> or an item name to navigate inside.
+
+To enable this feature, call `focusGroupKeyUX`.
+
+```js
+import { focusGroupKeyUX } from 'keyux'
+
+startKeyUX(window, [
+  focusGroupKeyUX()
+])
+```
+
+
+### Tablist
+
+The [`role="tablist"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tablist_role)
+identifies the element that serves as the container for a set of tabs.
+The tab content should be marked by `[role="tabpanel']`.
+
+```html
+<div role="tablist">
+  <button role="tab">Home</button>
+  <button role="tab">About</button>
+  <button role="tab">Contact</button>
+</div>
+```
+
+Users will use <kbd>Tab</kbd> to get inside the menu, and will use either arrows or <kbd>Home</kbd>,
+<kbd>End</kbd>.
+
+To enable this feature, call `focusGroupKeyUX`.
+
+```js
+import { focusGroupKeyUX } from 'keyux'
+
+startKeyUX(window, [
+  focusGroupKeyUX()
 ])
 ```
 
@@ -260,10 +316,10 @@ You can add `aria-controls` to `<input>` to make the focus jump on <kbd>Enter</k
 To enable this feature, call `jumpKeyUX`.
 
 ```js
-import { menuKeyUX, jumpKeyUX } from 'keyux'
+import { focusGroupKeyUX, jumpKeyUX } from 'keyux'
 
 startKeyUX(window, [
-  menuKeyUX(),
+  focusGroupKeyUX(),
   jumpKeyUX()
 ])
 ```
@@ -294,10 +350,10 @@ have to set `tabindex="-1"` manually.
 To enable this feature, call `hiddenKeyUX`.
 
 ```js
-import { menuKeyUX, jumpKeyUX, hiddenKeyUX } from 'keyux'
+import { focusGroupKeyUX, jumpKeyUX, hiddenKeyUX } from 'keyux'
 
 startKeyUX(window, [
-  menuKeyUX(),
+  focusGroupKeyUX(),
   jumpKeyUX(),
   hiddenKeyUX()
 ])

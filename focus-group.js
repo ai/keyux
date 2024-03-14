@@ -1,6 +1,12 @@
-export function menuKeyUX(options) {
+const ROLES = {
+  'menuitem': ["menu", "menubar"],
+  'option': ["listbox"],
+  'tab': ["tablist"]
+}
+
+export function focusGroupKeyUX(options) {
   return window => {
-    let inMenu = false
+    let inGroup = false
     let typingDelayMs = options?.searchDelayMs || 300
     let lastTyped = 0
     let searchPrefix = ''
@@ -11,21 +17,41 @@ export function menuKeyUX(options) {
       current.tabIndex = -1
     }
 
+    function findGroupNodeByEventTarget(eventTarget) {
+      let itemRole = eventTarget.role
+      let groupRoles = ROLES[itemRole]
+      if (!groupRoles) return null
+
+      for (let role of groupRoles) {
+        let node = eventTarget.closest(`[role=${role}]`)
+        if (node) return node
+      }
+    }
+
+    function isHorizontalOrientation(group) {
+      let ariaOrientation = group.getAttribute('aria-orientation')
+      if (ariaOrientation === "vertical") return false
+      if (ariaOrientation === "horizontal") return true
+
+      let role = group.role
+      return role === "menubar" || role === "tablist";
+    }
+
+
     function keyDown(event) {
-      if (event.target.role !== 'menuitem') {
+      let group = findGroupNodeByEventTarget(event.target);
+
+      if (!group) {
         stop()
         return
       }
 
-      let menu = event.target.closest('[role="menu"]')
-      if (!menu) return
-
-      let items = menu.querySelectorAll('[role="menuitem"]')
+      let items = group.querySelectorAll(`[role=${event.target.role}]`)
       let index = Array.from(items).indexOf(event.target)
 
       let nextKey = 'ArrowDown'
       let prevKey = 'ArrowUp'
-      if (menu.getAttribute('aria-orientation') === 'horizontal') {
+      if (isHorizontalOrientation(group)) {
         if (window.document.dir === 'rtl') {
           nextKey = 'ArrowLeft'
           prevKey = 'ArrowRight'
@@ -47,7 +73,7 @@ export function menuKeyUX(options) {
       } else if (event.key === 'End') {
         event.preventDefault()
         focus(event.target, items[items.length - 1])
-      } else if (event.key.length === 1) {
+      } else if (event.key.length === 1 && group.role !== "tablist") {
         let now = Date.now()
         if (now - lastTyped <= typingDelayMs) {
           searchPrefix += event.key.toLowerCase()
@@ -70,26 +96,25 @@ export function menuKeyUX(options) {
     }
 
     function stop() {
-      inMenu = false
+      inGroup = false
       window.removeEventListener('keydown', keyDown)
     }
 
     function focusIn(event) {
-      if (event.target.role === 'menuitem') {
-        let menu = event.target.closest('[role="menu"]')
-        if (!menu) return
+      let group = findGroupNodeByEventTarget(event.target);
+      if (group) {
 
-        if (!inMenu) {
-          inMenu = true
+        if (!inGroup) {
+          inGroup = true
           window.addEventListener('keydown', keyDown)
         }
-        let items = menu.querySelectorAll('[role="menuitem"]')
+        let items = group.querySelectorAll(`[role=${event.target.role}]`)
         for (let item of items) {
           if (item !== event.target) {
             item.setAttribute('tabindex', -1)
           }
         }
-      } else if (inMenu) {
+      } else if (inGroup) {
         stop()
       }
     }
