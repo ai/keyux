@@ -74,79 +74,6 @@ const Counter: FC = () => {
   )
 }
 
-const Tabs: FC = () => {
-  let [tab, setTab] = useState('home')
-  return (
-    <>
-      <div className="tabs_list" role="tablist">
-        <button
-          aria-controls="tab_home"
-          aria-selected={tab === 'home' ? 'true' : undefined}
-          className="tabs_tab"
-          onFocus={() => {
-            setTab('home')
-          }}
-          role="tab"
-        >
-          Home Tab
-        </button>
-        <button
-          aria-controls="tab_about"
-          aria-selected={tab === 'about' ? 'true' : undefined}
-          className="tabs_tab"
-          onFocus={() => {
-            setTab('about')
-          }}
-          role="tab"
-        >
-          About Tab
-        </button>
-        <button
-          aria-controls="tab_contact"
-          aria-selected={tab === 'contact' ? 'true' : undefined}
-          className="tabs_tab"
-          onFocus={() => {
-            setTab('contact')
-          }}
-          role="tab"
-        >
-          Contact Tab
-        </button>
-      </div>
-
-      <div
-        className="tabs_body"
-        hidden={tab !== 'home'}
-        id="tab_home"
-        role="tabpanel"
-      >
-        <div>Home Content</div>
-        <input placeholder="Home input" type="text" />
-      </div>
-
-      <div
-        className="tabs_body"
-        hidden={tab !== 'about'}
-        id="tab_about"
-        role="tabpanel"
-      >
-        <div>About Content</div>
-        <input placeholder="About input" type="text" />
-      </div>
-
-      <div
-        className="tabs_body"
-        hidden={tab !== 'contact'}
-        id="tab_contact"
-        role="tabpanel"
-      >
-        <div>Contact Content</div>
-        <input placeholder="Contact input" type="text" />
-      </div>
-    </>
-  )
-}
-
 const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
   router,
   setRouter
@@ -336,6 +263,79 @@ const Page: FC<{
     )
   }
   return <main id="page">{content}</main>
+}
+
+const Tabs: FC = () => {
+  let [tab, setTab] = useState('home')
+  return (
+    <>
+      <div className="tabs_list" role="tablist">
+        <button
+          aria-controls="tab_home"
+          aria-selected={tab === 'home' ? 'true' : undefined}
+          className="tabs_tab"
+          onFocus={() => {
+            setTab('home')
+          }}
+          role="tab"
+        >
+          Home Tab
+        </button>
+        <button
+          aria-controls="tab_about"
+          aria-selected={tab === 'about' ? 'true' : undefined}
+          className="tabs_tab"
+          onFocus={() => {
+            setTab('about')
+          }}
+          role="tab"
+        >
+          About Tab
+        </button>
+        <button
+          aria-controls="tab_contact"
+          aria-selected={tab === 'contact' ? 'true' : undefined}
+          className="tabs_tab"
+          onFocus={() => {
+            setTab('contact')
+          }}
+          role="tab"
+        >
+          Contact Tab
+        </button>
+      </div>
+
+      <div
+        className="tabs_body"
+        hidden={tab !== 'home'}
+        id="tab_home"
+        role="tabpanel"
+      >
+        <div>Home Content</div>
+        <input placeholder="Home input" type="text" />
+      </div>
+
+      <div
+        className="tabs_body"
+        hidden={tab !== 'about'}
+        id="tab_about"
+        role="tabpanel"
+      >
+        <div>About Content</div>
+        <input placeholder="About input" type="text" />
+      </div>
+
+      <div
+        className="tabs_body"
+        hidden={tab !== 'contact'}
+        id="tab_contact"
+        role="tabpanel"
+      >
+        <div>Contact Content</div>
+        <input placeholder="Contact input" type="text" />
+      </div>
+    </>
+  )
 }
 
 const App: FC = () => {
