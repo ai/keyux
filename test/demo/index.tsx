@@ -75,32 +75,69 @@ const Counter: FC = () => {
 }
 
 const Tablist: FC = () => {
-  let [tab, setTab] = useState("Home")
+  let [tab, setTab] = useState('home')
   return (
-    <div className="tablist_container">
-      <span>Tablist:</span>
-
-      <div className="tablist" role="tablist" >
-        <button className="tablist_tab" onFocus={() => {setTab("Home")}} role="tab">Home Tab</button>
-        <button className="tablist_tab" onFocus={() => {setTab("About")}} role="tab">About Tab</button>
-        <button className="tablist_tab" onFocus={() => {setTab("Contact")}} role="tab">Contact Tab</button>
+    <>
+      <div className="tablist" role="tablist">
+        <button
+          className="tablist_tab"
+          aria-selected={tab === 'home' ? 'true' : undefined}
+          aria-controls="tab_home"
+          onFocus={() => {
+            setTab('home')
+          }}
+          role="tab"
+        >
+          Home Tab
+        </button>
+        <button
+          className="tablist_tab"
+          aria-selected={tab === 'about' ? 'true' : undefined}
+          aria-controls="tab_about"
+          onFocus={() => {
+            setTab('about')
+          }}
+          role="tab"
+        >
+          About Tab
+        </button>
+        <button
+          className="tablist_tab"
+          aria-selected={tab === 'contact' ? 'true' : undefined}
+          aria-controls="tab_contact"
+          onFocus={() => {
+            setTab('contact')
+          }}
+          role="tab"
+        >
+          Contact Tab
+        </button>
       </div>
 
-      <div className={"tabcontent" + (tab === "Home" ? "tabcontent--current" : "")}>
-        <h3>Home Content</h3>
-        <input placeholder="Home input" type="text"/>
+      <div
+        className={'tabcontent ' + (tab === 'home' ? 'is-current' : '')}
+        id="tab_home"
+      >
+        <div>Home Content</div>
+        <input placeholder="Home input" type="text" />
       </div>
 
-      <div className={"tabcontent" + (tab === "About" ? "tabcontent--current" : "")}>
-        <h3>About Content</h3>
-        <input placeholder="About input" type="text"/>
+      <div
+        className={'tabcontent ' + (tab === 'about' ? 'is-current' : '')}
+        id="tab_about"
+      >
+        <div>About Content</div>
+        <input placeholder="About input" type="text" />
       </div>
 
-      <div className={"tabcontent" + (tab === "Contact" ? "tabcontent--current" : "")}>
-        <h3>Contact Content</h3>
-        <input placeholder="Contact input" type="text"/>
+      <div
+        className={'tabcontent ' + (tab === 'contact' ? 'is-current' : '')}
+        id="tab_contact"
+      >
+        <div>Contact Content</div>
+        <input placeholder="Contact input" type="text" />
       </div>
-    </div>
+    </>
   )
 }
 
@@ -302,7 +339,6 @@ const App: FC = () => {
   return (
     <>
       <Counter />
-      <Tablist />
       <Menu router={router} setRouter={setRouter} />
       <Page
         router={router}
@@ -311,6 +347,7 @@ const App: FC = () => {
           setUpdate({})
         }}
       />
+      <Tablist />
     </>
   )
 }
