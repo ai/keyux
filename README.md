@@ -77,7 +77,8 @@ For instance, KeyUX will click on this button if user press
 <button aria-keyshortcuts="alt+b">Bold</button>
 ```
 
-The hotkey pattern should contain modifiers like `meta+ctrl+alt+shift+b` in this exact order.
+The hotkey pattern should contain modifiers like `meta+ctrl+alt+shift+b`
+in this exact order.
 
 To enable this feature, call `hotkeyKeyUX`:
 
@@ -92,7 +93,8 @@ startKeyUX(window, [
 
 ### Hotkeys Hint
 
-You can render the hotkey hint from the `aria-keyshortcuts` pattern in a prettier way:
+You can render the hotkey hint from the `aria-keyshortcuts` pattern in
+a prettier way:
 
 ```jsx
 import { likelyWithKeyboard, getHotKeyHint } from 'keyux'
@@ -105,7 +107,7 @@ export const Button = ({ hokey, children }) => {
 }
 ```
 
-`likelyWithKeyboard()` returns `false` on mobile devices where user are unlikely
+`likelyWithKeyboard()` returns `false` on mobile devices where user is unlikely
 to be able to use hotkeys (but it is still possible by connecting an
 external keyboard).
 
@@ -147,8 +149,8 @@ to automatically add class for every `:active` state in your CSS.
 Many users want to override hotkeys because your hotkeys can conflict with
 their browser’s extensions, system, or screen reader.
 
-KeyUX allows to override hotkeys using the `overrides` object. Both `hotkeyKeyUX()`
-and `getHotKeyHint()` accept it as an argument.
+KeyUX allows overriding hotkeys using the `overrides` object.
+Both `hotkeyKeyUX()` and `getHotKeyHint()` accept it as an argument.
 
 You will need to create some UI for users to fill this object like:
 
@@ -158,8 +160,9 @@ const overrides = {
 }
 ```
 
-Then KeyUX will click on `aria-keyshortcuts="b"` when <kbd>Alt</kbd>+<kbd>B</kbd>
-is pressed, and `getHotKeyHint(window, 'b', overrides)` will return `Alt + B`/`⌥ B`.
+Then KeyUX will click on `aria-keyshortcuts="b"` when
+<kbd>Alt</kbd>+<kbd>B</kbd> is pressed, and
+`getHotKeyHint(window, 'b', overrides)` will return `Alt + B`/`⌥ B`.
 
 
 ### Hotkeys for List
@@ -214,7 +217,8 @@ with arrow navigation.
 </nav>
 ```
 
-Users will use <kbd>Tab</kbd> to get inside the menu, and will use either arrows or <kbd>Home</kbd>,
+Users will use <kbd>Tab</kbd> to get inside the menu, and will use either
+arrows or <kbd>Home</kbd>,
 <kbd>End</kbd> or an item name to navigate inside.
 
 To enable this feature, call `focusGroupKeyUX`.
@@ -232,7 +236,8 @@ startKeyUX(window, [
 
 The [`role="listbox"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role)
 is used for lists from which a user may select one or
-more items which are static and, unlike HTML <select> elements, may contain images.
+more items which are static and, unlike HTML `<select>` elements,
+may contain images.
 
 ```html
 <ul role="listbox">
@@ -242,7 +247,8 @@ more items which are static and, unlike HTML <select> elements, may contain imag
 </ul>
 ```
 
-Users will use <kbd>Tab</kbd> to get inside the menu, and will use either arrows or <kbd>Home</kbd>,
+Users will use <kbd>Tab</kbd> to get inside the menu, and will use either
+arrows or <kbd>Home</kbd>,
 <kbd>End</kbd> or an item name to navigate inside.
 
 To enable this feature, call `focusGroupKeyUX`.
@@ -270,7 +276,8 @@ The tab content should be marked by `[role="tabpanel']`.
 </div>
 ```
 
-Users will use <kbd>Tab</kbd> to get inside the menu, and will use either arrows or <kbd>Home</kbd>,
+Users will use <kbd>Tab</kbd> to get inside the menu, and will use either
+arrows or <kbd>Home</kbd>,
 <kbd>End</kbd>.
 
 To enable this feature, call `focusGroupKeyUX`.
@@ -286,10 +293,10 @@ startKeyUX(window, [
 
 ### Jumps
 
-After finishing in one section, you can move user’s focus to the next step to save
-time. For example, you can move the cursor to the page after the user selects it
-from the menu. Or, you can move the focus to the item’s form after the user selects an item
-in the list.
+After finishing in one section, you can move user’s focus to the next step
+to save time. For example, you can move the cursor to the page after the user
+selects it from the menu. Or, you can move the focus to the item’s form after
+the user selects an item in the list.
 
 You can control where the focus moves next with `aria-controls`.
 
@@ -307,7 +314,8 @@ You can control where the focus moves next with `aria-controls`.
 
 On <kbd>Esc</kbd> the focus will jump back.
 
-You can add `aria-controls` to `<input>` to make the focus jump on <kbd>Enter</kbd>.
+You can add `aria-controls` to `<input>` to make the focus jump
+on <kbd>Enter</kbd>.
 
 ```html
 <input type="search" aria-controls="search_results" />
