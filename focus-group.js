@@ -18,6 +18,13 @@ export function focusGroupKeyUX(options) {
     }
 
     function findGroupNodeByEventTarget(eventTarget) {
+      if (
+          (eventTarget.tagName === 'BUTTON' || eventTarget.role === 'button') &&
+          eventTarget.closest('[role=toolbar]')
+        ) {
+        return eventTarget.closest('[role=toolbar]');
+      }
+
       let itemRole = eventTarget.role
       let groupRoles = ROLES[itemRole]
       if (!groupRoles) return null
@@ -34,7 +41,7 @@ export function focusGroupKeyUX(options) {
       if (ariaOrientation === 'horizontal') return true
 
       let role = group.role
-      return role === 'menubar' || role === 'tablist'
+      return role === 'menubar' || role === 'tablist' || role === 'toolbar'
     }
 
     function keyDown(event) {
@@ -45,7 +52,8 @@ export function focusGroupKeyUX(options) {
         return
       }
 
-      let items = group.querySelectorAll(`[role=${event.target.role}]`)
+      let itemsSelector = event.target.role ? `[role=${event.target.role}]`: `${event.target.tagName}`
+      let items = group.querySelectorAll(itemsSelector)
       let index = Array.from(items).indexOf(event.target)
 
       let nextKey = 'ArrowDown'
