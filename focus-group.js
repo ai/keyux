@@ -1,7 +1,8 @@
 const ROLES = {
   menuitem: ['menu', 'menubar'],
   option: ['listbox'],
-  tab: ['tablist']
+  tab: ['tablist'],
+  button: ['toolbar']
 }
 
 export function focusGroupKeyUX(options) {
@@ -18,15 +19,10 @@ export function focusGroupKeyUX(options) {
     }
 
     function findGroupNodeByEventTarget(eventTarget) {
-      if (
-          (eventTarget.tagName === 'BUTTON' || eventTarget.role === 'button') &&
-          eventTarget.closest('[role=toolbar]')
-        ) {
-        return eventTarget.closest('[role=toolbar]');
-      }
+      let itemRole = eventTarget.role || eventTarget.tagName
+      if (!itemRole) return null;
 
-      let itemRole = eventTarget.role
-      let groupRoles = ROLES[itemRole]
+      let groupRoles = ROLES[itemRole.toLowerCase()]
       if (!groupRoles) return null
 
       for (let role of groupRoles) {
