@@ -211,13 +211,13 @@ If you have common panel with actions for focused item, you can use
 
 ## Focus Groups
 
+Using only <kbd>Tab</kbd> for navigation is not very useful. User may need to
+press it too many times to get to their button (also non-screen-reader users
+don’t have quick navigation).
+
 ### Menu
 
-Using only <kbd>Tab</kbd> for navigation is not very useful. User may need to
-press it too many times to get to their button (also non-screen-reader users don’t
-have quick navigation).
-
-To reduce Tab-list you can group some related things (tabs or website’s menu)
+To reduce Tab-list you can group website’s menu
 into [`role="menu"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/menu_role)
 with arrow navigation.
 
