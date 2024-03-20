@@ -26,6 +26,19 @@ export const Button = ({ hotkey, children }) => {
 See [demo page](https://ai.github.io/keyux/)
 and [example](./test/demo/index.tsx).
 
+- [Install](#install)
+- [Features](#features)
+  - [Hotkeys](#hotkeys)
+  - [Hotkeys Hint](#hotkeys-hint)
+  - [Pressed State](#pressed-state)
+  - [Hotkeys Override](#hotkeys-override)
+  - [Hotkeys for List](#hotkeys-for-list)
+  - [Menu](#menu)
+  - [Listbox](#listbox)
+  - [Tablist](#tablist)
+  - [Jumps](#jumps)
+  - [Nested Menu](#nested-menu)
+
 ---
 
 <img src="https://cdn.evilmartians.com/badges/logo-no-label.svg" alt="" width="22" height="16" />  Made in <b><a href="https://evilmartians.com/devtools?utm_source=keyux&utm_campaign=devtools-button&utm_medium=github">Evil Martians</a></b>, product consulting for <b>developer tools</b>.
