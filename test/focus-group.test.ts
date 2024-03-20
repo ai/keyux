@@ -429,30 +429,36 @@ test('adds toolbar widget', () => {
   startKeyUX(window, [focusGroupKeyUX()])
   window.document.body.innerHTML =
     '<div role="toolbar">' +
-    '<button>Copy</button>' +
-    '<button>Paste</button>' +
-    '<button>Cut</button>' +
+      '<div>' +
+        '<button>Copy</button>' +
+        '<button>Paste</button>' +
+        '<button>Cut</button>' +
+      '</div>' +
+      '<div>' +
+        '<input type="checkbox">' +
+      '</div>' +
     '</div>'
-  let items = window.document.querySelectorAll('button')
-  items[0].focus()
+  let buttons = window.document.querySelectorAll('button')
+  let checkboxes = window.document.querySelectorAll('[type="checkbox"]')
+  buttons[0].focus()
 
-  equal(window.document.activeElement, items[0])
+  equal(window.document.activeElement, buttons[0])
 
   press(window, 'ArrowRight')
-  equal(window.document.activeElement, items[1])
+  equal(window.document.activeElement, buttons[1])
 
   press(window, 'ArrowLeft')
-  equal(window.document.activeElement, items[0])
+  equal(window.document.activeElement, buttons[0])
 
   press(window, 'End')
-  equal(window.document.activeElement, items[2])
+  equal(window.document.activeElement, checkboxes[0])
 
   press(window, 'Home')
-  equal(window.document.activeElement, items[0])
+  equal(window.document.activeElement, buttons[0])
 
   press(window, 'ArrowLeft')
-  equal(window.document.activeElement, items[2])
+  equal(window.document.activeElement, checkboxes[0])
 
   press(window, 'ArrowRight')
-  equal(window.document.activeElement, items[0])
+  equal(window.document.activeElement, buttons[0])
 })

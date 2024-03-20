@@ -2,7 +2,8 @@ const ROLES = {
   menuitem: ['menu', 'menubar'],
   option: ['listbox'],
   tab: ['tablist'],
-  button: ['toolbar']
+  button: ['toolbar'],
+  checkbox: ['toolbar']
 }
 
 export function focusGroupKeyUX(options) {
@@ -19,7 +20,7 @@ export function focusGroupKeyUX(options) {
     }
 
     function findGroupNodeByEventTarget(eventTarget) {
-      let itemRole = eventTarget.role || eventTarget.tagName
+      let itemRole = eventTarget.role || eventTarget.type || eventTarget.tagName
       if (!itemRole) return null;
 
       let groupRoles = ROLES[itemRole.toLowerCase()]
@@ -48,8 +49,17 @@ export function focusGroupKeyUX(options) {
         return
       }
 
-      let itemsSelector = event.target.role ? `[role=${event.target.role}]`: `${event.target.tagName}`
-      let items = group.querySelectorAll(itemsSelector)
+      let items
+      if (group.role == "toolbar") {
+        items = group.querySelectorAll(`[role=${event.target.role}]`)
+        items = items.concat(group.querySelectorAll(`${event.target.tagName}`))
+        items = items.concat(group.querySelectorAll(`[type=${event.target.type}]`))
+        items = [...new Set(items)]
+      } else {
+        let itemsSelector = event.target.role ? `[role=${event.target.role}]` : `${event.target.tagName}`
+        items = group.querySelectorAll(itemsSelector)
+      }
+
       let index = Array.from(items).indexOf(event.target)
 
       let nextKey = 'ArrowDown'
