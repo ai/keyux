@@ -27,16 +27,16 @@ See [demo page](https://ai.github.io/keyux/)
 and [example](./test/demo/index.tsx).
 
 - [Install](#install)
-- [Features](#features)
-  - [Hotkeys](#hotkeys)
+- [Hotkeys](#hotkeys)
   - [Hotkeys Hint](#hotkeys-hint)
   - [Pressed State](#pressed-state)
   - [Hotkeys Override](#hotkeys-override)
   - [Hotkeys for List](#hotkeys-for-list)
+- [Focus Groups](#focus-groups)
   - [Menu](#menu)
   - [Listbox](#listbox)
   - [Tablist](#tablist)
-  - [Jumps](#jumps)
+- [Focus Jumps](#focus-jumps)
   - [Nested Menu](#nested-menu)
 
 ---
@@ -76,9 +76,7 @@ startKeyUX(window, [
 ```
 
 
-## Features
-
-### Hotkeys
+## Hotkeys
 
 When the user presses a hotkey, KeyUX will click on the button or link
 with the same hotkey in `aria-keyshortcuts`.
@@ -211,6 +209,7 @@ If you have common panel with actions for focused item, you can use
 </div>
 ```
 
+## Focus Groups
 
 ### Menu
 
@@ -304,7 +303,7 @@ startKeyUX(window, [
 ```
 
 
-### Jumps
+## Focus Jumps
 
 After finishing in one section, you can move user’s focus to the next step
 to save time. For example, you can move the cursor to the page after the user
