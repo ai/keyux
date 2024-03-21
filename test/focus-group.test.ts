@@ -430,9 +430,9 @@ test('adds toolbar widget', () => {
   window.document.body.innerHTML =
     '<div role="toolbar">' +
       '<div>' +
-        '<button>Copy</button>' +
-        '<button>Paste</button>' +
-        '<button>Cut</button>' +
+        '<button type="button">Copy</button>' +
+        '<button type="button">Paste</button>' +
+        '<button type="button">Cut</button>' +
       '</div>' +
       '<div>' +
         '<input type="checkbox">' +

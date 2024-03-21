@@ -32,6 +32,22 @@ export function focusGroupKeyUX(options) {
       }
     }
 
+    function getItems(eventTarget, group) {
+      return group.role === "toolbar" ?
+        getToolbarItems(group) :
+        group.querySelectorAll(`[role=${eventTarget.role}]`)
+    }
+
+    function getToolbarItems(group) {//TODO need to think about selectors order and refactoring
+      let items
+      let nodesByRole = group.querySelectorAll(`[role="button"]`)
+      let nodesByTagName = group.querySelectorAll(`button`)
+      let nodesByType = group.querySelectorAll(`[type="checkbox"]`)
+      items = [...nodesByRole, ...nodesByTagName, ...nodesByType]
+      items = [...new Set(items)]
+      return items
+    }
+
     function isHorizontalOrientation(group) {
       let ariaOrientation = group.getAttribute('aria-orientation')
       if (ariaOrientation === 'vertical') return false
@@ -49,17 +65,7 @@ export function focusGroupKeyUX(options) {
         return
       }
 
-      let items
-      if (group.role == "toolbar") {
-        items = group.querySelectorAll(`[role=${event.target.role}]`)
-        items = items.concat(group.querySelectorAll(`${event.target.tagName}`))
-        items = items.concat(group.querySelectorAll(`[type=${event.target.type}]`))
-        items = [...new Set(items)]
-      } else {
-        let itemsSelector = event.target.role ? `[role=${event.target.role}]` : `${event.target.tagName}`
-        items = group.querySelectorAll(itemsSelector)
-      }
-
+      let items = getItems(event.target, group);
       let index = Array.from(items).indexOf(event.target)
 
       let nextKey = 'ArrowDown'
@@ -120,7 +126,7 @@ export function focusGroupKeyUX(options) {
           inGroup = true
           window.addEventListener('keydown', keyDown)
         }
-        let items = group.querySelectorAll(`[role=${event.target.role}]`)
+        let items = getItems(event.target, group);
         for (let item of items) {
           if (item !== event.target) {
             item.setAttribute('tabindex', -1)
@@ -140,7 +146,7 @@ export function focusGroupKeyUX(options) {
     function click(event) {
       let group = findGroupNodeByEventTarget(event.target)
       if (group) {
-        let items = group.querySelectorAll(`[role=${event.target.role}]`)
+        let items = getItems(event.target, group);
         for (let item of items) {
           if (item !== event.target) {
             item.setAttribute('tabindex', -1)
