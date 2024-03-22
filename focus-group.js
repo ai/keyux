@@ -33,18 +33,15 @@ export function focusGroupKeyUX(options) {
     }
 
     function getItems(eventTarget, group) {
-      return group.role === "toolbar" ?
-        getToolbarItems(group) :
-        group.querySelectorAll(`[role=${eventTarget.role}]`)
+      if (group.role === "toolbar") return getToolbarItems(group)
+      return group.querySelectorAll(`[role=${eventTarget.role}]`)
     }
 
-    function getToolbarItems(group) {//TODO need to think about selectors order and refactoring
-      let items
-      let nodesByRole = group.querySelectorAll(`[role="button"]`)
-      let nodesByTagName = group.querySelectorAll(`button`)
-      let nodesByType = group.querySelectorAll(`[type="checkbox"]`)
-      items = [...nodesByRole, ...nodesByTagName, ...nodesByType]
-      items = [...new Set(items)]
+    function getToolbarItems(group) {
+      let items = [...group.querySelectorAll('*')]
+      items.filter((item)=> {
+        return item.role === 'button' || item.type === 'button' || item.role === 'checkbox' ||item.type === 'checkbox'
+      })
       return items
     }
 
