@@ -39,10 +39,9 @@ export function focusGroupKeyUX(options) {
 
     function getToolbarItems(group) {
       let items = [...group.querySelectorAll('*')]
-      items.filter((item)=> {
+      return items.filter((item)=> {
         return item.role === 'button' || item.type === 'button' || item.role === 'checkbox' ||item.type === 'checkbox'
       })
-      return items
     }
 
     function isHorizontalOrientation(group) {
