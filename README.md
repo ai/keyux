@@ -247,7 +247,7 @@ may contain images.
 </ul>
 ```
 
-Users will use <kbd>Tab</kbd> to get inside the menu, and will use either
+Users will use <kbd>Tab</kbd> to get inside the listbox, and will use either
 arrows or <kbd>Home</kbd>,
 <kbd>End</kbd> or an item name to navigate inside.
 
@@ -276,7 +276,40 @@ The tab content should be marked by `[role="tabpanel']`.
 </div>
 ```
 
-Users will use <kbd>Tab</kbd> to get inside the menu, and will use either
+Users will use <kbd>Tab</kbd> to get inside the tablist, and will use either
+arrows or <kbd>Home</kbd>,
+<kbd>End</kbd>.
+
+To enable this feature, call `focusGroupKeyUX`.
+
+```js
+import { focusGroupKeyUX } from 'keyux'
+
+startKeyUX(window, [
+  focusGroupKeyUX()
+])
+```
+
+
+### Toolbar
+
+The [`role="toolbar"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/toolbar_role)
+defines the containing element as a collection of commonly used function buttons or controls represented in a compact visual forms.
+
+```html
+<div role="toolbar">
+  <div>
+    <button type="button">Copy</button>
+    <button type="button">Paste</button>
+    <button type="button">Cut</button>
+  </div>
+  <div>
+    <input type="checkbox">
+  </div>
+</div>
+```
+
+Users will use <kbd>Tab</kbd> to get inside the tablist, and will use either
 arrows or <kbd>Home</kbd>,
 <kbd>End</kbd>.
 

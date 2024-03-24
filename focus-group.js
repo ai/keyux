@@ -1,9 +1,9 @@
 const ROLES = {
+  button: ['toolbar'],
+  checkbox: ['toolbar'],
   menuitem: ['menu', 'menubar'],
   option: ['listbox'],
   tab: ['tablist'],
-  button: ['toolbar'],
-  checkbox: ['toolbar']
 }
 
 export function focusGroupKeyUX(options) {
