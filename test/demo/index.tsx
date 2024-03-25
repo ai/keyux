@@ -341,7 +341,7 @@ const Tabs: FC = () => {
 const Toolbar: FC = () => {
   return (
     <>
-      <div role="toolbar" className='toolbar'>
+      <div className='toolbar' role="toolbar">
         <div className="toolbar_group">
           <button className="toolbar_button" type="button">Copy</button>
           <button className="toolbar_button" type="button">Paste</button>
