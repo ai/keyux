@@ -304,7 +304,7 @@ defines the containing element as a collection of commonly used function buttons
     <button type="button">Cut</button>
   </div>
   <div>
-    <input type="checkbox">
+    <input type="checkbox" />
   </div>
 </div>
 ```

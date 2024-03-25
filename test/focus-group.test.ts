@@ -435,7 +435,7 @@ test('adds toolbar widget', () => {
         '<button type="button">Cut</button>' +
       '</div>' +
       '<div>' +
-        '<input type="checkbox">' +
+        '<input type="checkbox"/>' +
       '</div>' +
     '</div>'
   let buttons = window.document.querySelectorAll('button')
