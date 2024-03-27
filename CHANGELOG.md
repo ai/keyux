@@ -1,6 +1,9 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.0
+* Added `toolbar` support to `focusGroupKeyUX()` (by @dmitry-kurmanov).
+
 ## 0.5.0
 * Renamed `menuKeyUX()` to `focusGroupKeyUX()` (by @dmitry-kurmanov).
 * Added more `role` to `focusGroupKeyUX()` (by @dmitry-kurmanov).
