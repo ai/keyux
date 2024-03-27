@@ -295,6 +295,7 @@ startKeyUX(window, [
 
 The [`role="toolbar"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/toolbar_role)
 defines the containing element as a collection of commonly used function buttons or controls represented in a compact visual forms.
+Buttons inside the `toolbar` must have `type="button"` attribute because the default one is `submit`.
 
 ```html
 <div role="toolbar">
