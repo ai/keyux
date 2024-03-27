@@ -338,6 +338,26 @@ const Tabs: FC = () => {
   )
 }
 
+const Toolbar: FC = () => {
+  return (
+    <>
+      <div className='toolbar' role="toolbar">
+        <div className="toolbar_group">
+          <button className="toolbar_button" type="button">Copy</button>
+          <button className="toolbar_button" type="button">Paste</button>
+          <button className="toolbar_button" type="button">Cut</button>
+        </div>
+        <div className="toolbar_group">
+          <label className="toolbar_label">
+            <input type="checkbox"/>
+            Night Mode
+          </label>
+        </div>
+      </div>
+    </>
+  )
+}
+
 const App: FC = () => {
   let [, setUpdate] = useState({})
   let [router, setRouter] = useState('home')
@@ -354,6 +374,7 @@ const App: FC = () => {
         }}
       />
       <Tabs />
+      <Toolbar />
     </>
   )
 }
