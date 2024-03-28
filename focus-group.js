@@ -6,57 +6,57 @@ const ROLES = {
   tab: ['tablist']
 }
 
+function focus(current, next) {
+  next.tabIndex = 0
+  next.focus()
+  current.tabIndex = -1
+}
+
+function findGroupNodeByEventTarget(target) {
+  let itemRole = target.role || target.type || target.tagName
+  if (!itemRole) return null
+
+  let groupRoles = ROLES[itemRole.toLowerCase()]
+  if (!groupRoles) return null
+
+  for (let role of groupRoles) {
+    let node = target.closest(`[role=${role}]`)
+    if (node) return node
+  }
+}
+
+function getItems(target, group) {
+  if (group.role === 'toolbar') return getToolbarItems(group)
+  return group.querySelectorAll(`[role=${target.role}]`)
+}
+
+function getToolbarItems(group) {
+  let items = [...group.querySelectorAll('*')]
+  return items.filter(item => {
+    return (
+      item.role === 'button' ||
+      item.type === 'button' ||
+      item.role === 'checkbox' ||
+      item.type === 'checkbox'
+    )
+  })
+}
+
+function isHorizontalOrientation(group) {
+  let ariaOrientation = group.getAttribute('aria-orientation')
+  if (ariaOrientation === 'vertical') return false
+  if (ariaOrientation === 'horizontal') return true
+
+  let role = group.role
+  return role === 'menubar' || role === 'tablist' || role === 'toolbar'
+}
+
 export function focusGroupKeyUX(options) {
   return window => {
     let inGroup = false
     let typingDelayMs = options?.searchDelayMs || 300
     let lastTyped = 0
     let searchPrefix = ''
-
-    function focus(current, next) {
-      next.tabIndex = 0
-      next.focus()
-      current.tabIndex = -1
-    }
-
-    function findGroupNodeByEventTarget(eventTarget) {
-      let itemRole = eventTarget.role || eventTarget.type || eventTarget.tagName
-      if (!itemRole) return null
-
-      let groupRoles = ROLES[itemRole.toLowerCase()]
-      if (!groupRoles) return null
-
-      for (let role of groupRoles) {
-        let node = eventTarget.closest(`[role=${role}]`)
-        if (node) return node
-      }
-    }
-
-    function getItems(eventTarget, group) {
-      if (group.role === 'toolbar') return getToolbarItems(group)
-      return group.querySelectorAll(`[role=${eventTarget.role}]`)
-    }
-
-    function getToolbarItems(group) {
-      let items = [...group.querySelectorAll('*')]
-      return items.filter(item => {
-        return (
-          item.role === 'button' ||
-          item.type === 'button' ||
-          item.role === 'checkbox' ||
-          item.type === 'checkbox'
-        )
-      })
-    }
-
-    function isHorizontalOrientation(group) {
-      let ariaOrientation = group.getAttribute('aria-orientation')
-      if (ariaOrientation === 'vertical') return false
-      if (ariaOrientation === 'horizontal') return true
-
-      let role = group.role
-      return role === 'menubar' || role === 'tablist' || role === 'toolbar'
-    }
 
     function keyDown(event) {
       let group = findGroupNodeByEventTarget(event.target)
