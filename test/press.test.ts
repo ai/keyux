@@ -66,3 +66,31 @@ test('stops event tracking', () => {
   equal(button.classList.contains('is-pressed'), false)
   equal(button.classList.contains('is-hover'), false)
 })
+
+test('is ready to pressing 2 buttons', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [pressKeyUX('is-pressed'), hotkeyKeyUX()])
+
+  window.document.body.innerHTML =
+    '<button aria-keyshortcuts="a" class=""></button>' +
+    '<button aria-keyshortcuts="b" class=""></button>'
+
+  window.dispatchEvent(
+    new window.KeyboardEvent('keydown', { bubbles: true, key: 'b' })
+  )
+  window.dispatchEvent(
+    new window.KeyboardEvent('keydown', { bubbles: true, key: 'a' })
+  )
+  window.dispatchEvent(
+    new window.KeyboardEvent('keyup', { bubbles: true, key: 'a' })
+  )
+  window.dispatchEvent(
+    new window.KeyboardEvent('keyup', { bubbles: true, key: 'b' })
+  )
+
+  equal(
+    window.document.body.innerHTML,
+    '<button aria-keyshortcuts="a" class=""></button>' +
+      '<button aria-keyshortcuts="b" class=""></button>'
+  )
+})

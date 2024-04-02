@@ -10,6 +10,7 @@ export function pressKeyUX(pressedClass) {
 
   function click(event) {
     if (event.clientX === 0 && event.clientY === 0) {
+      keyUp()
       event.target.classList.add(...classes)
       pressedElement = event.target
     }
