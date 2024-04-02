@@ -24,32 +24,34 @@ export function jumpKeyUX() {
       }
     }
 
-    function jumpIfFound(area) {
-      let next = area.querySelector(
-        'a, button, select, textarea, ' +
-          'input:not([type=radio]), [type=radio]:checked, ' +
-          '[tabindex]:not([tabindex="-1"])'
-      )
-      if (next) focus(next)
-      return next
-    }
+    let tries = 0
+    let finding
 
     function jump(from) {
+      clearInterval(finding)
       let ariaControls = from.getAttribute('aria-controls')
       if (!ariaControls) return
-      setTimeout(() => {
+      finding = setInterval(() => {
+        if (tries++ > 50) {
+          clearInterval(finding)
+          return
+        }
         let area = window.document.getElementById(ariaControls)
         if (area) {
-          area.dispatchEvent(
-            new window.CustomEvent('keyuxJump', { bubbles: true })
+          let next = area.querySelector(
+            'a, button, select, textarea, ' +
+              'input:not([type=radio]), [type=radio]:checked, ' +
+              '[tabindex]:not([tabindex="-1"])'
           )
-          if (!jumpIfFound(area)) {
-            setTimeout(() => {
-              jumpIfFound(area)
-            }, 100)
+          if (next) {
+            clearInterval(finding)
+            area.dispatchEvent(
+              new window.CustomEvent('keyuxJump', { bubbles: true })
+            )
+            focus(next)
           }
         }
-      }, 10)
+      }, 50)
     }
 
     function click(event) {
