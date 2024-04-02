@@ -36,6 +36,7 @@ and [example](./test/demo/index.tsx).
   - [Menu](#menu)
   - [Listbox](#listbox)
   - [Tablist](#tablist)
+  - [Toolbar](#toolbar)
 - [Focus Jumps](#focus-jumps)
   - [Nested Menu](#nested-menu)
 
