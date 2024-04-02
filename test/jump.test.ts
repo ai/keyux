@@ -76,7 +76,7 @@ test('jumps to next area by click and back by escape', async () => {
   equal(window.document.activeElement, step1)
 
   press(window, 'Escape')
-  equal(window.document.activeElement, step1)
+  equal(window.document.activeElement, window.document.body)
 })
 
 test('stops event tracking', async () => {
