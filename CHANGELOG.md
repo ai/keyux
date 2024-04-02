@@ -1,6 +1,9 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.2
+* Reduced npm package size.
+
 ## 0.6.1
 * Fixed `aria-controls` jump with loader in next menu.
 * Fixed blur on `Esc` on last element of jump queue.
