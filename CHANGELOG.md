@@ -1,6 +1,11 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.1
+* Fixed `aria-controls` jump with loader in next menu.
+* Fixed blur on `Esc` on last element of jump queue.
+* Fixed pressed state on pressing two hotkeys.
+
 ## 0.6.0
 * Added `toolbar` support to `focusGroupKeyUX()` (by @dmitry-kurmanov).
 
