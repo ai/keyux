@@ -14,8 +14,6 @@ export function jumpKeyUX() {
       let ref = jumps.pop()
       if (!ref) {
         window.document.activeElement.blur()
-        window.document.documentElement.focus()
-        window.document.documentElement.blur()
         return
       }
       let el = ref.deref()
