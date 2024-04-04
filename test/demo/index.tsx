@@ -7,6 +7,7 @@ import {
   getHotKeyHint,
   hiddenKeyUX,
   hotkeyKeyUX,
+  hotkeyMacCompat,
   hotkeyOverrides,
   jumpKeyUX,
   likelyWithKeyboard,
@@ -16,9 +17,10 @@ import {
 
 let overrides: HotkeyOverride = {}
 let overridesTransformer = hotkeyOverrides(overrides)
+let macCompatTransformer = hotkeyMacCompat()
 
 startKeyUX(window, [
-  hotkeyKeyUX([overridesTransformer]),
+  hotkeyKeyUX([macCompatTransformer, overridesTransformer]),
   focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
@@ -27,7 +29,12 @@ startKeyUX(window, [
 
 const HotKeyHint: FC<{ hotkey: string }> = ({ hotkey }) => {
   return likelyWithKeyboard(window) ? (
-    <kbd>{getHotKeyHint(window, hotkey, [overridesTransformer])}</kbd>
+    <kbd>
+      {getHotKeyHint(window, hotkey, [
+        overridesTransformer,
+        macCompatTransformer
+      ])}
+    </kbd>
   ) : null
 }
 
@@ -345,15 +352,9 @@ const Toolbar: FC = () => {
     <>
       <div className="toolbar" role="toolbar">
         <div className="toolbar_group">
-          <button className="toolbar_button" type="button">
-            Copy
-          </button>
-          <button className="toolbar_button" type="button">
-            Paste
-          </button>
-          <button className="toolbar_button" type="button">
-            Cut
-          </button>
+          <button className="toolbar_button" type="button">Copy</button>
+          <button className="toolbar_button" type="button">Paste</button>
+          <button className="toolbar_button" type="button">Cut</button>
         </div>
         <div className="toolbar_group">
           <label className="toolbar_label">
