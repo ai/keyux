@@ -235,7 +235,7 @@ If you have common panel with actions for focused item, you can use
 ### Meta instead of Ctrl on Mac
 
 It’s common to use the <kbd>Meta</kbd> (or <kbd>⌘</kbd>) modifier for hotkeys
-on Mac, while Window and Linux usually favor the <kbd>Ctrl</kbd> key. To provide
+on Mac, while Windows and Linux usually favor the <kbd>Ctrl</kbd> key. To provide
 familiar experience on all platforms, enable the Mac compatibility transform:
 
 ```js
