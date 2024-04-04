@@ -32,7 +32,7 @@ and [example](./test/demo/index.tsx).
   - [Pressed State](#pressed-state)
   - [Hotkeys Override](#hotkeys-override)
   - [Hotkeys for List](#hotkeys-for-list)
-  - [Mac Compatibility Mode](#mac-compatibility-mode)
+  - [Meta instead of Ctrl on Mac](#meta-instead-of-ctrl-on-mac)
 - [Focus Groups](#focus-groups)
   - [Menu](#menu)
   - [Listbox](#listbox)
@@ -232,7 +232,7 @@ If you have common panel with actions for focused item, you can use
 ```
 
 
-### Mac Compatibility Mode
+### Meta instead of Ctrl on Mac
 
 It’s common to use the <kbd>Meta</kbd> (or <kbd>⌘</kbd>) modifier for hotkeys
 on Mac, while Window and Linux usually favor the <kbd>Ctrl</kbd> key. To provide
