@@ -246,9 +246,9 @@ import {
   getHotKeyHint
 } from 'keyux'
 
-const macCompat = hotkeyMacCompat();
-startKeyUX(window, [hotkeyKeyUX([macCompat])])
-getHotKeyHint(window, 'ctrl+b', [macCompat])
+const mac = hotkeyMacCompat();
+startKeyUX(window, [hotkeyKeyUX([mac])])
+getHotKeyHint(window, 'ctrl+b', [mac]) // Ctrl+B on Windows/Linux and ⌘+b on Mac
 ```
 
 Hotkeys pressed with the <kbd>Meta</kbd> modifier will work as if
