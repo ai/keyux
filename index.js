@@ -20,7 +20,7 @@ export function likelyWithKeyboard(window = globalThis) {
 export function getHotKeyHint(window, code, transformers = []) {
   let realCode = code
   for (let transform of transformers) {
-    realCode = transform(realCode, window)
+    realCode = transform(realCode, window, 'r')
   }
   let prettyParts = realCode
     .split('+')

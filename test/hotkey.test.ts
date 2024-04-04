@@ -3,7 +3,7 @@ import { equal } from 'node:assert'
 import { test } from 'node:test'
 
 import type { HotkeyOverride } from '../index.js'
-import { hotkeyKeyUX, overrides, startKeyUX } from '../index.js'
+import { hotkeyKeyUX, hotkeyOverrides, startKeyUX } from '../index.js'
 
 function press(
   window: DOMWindow,
@@ -125,7 +125,7 @@ test('supports non-English keyboard layouts', () => {
 test('allows to override hotkeys', () => {
   let window = new JSDOM().window
   let overridesConfig: HotkeyOverride = {}
-  startKeyUX(window, [hotkeyKeyUX([overrides(overridesConfig)])])
+  startKeyUX(window, [hotkeyKeyUX([hotkeyOverrides(overridesConfig)])])
   window.document.body.innerHTML =
     '<button aria-keyshortcuts="b"></button>' +
     '<button aria-keyshortcuts="q"></button>'

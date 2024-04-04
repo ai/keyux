@@ -83,9 +83,9 @@
     {
       "name": "All modules",
       "import": {
-        "./index.js": "{ startKeyUX, hotkeyKeyUX, pressKeyUX, focusGroupKeyUX, jumpKeyUX, hiddenKeyUX, likelyWithKeyboard, getHotKeyHint, overrides, hintOverrides }"
+        "./index.js": "{ startKeyUX, hotkeyKeyUX, pressKeyUX, focusGroupKeyUX, jumpKeyUX, hiddenKeyUX, likelyWithKeyboard, getHotKeyHint, hotkeyOverrides }"
       },
-      "limit": "1998 B"
+      "limit": "2003 B"
     }
   ],
   "clean-publish": {

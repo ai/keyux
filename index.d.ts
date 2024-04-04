@@ -39,7 +39,7 @@ export interface FocusGroupKeyUXOptions {
 export type HotkeyOverride = Record<string, string>
 
 export interface Transformer {
-  (code: string, window: MinimalWindow): false | string
+  (code: string, window: MinimalWindow, dir?: 'r'): false | string
 }
 
 /**
@@ -167,31 +167,16 @@ export function getHotKeyHint(
 
 /**
  * Provides a transformer for hotkey overrides that can be used
- * with `hotkeyKeyUX`.
+ * with `hotkeyKeyUX()` and `getHotKeyHint()`.
  *
  * ```js
- * import { startKeyUX, hotkeyKeyUX, overrides } from 'keyux'
+ * import { getHotKeyHint, hotkeyKeyUX, hotkeyOverrides } from "keyux"
  *
+ * let overrides = { 'alt+b': 'b' }
  * startKeyUX(window, [
- *   hotkeyKeyUX([overrides({
- *     'alt+b': 'b' // Override B to Alt + B
- *   })])
+ *   hotkeyKeyUX([hotkeyOverrides(overrides)])
  * ])
+ * getHotKeyHint(window, 'b', [hotkeyOverrides(config)])
  * ```
  */
-export function overrides(config: HotkeyOverride): Transformer
-
-/**
- * Provides a transformer for hotkey overrides that can be used
- * with `getHotKeyHint`. Use the same override config in `hotkeyKeyUX`
- * and `getHotKeyHint` to get accurate hints.
- *
- * ```js
- * import { getHotKeyHint, hintOverrides, hotkeyKeyUX, overrides } from "keyux"
- *
- * let config = { 'alt+b': 'b' }
- * hotkeyKeyUX([overrides(config)]) // Override B to Alt + B
- * getHotKeyHint(window, 'b', [hintOverrides(config)]) // Alt + B
- * ```
- */
-export function hintOverrides(config: HotkeyOverride): Transformer
+export function hotkeyOverrides(overrides: HotkeyOverride): Transformer

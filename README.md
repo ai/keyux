@@ -59,9 +59,9 @@ Then add the `startKeyUX` call with the necessary features to the main JS file.
 import {
   hiddenKeyUX,
   hotkeyKeyUX,
+  hotkeyOverrides,
   jumpKeyUX,
   focusGroupKeyUX,
-  overrides,
   pressKeyUX,
   startKeyUX
 } from 'keyux'
@@ -69,7 +69,7 @@ import {
 const overridesConfig = {}
 
 startKeyUX(window, [
-  hotkeyKeyUX([overrides(overridesConfig)]),
+  hotkeyKeyUX([hotkeyOverrides(overridesConfig)]),
   focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
@@ -134,16 +134,16 @@ and `getHotKeyHint` for accurate hints:
 ```js
 import {
   getHotKeyHint,
+  hotkeyOverrides,
   hintOverrides,
   hotkeyKeyUX,
-  overrides,
   startKeyUX
 } from 'keyux'
 
 let config = { 'alt+b': 'b' }
 
 startKeyUX(window, [
-  hotkeyKeyUX([overrides(config)]) // Override B to Alt + B
+  hotkeyKeyUX([hotkeyOverrides(config)]) // Override B to Alt + B
 ])
 getHotKeyHint(window, 'b', [hintOverrides(config)]) // Alt + B
 ```
