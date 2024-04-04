@@ -128,7 +128,7 @@ external keyboard).
 For instance, for `alt+b` it will return `Alt + B` on Windows/Linux or `⌥ B`
 on Mac.
 
-If you're using overrides, pass the same override config both to `hotkeyKeyUX()`
+If you’re using overrides, pass the same override config both to `hotkeyKeyUX()`
 and `getHotKeyHint()` for accurate hints:
 
 ```js
@@ -435,9 +435,9 @@ startKeyUX(window, [
 
 ### Mac Compatibility Mode
 
-It's common to use the Meta (<kbd>⌘</kbd>) modifier for hotkeys on Mac, while
-Window and Linux usually favor the Ctrl key. To provide familiar experience on
-all platforms, enable the Mac compatibility transform:
+It’s common to use the <kbd>Meta</kbd> (or <kbd>⌘</kbd>) modifier for hotkeys
+on Mac, while Window and Linux usually favor the <kbd>Ctrl</kbd> key. To provide
+familiar experience on all platforms, enable the Mac compatibility transform:
 
 ```js
 import {
@@ -452,5 +452,5 @@ startKeyUX(window, [hotkeyKeyUX([macCompat])])
 getHotKeyHint(window, 'ctrl+b', [macCompat])
 ```
 
-Hotkeys pressed with the Meta modifier will work as if the Ctrl modifier was
-pressed.
+Hotkeys pressed with the <kbd>Meta</kbd> modifier will work as if the <kbd>Ctrl</kbd>
+modifier was pressed.
