@@ -38,6 +38,10 @@ export interface FocusGroupKeyUXOptions {
 
 export type HotkeyOverride = Record<string, string>
 
+export interface Transformer {
+  (code: string, window: MinimalWindow): false | string
+}
+
 /**
  * Press button/a according to `aria-keyshortcuts`.
  *
@@ -49,7 +53,7 @@ export type HotkeyOverride = Record<string, string>
  * ])
  * ```
  */
-export function hotkeyKeyUX(overrides?: HotkeyOverride): KeyUXModule
+export function hotkeyKeyUX(transformers?: Transformer[]): KeyUXModule
 
 /**
  * Add arrow-navigation on `role="menu"`.
@@ -142,7 +146,7 @@ export function likelyWithKeyboard(window: MinimalWindow): boolean
 /**
  * Return text for `<kbd>` element with hint for hot key.
  *
- * It replaced `Ctrl` with `⌘` on Mac and respects overrides.
+ * It replaces `Cmd` with `⌘` etc on Mac.
  *
  * ```js
  * import { getHotKeyHint, likelyWithKeyboard } from 'keyux'
@@ -158,5 +162,36 @@ export function likelyWithKeyboard(window: MinimalWindow): boolean
 export function getHotKeyHint(
   window: MinimalWindow,
   code: string,
-  overrides?: HotkeyOverride
+  transformers?: Transformer[]
 ): string
+
+/**
+ * Provides a transformer for hotkey overrides that can be used
+ * with `hotkeyKeyUX`.
+ *
+ * ```js
+ * import { startKeyUX, hotkeyKeyUX, overrides } from 'keyux'
+ *
+ * startKeyUX(window, [
+ *   hotkeyKeyUX([overrides({
+ *     'alt+b': 'b' // Override B to Alt + B
+ *   })])
+ * ])
+ * ```
+ */
+export function overrides(config: HotkeyOverride): Transformer
+
+/**
+ * Provides a transformer for hotkey overrides that can be used
+ * with `getHotKeyHint`. Use the same override config in `hotkeyKeyUX`
+ * and `getHotKeyHint` to get accurate hints.
+ *
+ * ```js
+ * import { getHotKeyHint, hintOverrides, hotkeyKeyUX, overrides } from "keyux"
+ *
+ * let config = { 'alt+b': 'b' }
+ * hotkeyKeyUX([overrides(config)]) // Override B to Alt + B
+ * getHotKeyHint(window, 'b', [hintOverrides(config)]) // Alt + B
+ * ```
+ */
+export function hintOverrides(config: HotkeyOverride): Transformer

@@ -4,6 +4,7 @@ import { test } from 'node:test'
 
 import {
   getHotKeyHint,
+  hintOverrides,
   likelyWithKeyboard,
   type MinimalWindow
 } from '../index.js'
@@ -34,7 +35,8 @@ test('makes hotkey hint prettier', () => {
     getHotKeyHint(window, 'meta+ctrl+shift+alt+b'),
     'Meta + Ctrl + Shift + Alt + B'
   )
-  equal(getHotKeyHint(window, 'alt+b', { b: 'alt+b' }), 'B')
+  equal(getHotKeyHint(window, 'alt+b', [hintOverrides({ b: 'alt+b' })]), 'B')
+  equal(getHotKeyHint(window, 'q', [hintOverrides({ b: 'alt+b' })]), 'Q')
 })
 
 test('makes mac hotkey hint prettier', () => {

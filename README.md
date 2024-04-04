@@ -61,14 +61,15 @@ import {
   hotkeyKeyUX,
   jumpKeyUX,
   focusGroupKeyUX,
+  overrides,
   pressKeyUX,
   startKeyUX
 } from 'keyux'
 
-const overrides = {}
+const overridesConfig = {}
 
 startKeyUX(window, [
-  hotkeyKeyUX(overrides),
+  hotkeyKeyUX([overrides(overridesConfig)]),
   focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
@@ -127,6 +128,25 @@ external keyboard).
 For instance, for `alt+b` it will return `Alt + B` on Windows/Linux or `⌥ B`
 on Mac.
 
+If you're using overrides, pass the same override config both to `hotkeyKeyUX`
+and `getHotKeyHint` for accurate hints:
+
+```js
+import {
+  getHotKeyHint,
+  hintOverrides,
+  hotkeyKeyUX,
+  overrides,
+  startKeyUX
+} from 'keyux'
+
+let config = { 'alt+b': 'b' }
+
+startKeyUX(window, [
+  hotkeyKeyUX([overrides(config)]) // Override B to Alt + B
+])
+getHotKeyHint(window, 'b', [hintOverrides(config)]) // Alt + B
+```
 
 ### Pressed State
 
@@ -161,21 +181,20 @@ to automatically add class for every `:active` state in your CSS.
 Many users want to override hotkeys because your hotkeys can conflict with
 their browser’s extensions, system, or screen reader.
 
-KeyUX allows overriding hotkeys using the `overrides` object.
-Both `hotkeyKeyUX()` and `getHotKeyHint()` accept it as an argument.
+KeyUX allows to override hotkeys using tranforms. Use the `overrides` tranformer
+with `hotkeyKeyUX()`, and `hintOverrides` with `getHotKeyHint()`.
 
 You will need to create some UI for users to fill this object like:
 
 ```js
-const overrides = {
+const overridesConfig = {
   'alt+b': 'b' // Override B to Alt + B
 }
 ```
 
-Then KeyUX will click on `aria-keyshortcuts="b"` when
-<kbd>Alt</kbd>+<kbd>B</kbd> is pressed, and
-`getHotKeyHint(window, 'b', overrides)` will return `Alt + B`/`⌥ B`.
-
+Then KeyUX will click on `aria-keyshortcuts="b"` when <kbd>Alt</kbd>+<kbd>B</kbd>
+is pressed, and `getHotKeyHint(window, 'b', [hintOverrides(overrideConfig)])`
+will return `Alt + B`/`⌥ B`.
 
 ### Hotkeys for List
 

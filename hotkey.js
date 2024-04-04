@@ -31,12 +31,15 @@ function findNonIgnored(activeElement, elements) {
   }
 }
 
-function checkHotkey(where, code, overrides) {
-  let codeOverride = overrides[code]
-  if (Object.values(overrides).includes(code) && !codeOverride) return false
+function checkHotkey(window, code, transformers) {
+  let actualCode = code
+  for (let transform of transformers) {
+    actualCode = transform(code, window)
+    if (!actualCode) return false
+  }
 
+  let where = window.document
   let activeElement = where.activeElement
-  let actualCode = codeOverride || code
 
   let areaId = activeElement.getAttribute('data-keyux-hotkeys')
   if (areaId) {
@@ -59,7 +62,7 @@ function checkHotkey(where, code, overrides) {
   )
 }
 
-function findHotKey(event, where, overrides) {
+function findHotKey(event, window, transformers) {
   let prefix = ''
   if (event.metaKey) prefix += 'meta+'
   if (event.ctrlKey) prefix += 'ctrl+'
@@ -73,24 +76,24 @@ function findHotKey(event, where, overrides) {
     code += event.key.toLowerCase()
   }
 
-  let hotkey = checkHotkey(where, code, overrides)
+  let hotkey = checkHotkey(window, code, transformers)
   if (
     !hotkey &&
     NON_ENGLISH_LAYOUT.test(event.key) &&
     /^Key.$/.test(event.code)
   ) {
     let enKey = event.code.replace(/^Key/, '').toLowerCase()
-    hotkey = checkHotkey(where, prefix + enKey, overrides)
+    hotkey = checkHotkey(window, prefix + enKey, transformers)
   }
 
   return hotkey
 }
 
-export function hotkeyKeyUX(overrides = {}) {
+export function hotkeyKeyUX(transformers = []) {
   return window => {
     function keyDown(event) {
       if (ignoreHotkeysIn(event.target)) return
-      let press = findHotKey(event, window.document, overrides)
+      let press = findHotKey(event, window, transformers)
       if (press) press.click()
     }
 
