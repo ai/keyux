@@ -8,7 +8,6 @@ function maybeApplyCompat(code, window, from, to) {
   return code
 }
 
-
 export function hotkeyMacCompat() {
   return [
     (code, window) => maybeApplyCompat(code, window, 'meta', 'ctrl'),
