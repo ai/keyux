@@ -1,6 +1,10 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.0
+* Changed hotkeys override API with transformers (by @myandrienko).
+* Added `hotkeyMacCompat` transformer (by @myandrienko).
+
 ## 0.6.2
 * Reduced npm package size.
 
