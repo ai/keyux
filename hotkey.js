@@ -33,7 +33,7 @@ function findNonIgnored(activeElement, elements) {
 
 function checkHotkey(window, code, transformers) {
   let realCode = code
-  for (let transform of transformers) {
+  for (let [transform] of transformers) {
     realCode = transform(realCode, window)
     if (!realCode) return false
   }

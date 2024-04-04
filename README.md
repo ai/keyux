@@ -66,10 +66,10 @@ import {
   startKeyUX
 } from 'keyux'
 
-const overrides = {}
+const overrides = hotkeyOverrides({})
 
 startKeyUX(window, [
-  hotkeyKeyUX([hotkeyOverrides(overrides)]),
+  hotkeyKeyUX([overrides]),
   focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),

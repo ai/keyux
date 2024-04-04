@@ -38,9 +38,15 @@ export interface FocusGroupKeyUXOptions {
 
 export type HotkeyOverride = Record<string, string>
 
-export interface Transformer {
-  (code: string, window: MinimalWindow, dir?: 'r'): false | string
-}
+type SingleDirectionTransformer = (
+  code: string,
+  window: MinimalWindow
+) => false | string
+
+export type Transformer = [
+  tranformForward: SingleDirectionTransformer,
+  transformReverse: SingleDirectionTransformer
+]
 
 /**
  * Press button/a according to `aria-keyshortcuts`.
@@ -172,11 +178,11 @@ export function getHotKeyHint(
  * ```js
  * import { getHotKeyHint, hotkeyKeyUX, hotkeyOverrides } from "keyux"
  *
- * let overrides = { 'alt+b': 'b' }
+ * let overrides = hotkeyOverrides({ 'alt+b': 'b' })
  * startKeyUX(window, [
- *   hotkeyKeyUX([hotkeyOverrides(overrides)])
+ *   hotkeyKeyUX([overrides])
  * ])
- * getHotKeyHint(window, 'b', [hotkeyOverrides(config)])
+ * getHotKeyHint(window, 'b', [overrides])
  * ```
  */
 export function hotkeyOverrides(overrides: HotkeyOverride): Transformer
