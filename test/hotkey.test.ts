@@ -124,8 +124,8 @@ test('supports non-English keyboard layouts', () => {
 
 test('allows to override hotkeys', () => {
   let window = new JSDOM().window
-  let overridesConfig: HotkeyOverride = {}
-  startKeyUX(window, [hotkeyKeyUX([hotkeyOverrides(overridesConfig)])])
+  let overrides: HotkeyOverride = {}
+  startKeyUX(window, [hotkeyKeyUX([hotkeyOverrides(overrides)])])
   window.document.body.innerHTML =
     '<button aria-keyshortcuts="b"></button>' +
     '<button aria-keyshortcuts="q"></button>'
@@ -137,8 +137,8 @@ test('allows to override hotkeys', () => {
     })
   }
 
-  overridesConfig.q = 'b'
-  overridesConfig.a = 'q'
+  overrides.q = 'b'
+  overrides.a = 'q'
   press(window, { key: 'b' })
   equal(clicked, '')
 

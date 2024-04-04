@@ -66,10 +66,10 @@ import {
   startKeyUX
 } from 'keyux'
 
-const overridesConfig = {}
+const overrides = {}
 
 startKeyUX(window, [
-  hotkeyKeyUX([hotkeyOverrides(overridesConfig)]),
+  hotkeyKeyUX([hotkeyOverrides(overrides)]),
   focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
@@ -186,7 +186,7 @@ with `hotkeyKeyUX()` and `getHotKeyHint()`.
 You will need to create some UI for users to fill this object like:
 
 ```js
-const overridesConfig = {
+const overrides = {
   'alt+b': 'b' // Override B to Alt + B
 }
 ```
