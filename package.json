@@ -41,9 +41,9 @@
     "@logux/eslint-config": "^53.0.0",
     "@size-limit/preset-small-lib": "^11.1.2",
     "@types/jsdom": "^21.1.6",
-    "@types/node": "^20.12.2",
+    "@types/node": "^20.12.4",
     "@types/react": "^18.2.74",
-    "@types/react-dom": "^18.2.23",
+    "@types/react-dom": "^18.2.24",
     "better-node-test": "^0.5.1",
     "c8": "^9.1.0",
     "clean-publish": "^4.3.0",
@@ -52,9 +52,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "size-limit": "^11.1.2",
-    "tsx": "^4.7.1",
+    "tsx": "^4.7.2",
     "typescript": "^5.4.3",
-    "vite": "^5.2.7"
+    "vite": "^5.2.8"
   },
   "prettier": {
     "arrowParens": "avoid",
