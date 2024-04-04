@@ -186,3 +186,9 @@ export function getHotKeyHint(
  * ```
  */
 export function hotkeyOverrides(overrides: HotkeyOverride): Transformer
+
+/**
+ * Provides a transformer for Mac compatibility mode that can be used
+ * with `hotkeyKeyUX()` and `getHotKeyHint()`.
+ */
+export function hotkeyMacCompat(): Transformer

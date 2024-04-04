@@ -4,6 +4,7 @@ export * from './hidden.js'
 export * from './press.js'
 export * from './jump.js'
 export * from './overrides.js'
+export * from './compat.js'
 
 export function startKeyUX(window, plugins) {
   let unbinds = plugins.map(plugin => plugin(window))

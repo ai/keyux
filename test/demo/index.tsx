@@ -7,6 +7,7 @@ import {
   getHotKeyHint,
   hiddenKeyUX,
   hotkeyKeyUX,
+  hotkeyMacCompat,
   hotkeyOverrides,
   jumpKeyUX,
   likelyWithKeyboard,
@@ -15,10 +16,11 @@ import {
 } from '../../index.js'
 
 let overrides: HotkeyOverride = {}
-let overridesTransformer = hotkeyOverrides(overrides);
+let overridesTransformer = hotkeyOverrides(overrides)
+let macCompatTransformer = hotkeyMacCompat()
 
 startKeyUX(window, [
-  hotkeyKeyUX([overridesTransformer]),
+  hotkeyKeyUX([macCompatTransformer, overridesTransformer]),
   focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
@@ -27,7 +29,12 @@ startKeyUX(window, [
 
 const HotKeyHint: FC<{ hotkey: string }> = ({ hotkey }) => {
   return likelyWithKeyboard(window) ? (
-    <kbd>{getHotKeyHint(window, hotkey, [overridesTransformer])}</kbd>
+    <kbd>
+      {getHotKeyHint(window, hotkey, [
+        overridesTransformer,
+        macCompatTransformer
+      ])}
+    </kbd>
   ) : null
 }
 
@@ -343,7 +350,7 @@ const Tabs: FC = () => {
 const Toolbar: FC = () => {
   return (
     <>
-      <div className='toolbar' role="toolbar">
+      <div className="toolbar" role="toolbar">
         <div className="toolbar_group">
           <button className="toolbar_button" type="button">Copy</button>
           <button className="toolbar_button" type="button">Paste</button>
@@ -351,7 +358,7 @@ const Toolbar: FC = () => {
         </div>
         <div className="toolbar_group">
           <label className="toolbar_label">
-            <input type="checkbox"/>
+            <input type="checkbox" />
             Night Mode
           </label>
         </div>
