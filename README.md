@@ -32,6 +32,7 @@ and [example](./test/demo/index.tsx).
   - [Pressed State](#pressed-state)
   - [Hotkeys Override](#hotkeys-override)
   - [Hotkeys for List](#hotkeys-for-list)
+  - [Mac Compatibility Mode](#mac-compatibility-mode)
 - [Focus Groups](#focus-groups)
   - [Menu](#menu)
   - [Listbox](#listbox)
@@ -180,8 +181,8 @@ to automatically add class for every `:active` state in your CSS.
 Many users want to override hotkeys because your hotkeys can conflict with
 their browser’s extensions, system, or screen reader.
 
-KeyUX allows to override hotkeys using tranforms. Use the `hotkeyOverrides()` tranformer
-with `hotkeyKeyUX()` and `getHotKeyHint()`.
+KeyUX allows to override hotkeys using tranforms. Use the `hotkeyOverrides()`
+tranformer with `hotkeyKeyUX()` and `getHotKeyHint()`.
 
 You will need to create some UI for users to fill this object like:
 
@@ -191,9 +192,11 @@ const overrides = {
 }
 ```
 
-Then KeyUX will click on `aria-keyshortcuts="b"` when <kbd>Alt</kbd>+<kbd>B</kbd>
-is pressed, and `getHotKeyHint(window, 'b', [hotkeyOverrides(overrides)])`
-will return `Alt + B`/`⌥ B`.
+Then KeyUX will click on `aria-keyshortcuts="b"` when
+<kbd>Alt</kbd>+<kbd>B</kbd> is pressed, and
+`getHotKeyHint(window, 'b', [hotkeyOverrides(overrides)])` will return
+`Alt + B`/`⌥ B`.
+
 
 ### Hotkeys for List
 
@@ -227,6 +230,30 @@ If you have common panel with actions for focused item, you can use
   <button aria-keyshortcuts="a">Add to card</button>
 </div>
 ```
+
+
+### Mac Compatibility Mode
+
+It’s common to use the <kbd>Meta</kbd> (or <kbd>⌘</kbd>) modifier for hotkeys
+on Mac, while Window and Linux usually favor the <kbd>Ctrl</kbd> key. To provide
+familiar experience on all platforms, enable the Mac compatibility transform:
+
+```js
+import {
+  hotkeyMacCompat,
+  hotkeyKeyUX,
+  startKeyUX,
+  getHotKeyHint
+} from 'keyux'
+
+const macCompat = hotkeyMacCompat();
+startKeyUX(window, [hotkeyKeyUX([macCompat])])
+getHotKeyHint(window, 'ctrl+b', [macCompat])
+```
+
+Hotkeys pressed with the <kbd>Meta</kbd> modifier will work as if
+the <kbd>Ctrl</kbd> modifier was pressed.
+
 
 ## Focus Groups
 
@@ -325,8 +352,9 @@ startKeyUX(window, [
 ### Toolbar
 
 The [`role="toolbar"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/toolbar_role)
-defines the containing element as a collection of commonly used function buttons or controls represented in a compact visual forms.
-Buttons inside the `toolbar` must have `type="button"` attribute because the default one is `submit`.
+defines the containing element as a collection of commonly used function buttons
+or controls represented in a compact visual forms. Buttons inside the `toolbar`
+must have `type="button"` attribute because the default one is `submit`.
 
 ```html
 <div role="toolbar">
@@ -431,26 +459,3 @@ startKeyUX(window, [
   hiddenKeyUX()
 ])
 ```
-
-
-### Mac Compatibility Mode
-
-It’s common to use the <kbd>Meta</kbd> (or <kbd>⌘</kbd>) modifier for hotkeys
-on Mac, while Window and Linux usually favor the <kbd>Ctrl</kbd> key. To provide
-familiar experience on all platforms, enable the Mac compatibility transform:
-
-```js
-import {
-  hotkeyMacCompat,
-  hotkeyKeyUX,
-  startKeyUX,
-  getHotKeyHint
-} from 'keyux'
-
-const macCompat = hotkeyMacCompat();
-startKeyUX(window, [hotkeyKeyUX([macCompat])])
-getHotKeyHint(window, 'ctrl+b', [macCompat])
-```
-
-Hotkeys pressed with the <kbd>Meta</kbd> modifier will work as if the <kbd>Ctrl</kbd>
-modifier was pressed.
