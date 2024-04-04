@@ -6,17 +6,19 @@ import {
   focusGroupKeyUX,
   getHotKeyHint,
   hiddenKeyUX,
+  hintOverrides,
   hotkeyKeyUX,
   jumpKeyUX,
   likelyWithKeyboard,
+  overrides,
   pressKeyUX,
   startKeyUX
 } from '../../index.js'
 
-let overrides: HotkeyOverride = {}
+let overridesConfig: HotkeyOverride = {}
 
 startKeyUX(window, [
-  hotkeyKeyUX(overrides),
+  hotkeyKeyUX([overrides(overridesConfig)]),
   focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
@@ -25,7 +27,7 @@ startKeyUX(window, [
 
 const HotKeyHint: FC<{ hotkey: string }> = ({ hotkey }) => {
   return likelyWithKeyboard(window) ? (
-    <kbd>{getHotKeyHint(window, hotkey, overrides)}</kbd>
+    <kbd>{getHotKeyHint(window, hotkey, [hintOverrides(overridesConfig)])}</kbd>
   ) : null
 }
 
@@ -246,15 +248,15 @@ const Page: FC<{
     content = (
       <textarea
         defaultValue={Object.keys(overrides)
-          .map(key => `${key}: ${overrides[key]}`)
+          .map(key => `${key}: ${overridesConfig[key]}`)
           .join('\n')}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
           for (let i in overrides) {
-            delete overrides[i]
+            delete overridesConfig[i]
           }
           for (let i of e.target.value.split('\n')) {
             let [key, value] = i.split(/:\s*/)
-            overrides[key] = value
+            overridesConfig[key] = value
           }
           update()
         }}
