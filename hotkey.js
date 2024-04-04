@@ -32,10 +32,10 @@ function findNonIgnored(activeElement, elements) {
 }
 
 function checkHotkey(window, code, transformers) {
-  let actualCode = code
+  let realCode = code
   for (let transform of transformers) {
-    actualCode = transform(actualCode, window)
-    if (!actualCode) return false
+    realCode = transform(realCode, window)
+    if (!realCode) return false
   }
 
   let where = window.document
@@ -45,7 +45,7 @@ function checkHotkey(window, code, transformers) {
   if (areaId) {
     let area = where.querySelector(`#${areaId}`)
     if (area) {
-      let element = area.querySelector(`[aria-keyshortcuts="${actualCode}" i]`)
+      let element = area.querySelector(`[aria-keyshortcuts="${realCode}" i]`)
       if (element) return element
     }
   }
@@ -53,11 +53,11 @@ function checkHotkey(window, code, transformers) {
   return (
     findNonIgnored(
       activeElement,
-      activeElement.querySelectorAll(`[aria-keyshortcuts="${actualCode}" i]`)
+      activeElement.querySelectorAll(`[aria-keyshortcuts="${realCode}" i]`)
     ) ||
     findNonIgnored(
       where,
-      where.querySelectorAll(`[aria-keyshortcuts="${actualCode}" i]`)
+      where.querySelectorAll(`[aria-keyshortcuts="${realCode}" i]`)
     )
   )
 }

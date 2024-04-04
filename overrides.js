@@ -1,8 +1,8 @@
 export function overrides(config) {
   return code => {
-    let codeOverride = config[code]
-    if (Object.values(config).includes(code) && !codeOverride) return false
-    return codeOverride || code
+    let realCode = config[code]
+    if (Object.values(config).includes(code) && !realCode) return false
+    return realCode || code
   }
 }
 

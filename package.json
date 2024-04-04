@@ -85,7 +85,7 @@
       "import": {
         "./index.js": "{ startKeyUX, hotkeyKeyUX, pressKeyUX, focusGroupKeyUX, jumpKeyUX, hiddenKeyUX, likelyWithKeyboard, getHotKeyHint, overrides, hintOverrides }"
       },
-      "limit": "2002 B"
+      "limit": "1998 B"
     }
   ],
   "clean-publish": {
