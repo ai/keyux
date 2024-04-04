@@ -146,7 +146,7 @@ export function likelyWithKeyboard(window: MinimalWindow): boolean
 /**
  * Return text for `<kbd>` element with hint for hot key.
  *
- * It replaces `Cmd` with `⌘` etc on Mac.
+ * It replaces `Meta` with `⌘` etc on Mac.
  *
  * ```js
  * import { getHotKeyHint, likelyWithKeyboard } from 'keyux'
