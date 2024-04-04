@@ -3,6 +3,7 @@ export * from './hotkey.js'
 export * from './hidden.js'
 export * from './press.js'
 export * from './jump.js'
+export * from './overrides.js'
 
 export function startKeyUX(window, plugins) {
   let unbinds = plugins.map(plugin => plugin(window))
@@ -16,13 +17,10 @@ export function likelyWithKeyboard(window = globalThis) {
   return !['iphone', 'ipad', 'android'].some(device => agent.includes(device))
 }
 
-export function getHotKeyHint(window, code, overrides = {}) {
+export function getHotKeyHint(window, code, transformers = []) {
   let realCode = code
-  for (let i in overrides) {
-    if (overrides[i] === code) {
-      realCode = i
-      break
-    }
+  for (let transformer of transformers) {
+    realCode = transformer[1](realCode, window, 'r')
   }
   let prettyParts = realCode
     .split('+')

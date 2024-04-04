@@ -7,6 +7,7 @@ import {
   getHotKeyHint,
   hiddenKeyUX,
   hotkeyKeyUX,
+  hotkeyOverrides,
   jumpKeyUX,
   likelyWithKeyboard,
   pressKeyUX,
@@ -14,9 +15,10 @@ import {
 } from '../../index.js'
 
 let overrides: HotkeyOverride = {}
+let overridesTransformer = hotkeyOverrides(overrides);
 
 startKeyUX(window, [
-  hotkeyKeyUX(overrides),
+  hotkeyKeyUX([overridesTransformer]),
   focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
@@ -25,7 +27,7 @@ startKeyUX(window, [
 
 const HotKeyHint: FC<{ hotkey: string }> = ({ hotkey }) => {
   return likelyWithKeyboard(window) ? (
-    <kbd>{getHotKeyHint(window, hotkey, overrides)}</kbd>
+    <kbd>{getHotKeyHint(window, hotkey, [overridesTransformer])}</kbd>
   ) : null
 }
 

@@ -31,18 +31,21 @@ function findNonIgnored(activeElement, elements) {
   }
 }
 
-function checkHotkey(where, code, overrides) {
-  let codeOverride = overrides[code]
-  if (Object.values(overrides).includes(code) && !codeOverride) return false
+function checkHotkey(window, code, transformers) {
+  let realCode = code
+  for (let [transform] of transformers) {
+    realCode = transform(realCode, window)
+    if (!realCode) return false
+  }
 
+  let where = window.document
   let activeElement = where.activeElement
-  let actualCode = codeOverride || code
 
   let areaId = activeElement.getAttribute('data-keyux-hotkeys')
   if (areaId) {
     let area = where.querySelector(`#${areaId}`)
     if (area) {
-      let element = area.querySelector(`[aria-keyshortcuts="${actualCode}" i]`)
+      let element = area.querySelector(`[aria-keyshortcuts="${realCode}" i]`)
       if (element) return element
     }
   }
@@ -50,16 +53,16 @@ function checkHotkey(where, code, overrides) {
   return (
     findNonIgnored(
       activeElement,
-      activeElement.querySelectorAll(`[aria-keyshortcuts="${actualCode}" i]`)
+      activeElement.querySelectorAll(`[aria-keyshortcuts="${realCode}" i]`)
     ) ||
     findNonIgnored(
       where,
-      where.querySelectorAll(`[aria-keyshortcuts="${actualCode}" i]`)
+      where.querySelectorAll(`[aria-keyshortcuts="${realCode}" i]`)
     )
   )
 }
 
-function findHotKey(event, where, overrides) {
+function findHotKey(event, window, transformers) {
   let prefix = ''
   if (event.metaKey) prefix += 'meta+'
   if (event.ctrlKey) prefix += 'ctrl+'
@@ -73,24 +76,24 @@ function findHotKey(event, where, overrides) {
     code += event.key.toLowerCase()
   }
 
-  let hotkey = checkHotkey(where, code, overrides)
+  let hotkey = checkHotkey(window, code, transformers)
   if (
     !hotkey &&
     NON_ENGLISH_LAYOUT.test(event.key) &&
     /^Key.$/.test(event.code)
   ) {
     let enKey = event.code.replace(/^Key/, '').toLowerCase()
-    hotkey = checkHotkey(where, prefix + enKey, overrides)
+    hotkey = checkHotkey(window, prefix + enKey, transformers)
   }
 
   return hotkey
 }
 
-export function hotkeyKeyUX(overrides = {}) {
+export function hotkeyKeyUX(transformers = []) {
   return window => {
     function keyDown(event) {
       if (ignoreHotkeysIn(event.target)) return
-      let press = findHotKey(event, window.document, overrides)
+      let press = findHotKey(event, window, transformers)
       if (press) press.click()
     }
 
