@@ -1,10 +1,10 @@
+export * from './compat.js'
 export * from './focus-group.js'
-export * from './hotkey.js'
 export * from './hidden.js'
-export * from './press.js'
+export * from './hotkey.js'
 export * from './jump.js'
 export * from './overrides.js'
-export * from './compat.js'
+export * from './press.js'
 
 export function startKeyUX(window, plugins) {
   let unbinds = plugins.map(plugin => plugin(window))

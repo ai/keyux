@@ -11,5 +11,11 @@ export default [
       'import/export': 'off', // Until they fix flat config support
       'no-control-regex': 'off'
     }
+  },
+  {
+    files: ['test/*.ts'],
+    rules: {
+      'n/no-unsupported-features/node-builtins': 'off'
+    }
   }
 ]
