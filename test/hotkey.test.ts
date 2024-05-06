@@ -108,6 +108,27 @@ test('ignores hot keys when focus is inside text fields', () => {
   equal(clicked, 2)
 })
 
+test('does not ignore hotkeys with Alt on focus in text field', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<input type="text">' +
+    '<a></a>' +
+    '<button aria-keyshortcuts="alt+b"></button>'
+
+  let clicked = 0
+  window.document.querySelector('button')!.addEventListener('click', () => {
+    clicked += 1
+  })
+
+  press(
+    window,
+    { altKey: true, key: 'b' },
+    window.document.querySelector('[type=text]')!
+  )
+  equal(clicked, 1)
+})
+
 test('supports non-English keyboard layouts', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])

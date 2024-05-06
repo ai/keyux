@@ -92,7 +92,7 @@ function findHotKey(event, window, transformers) {
 export function hotkeyKeyUX(transformers = []) {
   return window => {
     function keyDown(event) {
-      if (ignoreHotkeysIn(event.target)) return
+      if (!event.altKey && ignoreHotkeysIn(event.target)) return
       let press = findHotKey(event, window, transformers)
       if (press) press.click()
     }
