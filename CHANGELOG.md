@@ -1,6 +1,9 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.1
+* Allowed to trigger hotkey with `Alt` on focus in text fields.
+
 ## 0.7.0
 * Changed hotkeys override API with transformers (by @myandrienko).
 * Added `hotkeyMacCompat` transformer (by @myandrienko).
