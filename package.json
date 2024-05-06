@@ -38,23 +38,23 @@
     }
   ],
   "devDependencies": {
-    "@logux/eslint-config": "^53.0.0",
+    "@logux/eslint-config": "^53.0.1",
     "@size-limit/preset-small-lib": "^11.1.2",
     "@types/jsdom": "^21.1.6",
-    "@types/node": "^20.12.4",
-    "@types/react": "^18.2.74",
-    "@types/react-dom": "^18.2.24",
+    "@types/node": "^20.12.10",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "better-node-test": "^0.5.1",
     "c8": "^9.1.0",
-    "clean-publish": "^4.3.0",
+    "clean-publish": "^4.4.0",
     "eslint": "^8.57.0",
     "jsdom": "^24.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "size-limit": "^11.1.2",
-    "tsx": "^4.7.2",
-    "typescript": "^5.4.3",
-    "vite": "^5.2.8"
+    "tsx": "^4.9.3",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
   },
   "prettier": {
     "arrowParens": "avoid",
