@@ -1,20 +1,14 @@
-import { type DOMWindow, JSDOM } from 'jsdom'
+import { JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
 
-import type { HotkeyOverride } from '../index.js'
-import { hotkeyKeyUX, hotkeyOverrides, startKeyUX } from '../index.js'
-
-function press(
-  window: DOMWindow,
-  data: Partial<Omit<KeyboardEventInit, 'view'>>,
-  target: EventTarget = window
-): void {
-  let down = new window.KeyboardEvent('keydown', { ...data, bubbles: true })
-  target.dispatchEvent(down)
-  let up = new window.KeyboardEvent('keyup', { ...data, bubbles: true })
-  target.dispatchEvent(up)
-}
+import {
+  hotkeyKeyUX,
+  type HotkeyOverride,
+  hotkeyOverrides,
+  startKeyUX
+} from '../index.js'
+import { press } from './utils.js'
 
 test('adds hot keys to buttons and links', () => {
   let window = new JSDOM().window

@@ -1,16 +1,10 @@
-import { type DOMWindow, JSDOM } from 'jsdom'
+import { JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
 import { focusGroupKeyUX, hotkeyKeyUX, startKeyUX } from '../index.js'
-
-function press(window: DOMWindow, key: string): void {
-  let down = new window.KeyboardEvent('keydown', { bubbles: true, key })
-  window.document.activeElement!.dispatchEvent(down)
-  let up = new window.KeyboardEvent('keyup', { bubbles: true, key })
-  window.document.activeElement!.dispatchEvent(up)
-}
+import { press } from './utils.js'
 
 test('adds menu navigation', () => {
   let window = new JSDOM().window

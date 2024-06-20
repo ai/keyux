@@ -1,31 +1,10 @@
-import { type DOMWindow, JSDOM } from 'jsdom'
+import { JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
 import { jumpKeyUX, startKeyUX } from '../index.js'
-
-function click(
-  window: DOMWindow,
-  element: Element,
-  extra: Partial<MouseEventInit> = {}
-): void {
-  element.dispatchEvent(
-    new window.MouseEvent('click', {
-      bubbles: true,
-      clientX: 0,
-      clientY: 0,
-      ...extra
-    })
-  )
-}
-
-function press(window: DOMWindow, key: string): void {
-  let down = new window.KeyboardEvent('keydown', { bubbles: true, key })
-  window.document.activeElement!.dispatchEvent(down)
-  let up = new window.KeyboardEvent('keyup', { bubbles: true, key })
-  window.document.activeElement!.dispatchEvent(up)
-}
+import { keyboardClick, mouseClick, press } from './utils.js'
 
 test('jumps to next area by click and back by escape', async () => {
   let window = new JSDOM().window
@@ -46,16 +25,16 @@ test('jumps to next area by click and back by escape', async () => {
   let step5checked = window.document.querySelector('#step5 input:last-child')!
 
   step1.focus()
-  click(window, step1)
+  keyboardClick(window, step1)
   equal(window.document.activeElement, step1)
   await setTimeout(50)
   equal(window.document.activeElement, step2button)
 
-  click(window, step2button)
+  keyboardClick(window, step2button)
   await setTimeout(50)
   equal(window.document.activeElement, step3label)
 
-  click(window, step3label)
+  keyboardClick(window, step3label)
   await setTimeout(50)
   equal(window.document.activeElement, step4input)
 
@@ -89,7 +68,7 @@ test('stops event tracking', async () => {
   let step1 = window.document.querySelector('#step1')!
   stop()
 
-  click(window, step1)
+  keyboardClick(window, step1)
   await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
 })
@@ -104,11 +83,11 @@ test('ignores mouse click', async () => {
   let step1 = window.document.querySelector('#step1')!
   let step2button = window.document.querySelector('#step2 button')!
 
-  click(window, step1, { clientX: 0, clientY: 10 })
+  mouseClick(window, step1)
   await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
 
-  click(window, step1)
+  keyboardClick(window, step1)
   await setTimeout(50)
   equal(window.document.activeElement, step2button)
 })
@@ -119,7 +98,7 @@ test('ignores links without data attribute', async () => {
   window.document.body.innerHTML =
     '<a id="step1" href="#"></a>' + '<div id="step2"><button></button></div>'
 
-  click(window, window.document.querySelector('#step1')!)
+  keyboardClick(window, window.document.querySelector('#step1')!)
   await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
 })
@@ -130,14 +109,14 @@ test('is ready for missed next area', async () => {
 
   window.document.body.innerHTML =
     '<a id="step1" href="#" aria-controls="step2"></a>'
-  click(window, window.document.querySelector('#step1')!)
+  keyboardClick(window, window.document.querySelector('#step1')!)
   await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
 
   window.document.body.innerHTML =
     '<a id="step1" href="#" aria-controls="step2"></a>' +
     '<div id="step2"></div>'
-  click(window, window.document.querySelector('#step1')!)
+  keyboardClick(window, window.document.querySelector('#step1')!)
   await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
 })
@@ -155,11 +134,11 @@ test('is ready for missed previous area', async () => {
   let step3link = window.document.querySelector('#step3 a')!
 
   step1.focus()
-  click(window, step1)
+  keyboardClick(window, step1)
   await setTimeout(50)
   equal(window.document.activeElement, step2link)
 
-  click(window, step2link)
+  keyboardClick(window, step2link)
   await setTimeout(50)
   equal(window.document.activeElement, step3link)
 
@@ -183,7 +162,7 @@ test('fires event on jump', async () => {
     jumped += 1
   })
 
-  click(window, window.document.querySelector('#step1')!)
+  keyboardClick(window, window.document.querySelector('#step1')!)
   await setTimeout(50)
   equal(jumped, 1)
 })
