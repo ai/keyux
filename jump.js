@@ -30,7 +30,6 @@ export function jumpKeyUX() {
     function jump(from) {
       clearInterval(finding)
       let ariaControls = from.getAttribute('aria-controls')
-      if (!ariaControls) return
       finding = setInterval(() => {
         if (tries++ > 50) {
           clearInterval(finding)
@@ -54,14 +53,8 @@ export function jumpKeyUX() {
       }, 50)
     }
 
-    function click(event) {
-      if (event.clientX === 0 && event.clientY === 0) {
-        jump(event.target)
-      }
-    }
-
     function keyDown(event) {
-      if (event.target.tagName === 'INPUT') {
+      if (event.target.getAttribute('aria-controls')) {
         if (event.key === 'Enter') {
           jump(event.target)
         }
@@ -71,10 +64,8 @@ export function jumpKeyUX() {
       }
     }
 
-    window.addEventListener('click', click)
     window.addEventListener('keydown', keyDown)
     return () => {
-      window.removeEventListener('click', click)
       window.removeEventListener('keydown', keyDown)
     }
   }

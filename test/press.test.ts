@@ -3,6 +3,7 @@ import { equal } from 'node:assert'
 import { test } from 'node:test'
 
 import { hotkeyKeyUX, pressKeyUX, startKeyUX } from '../index.js'
+import { keyboardClick, mouseClick } from './utils.js'
 
 test('adds pressed state', () => {
   let window = new JSDOM().window
@@ -33,14 +34,10 @@ test('ignores mouse click', () => {
   let button = window.document.querySelector('button')!
   equal(button.classList.contains('is-pressed'), false)
 
-  button.dispatchEvent(
-    new window.MouseEvent('click', { bubbles: true, clientX: 0, clientY: 10 })
-  )
+  keyboardClick(window, button)
   equal(button.classList.contains('is-pressed'), false)
 
-  button.dispatchEvent(
-    new window.MouseEvent('click', { bubbles: true, clientX: 0, clientY: 0 })
-  )
+  mouseClick(window, button)
   equal(button.classList.contains('is-pressed'), true)
 
   window.dispatchEvent(

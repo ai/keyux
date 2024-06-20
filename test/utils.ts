@@ -33,8 +33,8 @@ export function keyboardClick(window: DOMWindow, element: Element): void {
   element.dispatchEvent(
     new window.MouseEvent('click', {
       bubbles: true,
-      clientX: 0,
-      clientY: 0
+      clientX: 10,
+      clientY: 10
     })
   )
 }
