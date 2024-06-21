@@ -1,9 +1,6 @@
 import type { DOMWindow } from 'jsdom'
 
-export function mouseClick(
-  window: DOMWindow,
-  element: Element
-): void {
+export function mouseClick(window: DOMWindow, element: Element): void {
   element.dispatchEvent(
     new window.MouseEvent('click', {
       bubbles: true

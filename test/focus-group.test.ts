@@ -423,14 +423,14 @@ test('adds toolbar widget', () => {
   startKeyUX(window, [focusGroupKeyUX()])
   window.document.body.innerHTML =
     '<div role="toolbar">' +
-      '<div>' +
-        '<button type="button">Copy</button>' +
-        '<button type="button">Paste</button>' +
-        '<button type="button">Cut</button>' +
-      '</div>' +
-      '<div>' +
-        '<input type="checkbox"/>' +
-      '</div>' +
+    '<div>' +
+    '<button type="button">Copy</button>' +
+    '<button type="button">Paste</button>' +
+    '<button type="button">Cut</button>' +
+    '</div>' +
+    '<div>' +
+    '<input type="checkbox"/>' +
+    '</div>' +
     '</div>'
   let buttons = window.document.querySelectorAll('button')
   let checkboxes = window.document.querySelectorAll('[type="checkbox"]')
