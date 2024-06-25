@@ -1,6 +1,9 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.2
+* Fixed Safari support.
+
 ## 0.7.1
 * Allowed to trigger hotkey with `Alt` on focus in text fields.
 
