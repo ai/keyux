@@ -6,12 +6,10 @@ const IGNORE_INPUTS = {
   radio: true
 }
 
-function ignoreHotkeysIn(target) {
-  return (
-    target.tagName === 'TEXTAREA' ||
-    (target.tagName === 'INPUT' && !IGNORE_INPUTS[target.type]) ||
-    target.role === 'menuitem'
-  )
+const CLICK_INPUTS = {
+  button: true,
+  reset: true,
+  submit: true
 }
 
 function isInsideIgnored(parent, node) {
@@ -92,9 +90,27 @@ function findHotKey(event, window, transformers) {
 export function hotkeyKeyUX(transformers = []) {
   return window => {
     function keyDown(event) {
-      if (!event.altKey && ignoreHotkeysIn(event.target)) return
-      let press = findHotKey(event, window, transformers)
-      if (press) press.click()
+      if (
+        !event.altKey &&
+        (event.target.tagName === 'TEXTAREA' ||
+          (event.target.tagName === 'INPUT' &&
+            !IGNORE_INPUTS[event.target.type]) ||
+          event.target.role === 'menuitem')
+      ) {
+        return
+      }
+      let active = findHotKey(event, window, transformers)
+      if (!active) return
+      if (
+        active.tagName === 'TEXTAREA' ||
+        (active.tagName === 'INPUT' && !CLICK_INPUTS[active.type])
+      ) {
+        setTimeout(() => {
+          active.focus()
+        })
+      } else {
+        active.click()
+      }
     }
 
     window.addEventListener('keydown', keyDown)

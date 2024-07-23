@@ -1,6 +1,7 @@
 import { JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
+import { setTimeout } from 'node:timers/promises'
 
 import {
   hotkeyKeyUX,
@@ -310,4 +311,61 @@ test('is ready for missed data-keyux-hotkeys', () => {
   window.document.querySelector<HTMLElement>('li:first-child')!.focus()
   press(window, { key: 'v' })
   equal(clicked, 'Global')
+})
+
+test('puts focus to text inputs', async () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<input type="text" aria-keyshortcuts="i" />' +
+    '<input type="button" aria-keyshortcuts="b" />' +
+    '<textarea aria-keyshortcuts="t"></textarea>' +
+    '<textarea aria-keyshortcuts="alt+t"></textarea>'
+
+  let clicked = ''
+  let interactives = window.document.querySelectorAll('input, textarea, button')
+  for (let interactive of interactives) {
+    interactive.addEventListener('click', () => {
+      clicked += interactive.getAttribute('aria-keyshortcuts')!
+    })
+  }
+
+  press(window, { key: 'i' })
+  await setTimeout(1)
+  equal(clicked, '')
+  equal(
+    window.document.activeElement,
+    window.document.querySelector('input[type=text]')
+  )
+
+  press(window, { key: 't' })
+  await setTimeout(1)
+  equal(clicked, '')
+  equal(
+    window.document.activeElement,
+    window.document.querySelector('input[type=text]')
+  )
+
+  press(window, { altKey: true, key: 't' })
+  await setTimeout(1)
+  equal(clicked, '')
+  equal(
+    window.document.activeElement,
+    window.document.querySelector('textarea:last-of-type')
+  )
+
+  let textarea = window.document.activeElement as HTMLTextAreaElement
+  textarea.blur()
+  press(window, { key: 'b' })
+  await setTimeout(1)
+  equal(clicked, 'b')
+  equal(window.document.activeElement, window.document.body)
+
+  press(window, { key: 't' })
+  await setTimeout(1)
+  equal(clicked, 'b')
+  equal(
+    window.document.activeElement,
+    window.document.querySelector('textarea:first-of-type')
+  )
 })

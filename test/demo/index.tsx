@@ -83,6 +83,14 @@ const Counter: FC = () => {
   )
 }
 
+const Search: FC = () => {
+  return (
+    <div>
+      <input aria-keyshortcuts="s" placeholder="S" type="text" />
+    </div>
+  )
+}
+
 const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
   router,
   setRouter
@@ -352,9 +360,15 @@ const Toolbar: FC = () => {
     <>
       <div className="toolbar" role="toolbar">
         <div className="toolbar_group">
-          <button className="toolbar_button" type="button">Copy</button>
-          <button className="toolbar_button" type="button">Paste</button>
-          <button className="toolbar_button" type="button">Cut</button>
+          <button className="toolbar_button" type="button">
+            Copy
+          </button>
+          <button className="toolbar_button" type="button">
+            Paste
+          </button>
+          <button className="toolbar_button" type="button">
+            Cut
+          </button>
         </div>
         <div className="toolbar_group">
           <label className="toolbar_label">
@@ -374,6 +388,7 @@ const App: FC = () => {
   return (
     <>
       <Counter />
+      <Search />
       <Menu router={router} setRouter={setRouter} />
       <Page
         router={router}
