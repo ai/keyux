@@ -87,8 +87,14 @@ with the same hotkey in `aria-keyshortcuts`.
 For instance, KeyUX will click on this button if user press
 <kbd>Alt</kbd>+<kbd>B</kbd> or <kbd>⌥</kbd> <kbd>B</kbd>.
 
-```js
+```jsx
 <button aria-keyshortcuts="alt+b">Bold</button>
+```
+
+You can use hotkey to move focus to text input or textarea:
+
+```jsx
+<input type="search" aria-keyshortcuts="s" placeholder="S" />
 ```
 
 The hotkey pattern should contain modifiers like `meta+ctrl+alt+shift+b`
