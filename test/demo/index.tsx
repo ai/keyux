@@ -86,7 +86,7 @@ const Counter: FC = () => {
 const Search: FC = () => {
   return (
     <div>
-      <input aria-keyshortcuts="s" placeholder="S" type="text" />
+      <input aria-keyshortcuts="f" placeholder="f" type="text" />
     </div>
   )
 }
