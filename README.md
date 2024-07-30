@@ -30,7 +30,7 @@ and [example](./test/demo/index.tsx).
 
 Video example:
 
-<video src="./test/demo/example.mp4" type ="video/mp4" height = "260" muted> </video>
+https://github.com/user-attachments/assets/c7be91ef-7852-4da9-91d0-f3885ec24a7a
 
 - [Install](#install)
 - [Hotkeys](#hotkeys)
