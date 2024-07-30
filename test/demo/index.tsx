@@ -86,7 +86,7 @@ const Counter: FC = () => {
 const Search: FC = () => {
   return (
     <div>
-      <input aria-keyshortcuts="s" placeholder="S" type="text" />
+      <input aria-keyshortcuts="shift+s" placeholder="S" type="text" />
     </div>
   )
 }
@@ -147,7 +147,7 @@ const Page: FC<{
     content = (
       <>
         <input aria-controls="results" placeholder="Search" type="search" />
-        <ul id="results" role="listbox">
+        <ul id="results" aria-keyshortcuts="i" role="listbox">
           <li>
             <a href="#" role="option">
               First
@@ -182,6 +182,25 @@ const Page: FC<{
         </button>
       </>
     )
+  } else if (router === 'settings') {
+    content = (
+      <textarea
+        defaultValue={Object.keys(overrides)
+          .map(key => `${key}: ${overrides[key]}`)
+          .join('\n')}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+          for (let i in overrides) {
+            delete overrides[i]
+          }
+          for (let i of e.target.value.split('\n')) {
+            let [key, value] = i.split(/:\s*/)
+            overrides[key] = value
+          }
+          update()
+        }}
+        placeholder="new: old\nnew: old"
+      />
+    )
   } else if (router === 'list2') {
     content = (
       <>
@@ -208,6 +227,7 @@ const Page: FC<{
     router === 'team' ||
     router === 'treasury'
   ) {
+    console.log(router);
     content = (
       <>
         <div
@@ -215,7 +235,6 @@ const Page: FC<{
           aria-orientation="vertical"
           className="menu"
           data-keyux-jump-only={true}
-          hidden={true}
           id="about_menu"
           role="menu"
         >
@@ -260,24 +279,7 @@ const Page: FC<{
       </>
     )
   } else {
-    content = (
-      <textarea
-        defaultValue={Object.keys(overrides)
-          .map(key => `${key}: ${overrides[key]}`)
-          .join('\n')}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-          for (let i in overrides) {
-            delete overrides[i]
-          }
-          for (let i of e.target.value.split('\n')) {
-            let [key, value] = i.split(/:\s*/)
-            overrides[key] = value
-          }
-          update()
-        }}
-        placeholder="new: old\nnew: old"
-      />
-    )
+    content = "";
   }
   return <main id="page">{content}</main>
 }
