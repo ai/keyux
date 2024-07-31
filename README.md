@@ -30,7 +30,8 @@ and [example](./test/demo/index.tsx).
 
 Video example:
 
-https://github.com/user-attachments/assets/c7be91ef-7852-4da9-91d0-f3885ec24a7a
+https://github.com/user-attachments/assets/0220291a-0a96-4a82-b66a-fbe486ccd766
+
 
 - [Install](#install)
 - [Hotkeys](#hotkeys)
