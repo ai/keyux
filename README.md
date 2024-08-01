@@ -24,7 +24,12 @@ export const Button = ({ hotkey, children }) => {
 ```
 
 See [demo page](https://ai.github.io/keyux/)
-and [example](./test/demo/index.tsx).
+and [example](./test/demo/index.tsx),
+or watch demo video below.
+
+https://github.com/user-attachments/assets/bcd78271-cf76-45a3-8beb-4f3cea69c143
+
+---
 
 - [Install](#install)
 - [Hotkeys](#hotkeys)
