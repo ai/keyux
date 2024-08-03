@@ -219,9 +219,9 @@ To implement it:
    KeyUX ignores `data-keyux-ignore-hotkeys`.
 
 ```jsx
-<li data-keyux-ignore-hotkeys tabindex="0">
+<li data-keyux-ignore-hotkeys tabIndex={0}>
   {product.title}
-  <button aria-keyshortcuts="a">Add to card</button>
+  <button aria-keyshortcuts="a" tabIndex={-1}>Add to card</button>
 </li>
 ```
 
@@ -231,13 +231,13 @@ If you have common panel with actions for focused item, you can use
 ```js
 <ul>
   {products.map(product => {
-    return <li data-keyux-hotkeys="panel" tabindex="0" key={product.id}>
+    return <li data-keyux-hotkeys="panel" tabIndex={0} key={product.id}>
       {product.title}
     </li>
   })}
 </ul>
 <div id="panel" data-keyux-ignore-hotkeys>
-  <button aria-keyshortcuts="a">Add to card</button>
+  <button aria-keyshortcuts="a" tabIndex={-1}>Add to card</button>
 </div>
 ```
 

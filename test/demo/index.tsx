@@ -167,12 +167,12 @@ const Page: FC<{
         <h2>List item hotkey</h2>
         <ul role="listbox">
           <li data-keyux-ignore-hotkeys role="option" tabIndex={0}>
-            <button aria-keyshortcuts="v">
+            <button aria-keyshortcuts="v" tabIndex={-1}>
               First button <HotKeyHint hotkey="v" />
             </button>
           </li>
           <li data-keyux-ignore-hotkeys role="option" tabIndex={0}>
-            <button aria-keyshortcuts="v">
+            <button aria-keyshortcuts="v" tabIndex={-1}>
               Second button <HotKeyHint hotkey="v" />
             </button>
           </li>
@@ -195,8 +195,8 @@ const Page: FC<{
           </li>
         </ul>
 
-        <div data-keyux-ignore-hotkeys id="panel" tabIndex={0}>
-          <button aria-keyshortcuts="v">
+        <div data-keyux-ignore-hotkeys id="panel">
+          <button aria-keyshortcuts="v" tabIndex={-1}>
             Click on panel button <HotKeyHint hotkey="v" />
           </button>
         </div>
