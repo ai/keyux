@@ -287,7 +287,8 @@ with arrow navigation.
 
 Users will use <kbd>Tab</kbd> to get inside the menu, and will use either
 arrows or <kbd>Home</kbd>,
-<kbd>End</kbd> or an item name to navigate inside.
+<kbd>End</kbd> or an item name to navigate inside. User can search the menu item
+by typing the first characters of the item text.
 
 To enable this feature, call `focusGroupKeyUX`.
 
