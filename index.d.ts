@@ -44,7 +44,7 @@ type SingleDirectionTransformer = (
 ) => false | string
 
 export type Transformer = [
-  tranformForward: SingleDirectionTransformer,
+  transformForward: SingleDirectionTransformer,
   transformReverse: SingleDirectionTransformer
 ]
 
