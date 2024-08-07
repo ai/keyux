@@ -12,11 +12,11 @@ const MAC_WINDOW = {
   }
 } as MinimalWindow
 
-const [tranformForward, transformReverse] = hotkeyMacCompat()
+const [transformForward, transformReverse] = hotkeyMacCompat()
 
 test('applies hotkey compatibility for Mac platform', () => {
-  equal(tranformForward('meta+shift+b', MAC_WINDOW), 'ctrl+shift+b')
-  equal(tranformForward('meta+ctrl+shift+b', MAC_WINDOW), 'meta+ctrl+shift+b')
+  equal(transformForward('meta+shift+b', MAC_WINDOW), 'ctrl+shift+b')
+  equal(transformForward('meta+ctrl+shift+b', MAC_WINDOW), 'meta+ctrl+shift+b')
 })
 
 test('applies hint compatibility for Mac platform', () => {
@@ -25,6 +25,6 @@ test('applies hint compatibility for Mac platform', () => {
 })
 
 test('does nothing for non-Mac platform', () => {
-  equal(tranformForward('meta+shift+b', new JSDOM().window), 'meta+shift+b')
+  equal(transformForward('meta+shift+b', new JSDOM().window), 'meta+shift+b')
   equal(transformReverse('ctrl+shift+b', new JSDOM().window), 'ctrl+shift+b')
 })
