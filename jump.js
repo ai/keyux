@@ -1,6 +1,7 @@
 export function jumpKeyUX() {
   return window => {
     let jumps = []
+    let lastFocusedElement = null
 
     function focus(next) {
       let current = window.document.activeElement
@@ -8,27 +9,44 @@ export function jumpKeyUX() {
         jumps.push(new WeakRef(current))
       }
       next.focus({ focusVisible: true })
+      lastFocusedElement = null
     }
 
-    function back() {
-      let ref = jumps.pop()
-      if (!ref) {
-        window.document.activeElement.blur()
-        return
+    function jumpBack() {
+      let ref = jumps.pop();
+      if (ref) {
+        let el = ref.deref();
+    
+        if (el && el.isConnected) {
+          el.focus();
+          return true;
+        }
+        return jumpBack();
       }
-      let el = ref.deref()
-      if (el && el.isConnected) {
-        el.focus()
-      } else {
-        back()
+      return false;
+    }
+    
+    function blur() {
+      let activeElement = document.activeElement;
+      if (activeElement && activeElement !== document.body) {
+        lastFocusedElement = activeElement;
+      }
+      activeElement.blur();
+    }
+    
+    function jumpBackOrBlur() {
+      let successfullyJumped = jumpBack();
+      if (!successfullyJumped) {
+        blur();
       }
     }
-
+    
     let tries = 0
     let finding
 
     function jump(from) {
       clearInterval(finding)
+      tries = 0
       let ariaControls = from.getAttribute('aria-controls')
       finding = setInterval(() => {
         if (tries++ > 50) {
@@ -53,14 +71,21 @@ export function jumpKeyUX() {
       }, 50)
     }
 
+    function restoreFocus(event) {
+      event.preventDefault()
+      lastFocusedElement.focus({ focusVisible: true })
+      lastFocusedElement = null
+    }
+
     function keyDown(event) {
-      if (event.target.getAttribute('aria-controls')) {
-        if (event.key === 'Enter') {
-          jump(event.target)
-        }
+      if (event.target.getAttribute('aria-controls') && event.key === 'Enter') {
+        jump(event.target)
       }
-      if (event.key === 'Escape') {
-        back()
+
+      if (event.key === 'Tab' && lastFocusedElement) {
+        restoreFocus(event)
+      } else if (event.key === 'Escape') {
+        jumpBackOrBlur()
       }
     }
 
