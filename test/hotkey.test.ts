@@ -18,7 +18,8 @@ test('adds hot keys to buttons and links', () => {
     '<button aria-keyshortcuts="b">1</button>' +
     '<button aria-keyshortcuts="Ctrl+B">10</button>' +
     '<button aria-keyshortcuts="plus">100</button>' +
-    '<a href="#" aria-keyshortcuts="meta+ctrl+alt+shift+b">1000</a>'
+    '<a href="#" aria-keyshortcuts="meta+ctrl+alt+shift+b">1000</a>' +
+    '<button aria-keyshortcuts="Shift+Space">10000</button>'
 
   let result = 0
   let buttons = window.document.querySelectorAll('button, a')
@@ -51,6 +52,9 @@ test('adds hot keys to buttons and links', () => {
     shiftKey: true
   })
   equal(result, 1112)
+
+  press(window, { key: '', shiftKey: true })
+  equal(result, 11112)
 })
 
 test('stops event tracking', () => {
