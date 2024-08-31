@@ -2,6 +2,9 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.1
+* Fixed hotkeys with space (by @vitalybaev).
+
 ## 0.8.0
 * Added ability to put focus to text input by hotkey.
 
