@@ -12,6 +12,11 @@ const CLICK_INPUTS = {
   submit: true
 }
 
+let KEY_REPLACERS = {
+  '': 'space',
+  '+': 'plus'
+}
+
 function isInsideIgnored(parent, node) {
   if (node.tagName !== 'BODY' && parent !== node) {
     if (node.hasAttribute('data-keyux-ignore-hotkeys')) {
@@ -68,11 +73,7 @@ function findHotKey(event, window, transformers) {
   if (event.shiftKey) prefix += 'shift+'
 
   let code = prefix
-  if (event.key === '+') {
-    code += 'plus'
-  } else {
-    code += event.key.toLowerCase()
-  }
+  code += KEY_REPLACERS[event.key] ?? event.key.toLowerCase()
 
   let hotkey = checkHotkey(window, code, transformers)
   if (
