@@ -3,75 +3,59 @@
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.8.0
-
-- Added ability to put focus to text input by hotkey.
+* Added ability to put focus to text input by hotkey.
 
 ## 0.7.2
-
-- Fixed Safari support.
+* Fixed Safari support.
 
 ## 0.7.1
-
-- Allowed to trigger hotkey with `Alt` on focus in text fields.
+* Allowed to trigger hotkey with `Alt` on focus in text fields.
 
 ## 0.7.0
-
-- Changed hotkeys override API with transformers (by @myandrienko).
-- Added `hotkeyMacCompat` transformer (by @myandrienko).
+* Changed hotkeys override API with transformers (by @myandrienko).
+* Added `hotkeyMacCompat` transformer (by @myandrienko).
 
 ## 0.6.2
-
-- Reduced npm package size.
+* Reduced npm package size.
 
 ## 0.6.1
-
-- Fixed `aria-controls` jump with loader in next menu.
-- Fixed blur on `Esc` on last element of jump queue.
-- Fixed pressed state on pressing two hotkeys.
+* Fixed `aria-controls` jump with loader in next menu.
+* Fixed blur on `Esc` on last element of jump queue.
+* Fixed pressed state on pressing two hotkeys.
 
 ## 0.6.0
-
-- Added `toolbar` support to `focusGroupKeyUX()` (by @dmitry-kurmanov).
+* Added `toolbar` support to `focusGroupKeyUX()` (by @dmitry-kurmanov).
 
 ## 0.5.0
-
-- Renamed `menuKeyUX()` to `focusGroupKeyUX()` (by @dmitry-kurmanov).
-- Added more `role` to `focusGroupKeyUX()` (by @dmitry-kurmanov).
+* Renamed `menuKeyUX()` to `focusGroupKeyUX()` (by @dmitry-kurmanov).
+* Added more `role` to `focusGroupKeyUX()` (by @dmitry-kurmanov).
 
 ## 0.4.0
-
-- Added hotkeys for list items (by Fedorov Ignatij).
+* Added hotkeys for list items (by Fedorov Ignatij).
 
 ## 0.3.1
-
-- Fixed jumps for slow client-render apps.
+* Fixed jumps for slow client-render apps.
 
 ## 0.3.0
-
-- Changed modifier order for Windows canonical order (by @myandrienko).
-- Improved MacOS X support in `getHotKeyHint` (by @myandrienko).
-- Fixed listeners leak in `pressKeyUX` (by @ilyhryh).
-- Fixed docs (by @myandrienko, @lentsd, and @maximal).
+* Changed modifier order for Windows canonical order (by @myandrienko).
+* Improved MacOS X support in `getHotKeyHint` (by @myandrienko).
+* Fixed listeners leak in `pressKeyUX` (by @ilyhryh).
+* Fixed docs (by @myandrienko, @lentsd, and @maximal).
 
 ## 0.2.1
-
-- Fixed `menu` typing search and hotkeys conflict.
+* Fixed `menu` typing search and hotkeys conflict.
 
 ## 0.2.0
-
-- Added typing search for `menu` (by @VladBrok).
+* Added typing search for `menu` (by @VladBrok).
 
 ## 0.1.2
-
-- Fixed scroll on up/down keys in `menu`.
-- Fixed jumps in real apps with slower render.
+* Fixed scroll on up/down keys in `menu`.
+* Fixed jumps in real apps with slower render.
 
 ## 0.1.1
-
-- Fixed focus jump to checked radio input.
-- Fixed hotkey tracking with focus on radio input.
-- Fixed focus jump after mouse click.
+* Fixed focus jump to checked radio input.
+* Fixed hotkey tracking with focus on radio input.
+* Fixed focus jump after mouse click.
 
 ## 0.1.0
-
-- Initial release.
+* Initial release.
