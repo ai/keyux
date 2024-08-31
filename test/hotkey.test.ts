@@ -53,7 +53,7 @@ test('adds hot keys to buttons and links', () => {
   })
   equal(result, 1112)
 
-  press(window, { key: '', shiftKey: true })
+  press(window, { key: ' ', shiftKey: true })
   equal(result, 11112)
 })
 

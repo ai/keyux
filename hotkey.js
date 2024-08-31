@@ -13,7 +13,7 @@ let CLICK_INPUTS = {
 }
 
 let KEY_REPLACERS = {
-  '': 'space',
+  ' ': 'space',
   '+': 'plus'
 }
 
