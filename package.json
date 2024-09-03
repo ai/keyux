@@ -1,6 +1,6 @@
 {
   "name": "keyux",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "description": "Improve keyboard UI of web apps",
   "keywords": [
     "hotkey",
@@ -38,23 +38,23 @@
     }
   ],
   "devDependencies": {
-    "@logux/eslint-config": "^53.2.1",
+    "@logux/eslint-config": "^53.4.0",
     "@size-limit/preset-small-lib": "^11.1.4",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^22.1.0",
-    "@types/react": "^18.3.3",
+    "@types/node": "^22.5.1",
+    "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
-    "better-node-test": "^0.5.1",
+    "better-node-test": "^0.7.1",
     "c8": "^10.1.2",
     "clean-publish": "^5.0.0",
-    "eslint": "^9.8.0",
-    "jsdom": "^24.1.1",
+    "eslint": "^9.9.1",
+    "jsdom": "^25.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "size-limit": "^11.1.4",
-    "tsx": "^4.16.5",
+    "tsx": "^4.19.0",
     "typescript": "^5.5.4",
-    "vite": "^5.3.5"
+    "vite": "^5.4.2"
   },
   "prettier": {
     "arrowParens": "avoid",
@@ -85,7 +85,7 @@
       "import": {
         "./index.js": "{ startKeyUX, hotkeyKeyUX, pressKeyUX, focusGroupKeyUX, escapeKeyUX, jumpKeyUX, hiddenKeyUX, likelyWithKeyboard, getHotKeyHint, hotkeyOverrides, hotkeyMacCompat }"
       },
-      "limit": "2120 B"
+      "limit": "2132 B"
     }
   ],
   "clean-publish": {

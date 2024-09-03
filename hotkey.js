@@ -1,15 +1,20 @@
-const NON_ENGLISH_LAYOUT = /^[^\x00-\x7F]$/
+let NON_ENGLISH_LAYOUT = /^[^\x00-\x7F]$/
 
-const IGNORE_INPUTS = {
+let IGNORE_INPUTS = {
   checkbox: true,
   file: true,
   radio: true
 }
 
-const CLICK_INPUTS = {
+let CLICK_INPUTS = {
   button: true,
   reset: true,
   submit: true
+}
+
+let KEY_REPLACERS = {
+  ' ': 'space',
+  '+': 'plus'
 }
 
 function isInsideIgnored(parent, node) {
@@ -68,11 +73,7 @@ function findHotKey(event, window, transformers) {
   if (event.shiftKey) prefix += 'shift+'
 
   let code = prefix
-  if (event.key === '+') {
-    code += 'plus'
-  } else {
-    code += event.key.toLowerCase()
-  }
+  code += KEY_REPLACERS[event.key] ?? event.key.toLowerCase()
 
   let hotkey = checkHotkey(window, code, transformers)
   if (
