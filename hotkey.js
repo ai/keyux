@@ -94,6 +94,7 @@ export function hotkeyKeyUX(transformers = []) {
       if (
         !event.altKey &&
         (event.target.tagName === 'TEXTAREA' ||
+          event.target.isContentEditable ||
           (event.target.tagName === 'INPUT' &&
             !IGNORE_INPUTS[event.target.type]) ||
           event.target.role === 'menuitem')
