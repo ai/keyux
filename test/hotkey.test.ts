@@ -100,6 +100,8 @@ test('ignores hot keys when focus is inside text fields', () => {
   press(window, { key: 'b' }, window.document.querySelector('textarea')!)
   equal(clicked, 0)
 
+  // TODO: Add tests for conteneditable (currently, JSDOM doesn't support it)
+
   press(window, { key: 'b' }, window.document.querySelector('a')!)
   equal(clicked, 1)
 
