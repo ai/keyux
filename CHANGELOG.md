@@ -2,6 +2,9 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.3
+* Fixed `contenteditable` support (by @vitalybaev).
+
 ## 0.8.2
 * Fixed hotkey with space support (by @vitalybaev).
 
