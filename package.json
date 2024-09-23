@@ -85,7 +85,7 @@
       "import": {
         "./index.js": "{ startKeyUX, hotkeyKeyUX, pressKeyUX, focusGroupKeyUX, jumpKeyUX, hiddenKeyUX, likelyWithKeyboard, getHotKeyHint, hotkeyOverrides, hotkeyMacCompat }"
       },
-      "limit": "2144 B"
+      "limit": "2162 B"
     }
   ],
   "clean-publish": {
