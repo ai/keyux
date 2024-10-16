@@ -53,7 +53,9 @@ test('adds hot keys to buttons and links', () => {
   })
   equal(result, 1112)
 
+  console.log(result)
   press(window, { key: ' ', shiftKey: true })
+  console.log(result)
   equal(result, 11112)
 })
 
