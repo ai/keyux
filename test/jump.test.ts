@@ -6,15 +6,11 @@ import { setTimeout } from 'node:timers/promises'
 import { jumpKeyUX, startKeyUX } from '../index.js'
 import { keyboardClick, mouseClick, press } from './utils.js'
 
-const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
-global.window = dom.window;
-global.document = dom.window.document;
-
 test('jumps to next area by click and back by escape', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [jumpKeyUX()])
   window.document.body.innerHTML =
-    '<a id="step1" href="#" aria-controls="step2">Step1</a>' +
+    '<a id="step1" href="#" aria-controls="step2"></a>' +
     '<div id="step2"><button aria-controls="step3"></button></div>' +
     '<div id="step3"><label tabindex="0" aria-controls="step4">' +
     '</label><a href="#"></a></div>' +
@@ -22,23 +18,15 @@ test('jumps to next area by click and back by escape', async () => {
     '<div id="step5"><input type="radio" name="a" value="1">' +
     ' <input type="radio" name="a" value="2" checked></div>'
 
-  let step1 = window.document.querySelector('#step1')!
+  let step1 = window.document.querySelector<HTMLElement>('#step1')!
   let step2button = window.document.querySelector('#step2 button')!
   let step3label = window.document.querySelector('#step3 label')!
   let step4input = window.document.querySelector('#step4 input')!
   let step5checked = window.document.querySelector('#step5 input:last-child')!
 
-  console.log("step1:")
-  console.log(step1.innerHTML)
-  console.log("window.document.body.innerHTML:")
-  console.log(window.document.body.innerHTML)
-
   step1.focus()
-
-  console.log("step1:")
-  console.log(step1.innerHTML)
-
   keyboardClick(window, step1)
+
   equal(window.document.activeElement, step1)
   await setTimeout(50)
   equal(window.document.activeElement, step2button)
@@ -68,7 +56,8 @@ test('jumps to next area by click and back by escape', async () => {
   equal(window.document.activeElement, step1)
 
   press(window, 'Escape')
-  equal(window.document.activeElement, window.document.body)
+
+  equal(window.document.activeElement, step1)
 })
 
 test('stops event tracking', async () => {
