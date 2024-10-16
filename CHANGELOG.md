@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.9.0
+* Added `inert` and `aria-hidden` support.
+
+## 0.8.3
+* Fixed `contenteditable` support (by @vitalybaev).
+
 ## 0.8.2
 * Fixed hotkey with space support (by @vitalybaev).
 

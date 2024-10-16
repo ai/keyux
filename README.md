@@ -114,6 +114,18 @@ startKeyUX(window, [
 ])
 ```
 
+Hotkeys inside block with `inert` or `aria-hidden` attribute will be ignored.
+You can use it, to disable page’s hotkeys when dialog is shown:
+
+```html
+<main inert>
+  <button aria-keyshortcuts="h">Help</button> <!-- Will be ignored -->
+</main>
+<dialog>
+  …
+</dialog>
+```
+
 
 ### Hotkeys Hint
 
@@ -180,7 +192,7 @@ button {
   }
 }
 ```
-
+overriding
 You can use
 [`postcss-pseudo-classes`](https://github.com/giuseppeg/postcss-pseudo-classes)
 to automatically add class for every `:active` state in your CSS.
@@ -191,7 +203,7 @@ to automatically add class for every `:active` state in your CSS.
 Many users want to override hotkeys because your hotkeys can conflict with
 their browser’s extensions, system, or screen reader.
 
-KeyUX allows to override hotkeys using tranforms. Use the `hotkeyOverrides()`
+KeyUX allows overriding hotkeys using tranforms. Use the `hotkeyOverrides()`
 tranformer with `hotkeyKeyUX()` and `getHotKeyHint()`.
 
 You will need to create some UI for users to fill this object like:

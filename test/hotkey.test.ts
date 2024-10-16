@@ -100,6 +100,8 @@ test('ignores hot keys when focus is inside text fields', () => {
   press(window, { key: 'b' }, window.document.querySelector('textarea')!)
   equal(clicked, 0)
 
+  // TODO: Add tests for conteneditable (currently, JSDOM doesn't support it)
+
   press(window, { key: 'b' }, window.document.querySelector('a')!)
   equal(clicked, 1)
 
@@ -293,6 +295,33 @@ test('looks inside focused after data-keyux-hotkeys', () => {
   window.document.querySelector<HTMLElement>('li')!.focus()
   press(window, { key: 'v' })
   equal(clicked, 'First button')
+})
+
+test('ignores some hotkeys', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML =
+    '<div><button aria-keyshortcuts="v">Button</button></div>'
+
+  let clicked = 0
+  let parent = window.document.querySelector('div')!
+  let button = window.document.querySelector('button')!
+  button.addEventListener('click', () => {
+    clicked += 1
+  })
+
+  parent.setAttribute('inert', 'inert')
+  press(window, { key: 'v' })
+  equal(clicked, 0)
+
+  parent.removeAttribute('inert')
+  parent.setAttribute('aria-hidden', 'true')
+  press(window, { key: 'v' })
+  equal(clicked, 0)
+
+  parent.removeAttribute('aria-hidden')
+  press(window, { key: 'v' })
+  equal(clicked, 1)
 })
 
 test('is ready for missed data-keyux-hotkeys', () => {

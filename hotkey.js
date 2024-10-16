@@ -19,7 +19,11 @@ let KEY_REPLACERS = {
 
 function isInsideIgnored(parent, node) {
   if (node.tagName !== 'BODY' && parent !== node) {
-    if (node.hasAttribute('data-keyux-ignore-hotkeys')) {
+    if (
+      node.hasAttribute('data-keyux-ignore-hotkeys') ||
+      node.getAttribute('aria-hidden') === 'true' ||
+      node.hasAttribute('inert')
+    ) {
       return true
     } else {
       return isInsideIgnored(parent, node.parentNode)
@@ -94,6 +98,7 @@ export function hotkeyKeyUX(transformers = []) {
       if (
         !event.altKey &&
         (event.target.tagName === 'TEXTAREA' ||
+          event.target.isContentEditable ||
           (event.target.tagName === 'INPUT' &&
             !IGNORE_INPUTS[event.target.type]) ||
           event.target.role === 'menuitem')
