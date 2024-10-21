@@ -5,7 +5,6 @@ export * from './hotkey.js'
 export * from './jump.js'
 export * from './overrides.js'
 export * from './press.js'
-export * from './escape.js'
 
 export function startKeyUX(window, plugins) {
   let unbinds = plugins.map(plugin => plugin(window))

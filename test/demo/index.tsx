@@ -12,8 +12,7 @@ import {
   jumpKeyUX,
   likelyWithKeyboard,
   pressKeyUX,
-  startKeyUX,
-  escapeKeyUX
+  startKeyUX
 } from '../../index.js'
 
 let overrides: HotkeyOverride = {}
@@ -22,7 +21,6 @@ let macCompatTransformer = hotkeyMacCompat()
 
 startKeyUX(window, [
   hotkeyKeyUX([macCompatTransformer, overridesTransformer]),
-  escapeKeyUX(),
   focusGroupKeyUX(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
