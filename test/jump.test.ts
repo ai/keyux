@@ -70,6 +70,11 @@ test('stops event tracking', async () => {
 
   let step1 = window.document.querySelector('#step1')!
   stop()
+
+  keyboardClick(window, step1)
+  await setTimeout(50)
+  equal(window.document.activeElement, window.document.body)
+
 })
 
 test('ignores mouse click', async () => {
