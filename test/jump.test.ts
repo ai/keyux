@@ -6,8 +6,35 @@ import { setTimeout } from 'node:timers/promises'
 import { jumpKeyUX, startKeyUX } from '../index.js'
 import { keyboardClick, mouseClick, press } from './utils.js'
 
+test('jumps to next next elemnt, blur and restore focus on the last element', async () => {
+  let { window } = new JSDOM()
+  global.document = window.document
+
+  startKeyUX(window, [jumpKeyUX()])
+  window.document.body.innerHTML =
+    '<a id="step1" href="#"></a>' +
+    '<a id="step2" href="#"></a>'
+  let step1 = window.document.querySelector<HTMLElement>('#step1')!
+  let step2 = window.document.querySelector<HTMLElement>('#step1')!
+
+  step1.focus()
+  
+  press(window, 'Tab')
+  equal(window.document.activeElement, step1)
+  await setTimeout(50)
+  equal(window.document.activeElement, step2)
+
+  press(window, 'Escape')
+  equal(window.document.activeElement, window.document.body)
+
+  press(window, 'Tab')
+  equal(window.document.activeElement, step2)
+})
+
 test('jumps to next area by click and back by escape', async () => {
-  let window = new JSDOM().window
+  let { window } = new JSDOM()
+  global.document = window.document
+
   startKeyUX(window, [jumpKeyUX()])
   window.document.body.innerHTML =
     '<a id="step1" href="#" aria-controls="step2"></a>' +
@@ -26,6 +53,7 @@ test('jumps to next area by click and back by escape', async () => {
 
   step1.focus()
   keyboardClick(window, step1)
+
   equal(window.document.activeElement, step1)
   await setTimeout(50)
   equal(window.document.activeElement, step2button)
@@ -71,6 +99,7 @@ test('stops event tracking', async () => {
   keyboardClick(window, step1)
   await setTimeout(50)
   equal(window.document.activeElement, window.document.body)
+
 })
 
 test('ignores mouse click', async () => {
