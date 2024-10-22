@@ -94,13 +94,12 @@ export function focusGroupKeyUX(options) {
         event.preventDefault()
         focus(event.target, items[items.length - 1])
       } else if (event.key.length === 1 && group.role !== 'tablist') {
-        let now = Date.now()
-        if (now - lastTyped <= typingDelayMs) {
+        if (event.timeStamp - lastTyped <= typingDelayMs) {
           searchPrefix += event.key.toLowerCase()
         } else {
           searchPrefix = event.key.toLowerCase()
         }
-        lastTyped = now
+        lastTyped = event.timeStamp
 
         let found = Array.from(items).find(item => {
           return item.textContent
