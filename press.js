@@ -1,33 +1,38 @@
 export function pressKeyUX(pressedClass) {
   let pressedElement
   let classes = pressedClass.split(' ')
-  let down
+  let byEnter
 
   function keyDown(event) {
     if (
-      event.key === 'Enter' &&
+      (event.key === 'Enter' || event.key === ' ') &&
       (event.target.tagName === 'BUTTON' || event.target.tagName === 'A')
     ) {
       keyUp()
       event.target.classList.add(...classes)
       pressedElement = event.target
-      down = event.target
+      byEnter = event.target
     }
   }
 
   function keyUp() {
     if (pressedElement) {
       pressedElement.classList.remove(...classes)
+      pressedElement = 0
+      setTimeout(() => {
+        byEnter = 0
+      }, 0)
     }
-    down = null
   }
 
   function click(event) {
     if (event.clientX === 0 && event.clientY === 0) {
-      if (down !== event.target) {
+      if (pressedElement !== event.target) {
         keyUp()
-        event.target.classList.add(...classes)
-        pressedElement = event.target
+        if (byEnter !== event.target) {
+          event.target.classList.add(...classes)
+          pressedElement = event.target
+        }
       }
     }
   }

@@ -38,11 +38,6 @@ test('ignores mouse click', () => {
   equal(button.classList.contains('is-pressed'), false)
 
   mouseClick(window, button)
-  equal(button.classList.contains('is-pressed'), true)
-
-  window.dispatchEvent(
-    new window.KeyboardEvent('keyup', { bubbles: true, key: 'Enter' })
-  )
   equal(button.classList.contains('is-pressed'), false)
 })
 
@@ -90,4 +85,23 @@ test('is ready to pressing 2 buttons', () => {
     '<button aria-keyshortcuts="a" class=""></button>' +
       '<button aria-keyshortcuts="b" class=""></button>'
   )
+})
+
+test('is ready for Enter/Space', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [pressKeyUX('is-pressed'), hotkeyKeyUX()])
+
+  window.document.body.innerHTML =
+    '<button aria-keyshortcuts="b" class=""></button>'
+  let button = window.document.querySelector('button')!
+
+  keyboardClick(window, button, 'Enter', () => {
+    equal(button.classList.contains('is-pressed'), true)
+  })
+  equal(button.classList.contains('is-pressed'), false)
+
+  keyboardClick(window, button, ' ', () => {
+    equal(button.classList.contains('is-pressed'), true)
+  })
+  equal(button.classList.contains('is-pressed'), false)
 })

@@ -25,13 +25,38 @@ export function press(
   target.dispatchEvent(up)
 }
 
-export function keyboardClick(window: DOMWindow, element: Element): void {
-  press(window, 'Enter', element)
+export function keyboardClick(
+  window: DOMWindow,
+  element: Element,
+  key: ' ' | 'Enter' = 'Enter',
+  inMiddle?: () => void
+): void {
   element.dispatchEvent(
-    new window.MouseEvent('click', {
-      bubbles: true,
-      clientX: 10,
-      clientY: 10
-    })
+    new window.KeyboardEvent('keydown', { bubbles: true, key })
   )
+  if (inMiddle) inMiddle()
+
+  if (key === 'Enter') {
+    element.dispatchEvent(
+      new window.MouseEvent('click', {
+        bubbles: true,
+        clientX: 10,
+        clientY: 10
+      })
+    )
+    element.dispatchEvent(
+      new window.KeyboardEvent('keyup', { bubbles: true, key })
+    )
+  } else {
+    element.dispatchEvent(
+      new window.KeyboardEvent('keyup', { bubbles: true, key })
+    )
+    element.dispatchEvent(
+      new window.MouseEvent('click', {
+        bubbles: true,
+        clientX: 10,
+        clientY: 10
+      })
+    )
+  }
 }
