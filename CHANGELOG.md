@@ -21,7 +21,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed Safari support.
 
 ## 0.7.1
-* Allowed to trigger hotkey with `Alt` on focus in text fields.
+* Add support for hotkey with `Alt` on focus in text fields.
 
 ## 0.7.0
 * Changed hotkeys override API with transformers (by @myandrienko).
@@ -50,7 +50,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.3.0
 * Changed modifier order for Windows canonical order (by @myandrienko).
-* Improved MacOS X support in `getHotKeyHint` (by @myandrienko).
+* Improved Mac OS X support in `getHotKeyHint` (by @myandrienko).
 * Fixed listeners leak in `pressKeyUX` (by @ilyhryh).
 * Fixed docs (by @myandrienko, @lentsd, and @maximal).
 
