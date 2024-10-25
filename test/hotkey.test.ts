@@ -87,12 +87,15 @@ test('ignores hot keys when focus is inside text fields', () => {
     '<input type="radio">' +
     '<textarea></textarea>' +
     '<a></a>' +
-    '<button aria-keyshortcuts="b"></button>'
+    '<button aria-keyshortcuts="b"></button>' +
+    '<button aria-keyshortcuts="meta+s"></button>'
 
   let clicked = 0
-  window.document.querySelector('button')!.addEventListener('click', () => {
-    clicked += 1
-  })
+  for (let button of window.document.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      clicked += 1
+    })
+  }
 
   press(window, { key: 'b' }, window.document.querySelector('[type=text]')!)
   equal(clicked, 0)
@@ -107,6 +110,13 @@ test('ignores hot keys when focus is inside text fields', () => {
 
   press(window, { key: 'b' }, window.document.querySelector('[type=radio]')!)
   equal(clicked, 2)
+
+  press(
+    window,
+    { key: 's', metaKey: true },
+    window.document.querySelector('[type=text]')!
+  )
+  equal(clicked, 3)
 })
 
 test('does not ignore hotkeys with Alt on focus in text field', () => {

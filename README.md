@@ -170,6 +170,11 @@ startKeyUX(window, [
 getHotKeyHint(window, 'b', [hotkeyOverrides(config)]) // Alt + B
 ```
 
+One-letter hotkeys (like <kbd>B</kbd>) will be ignored if user’s focus is inside
+text inputs or [focus groups](#focus-groups). This is why for general hotkeys
+we recommend add some modifier like <kbd>Alt</kbd>+<kbd>B</kbd>.
+
+
 ### Pressed State
 
 KeyUX can set class to show pressed state for a button when user

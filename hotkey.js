@@ -95,14 +95,13 @@ function findHotKey(event, window, transformers) {
 export function hotkeyKeyUX(transformers = []) {
   return window => {
     function keyDown(event) {
-      if (
-        !event.altKey &&
-        (event.target.tagName === 'TEXTAREA' ||
-          event.target.isContentEditable ||
-          (event.target.tagName === 'INPUT' &&
-            !IGNORE_INPUTS[event.target.type]) ||
-          event.target.role === 'menuitem')
-      ) {
+      let isSpecialKey = event.ctrlKey || event.metaKey || event.altKey
+      let insideEditable =
+        event.target.isContentEditable ||
+        event.target.tagName === 'TEXTAREA' ||
+        (event.target.tagName === 'INPUT' && !IGNORE_INPUTS[event.target.type])
+      let insideFocusGroup = event.target.role === 'menuitem'
+      if (!isSpecialKey && (insideEditable || insideFocusGroup)) {
         return
       }
       let active = findHotKey(event, window, transformers)
