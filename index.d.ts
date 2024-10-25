@@ -6,7 +6,7 @@ export interface KeyUX {
 interface MinimalWindow {
   addEventListener(
     type: 'keydown' | 'keyup',
-    listener: (event: {}) => void
+    listener: (event: object) => void
   ): void
 
   document: {
@@ -20,7 +20,7 @@ interface MinimalWindow {
 
   removeEventListener(
     type: 'keydown' | 'keyup',
-    listener: (event: {}) => void
+    listener: (event: object) => void
   ): void
 }
 
