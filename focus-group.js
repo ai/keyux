@@ -36,11 +36,9 @@ function getItems(target, group) {
     return [...group.children]
   }
 
-  if (group.role === 'toolbar') {
-    return getToolbarItems(group)
-  }
-
-  return group.querySelectorAll(`[role=${target.role}]`)
+  return group.role === 'toolbar'
+    ? getToolbarItems(group)
+    : group.querySelectorAll(`[role=${target.role}]`)
 }
 
 function getToolbarItems(group) {
@@ -56,6 +54,10 @@ function getToolbarItems(group) {
 }
 
 function isHorizontalOrientation(group) {
+  let focusGroupValue = group.getAttribute('focusgroup')
+  if (focusGroupValue === 'inline') return true
+  if (focusGroupValue === 'block') return false
+
   let ariaOrientation = group.getAttribute('aria-orientation')
   if (ariaOrientation === 'vertical') return false
   if (ariaOrientation === 'horizontal') return true
