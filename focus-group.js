@@ -13,6 +13,10 @@ function focus(current, next) {
 }
 
 function findGroupNodeByEventTarget(target) {
+  if (target.hasAttribute('focusgroup')) {
+    return target.closest('[focusgroup]')
+  }
+
   let itemRole = target.role || target.type || target.tagName
   if (!itemRole) return null
 
@@ -23,10 +27,19 @@ function findGroupNodeByEventTarget(target) {
     let node = target.closest(`[role=${role}]`)
     if (node) return node
   }
+
+  return null
 }
 
 function getItems(target, group) {
-  if (group.role === 'toolbar') return getToolbarItems(group)
+  if (group.hasAttribute('focusgroup')) {
+    return [...group.children]
+  }
+
+  if (group.role === 'toolbar') {
+    return getToolbarItems(group)
+  }
+
   return group.querySelectorAll(`[role=${target.role}]`)
 }
 
