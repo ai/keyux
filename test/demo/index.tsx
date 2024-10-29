@@ -381,6 +381,57 @@ const Toolbar: FC = () => {
   )
 }
 
+const FocusGroup: FC = () => {
+  return (
+    <>
+      <div
+        className="focusgroup"
+        // @ts-expect-error
+        focusgroup={''}
+        tabIndex={0}
+      >
+        <button role="button" tabIndex={-1}>Red</button>
+        <button role="button" tabIndex={-1}>Yellow</button>
+        <button role="button" tabIndex={-1}>Green</button>
+      </div>
+    </>
+  )
+}
+
+const FocusGroupInline: FC = () => {
+  return (
+    <>
+      <div
+        className="focusgroup"
+        // @ts-expect-error
+        focusgroup="inline"
+        tabIndex={0}
+      >
+        <button role="button" tabIndex={-1}>Mac</button>
+        <button role="button" tabIndex={-1}>Windows</button>
+        <button role="button" tabIndex={-1}>Linux</button>
+      </div>
+    </>
+  )
+}
+
+const FocusGroupBlock: FC = () => {
+  return (
+    <>
+      <div
+        className="focusgroup"
+        // @ts-expect-error
+        focusgroup="block"
+        tabIndex={0}
+      >
+        <button role="button" tabIndex={-1}>Dog</button>
+        <button role="button" tabIndex={-1}>Cat</button>
+        <button role="button" tabIndex={-1}>Turtle</button>
+      </div>
+    </>
+  )
+}
+
 const App: FC = () => {
   let [, setUpdate] = useState({})
   let [router, setRouter] = useState('home')
@@ -399,6 +450,9 @@ const App: FC = () => {
       />
       <Tabs />
       <Toolbar />
+      <FocusGroup />
+      <FocusGroupInline />
+      <FocusGroupBlock />
     </>
   )
 }

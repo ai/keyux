@@ -124,6 +124,21 @@
         border: 1px solid #aaa;
         padding: 1em;
       }
+      .focusgroup {
+        margin-top: 1em;
+        gap: 16px;
+        align-items: center;
+        border: 1px solid #aaa;
+        padding: 0.5em 1em;
+        background: #eee;
+      }
+      .focusgroup button:not(:last-child) {
+        margin-right: 1em;
+      }
+      .focusgroup[focusgroup='block'] button {
+        display: block;
+        margin-bottom: 1em;
+      }
       .toolbar {
         margin-top: 1em;
         display: flex;
