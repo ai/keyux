@@ -48,10 +48,7 @@ function getToolbarItems(group) {
 
 function isHorizontalOrientation(group) {
   let fg = group.getAttribute('focusgroup')
-  if (fg !== null)
-  {
-    return !fg.split(' ').includes('block');
-  }
+  if (fg !== null) return !fg.split(' ').includes('block');
 
   let ariaOrientation = group.getAttribute('aria-orientation')
   if (ariaOrientation === 'vertical') return false
