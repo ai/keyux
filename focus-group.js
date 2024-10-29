@@ -13,6 +13,9 @@ function focus(current, next) {
 }
 
 function findGroupNodeByEventTarget(target) {
+  let fg = target.closest('[focusgroup]');
+  if (fg) return fg;
+
   let itemRole = target.role || target.type || target.tagName
   if (!itemRole) return null
 
@@ -26,7 +29,7 @@ function findGroupNodeByEventTarget(target) {
 }
 
 function getItems(target, group) {
-  if (group.role === 'toolbar') return getToolbarItems(group)
+  if (group.role === 'toolbar' || group.hasAttribute('focusgroup')) return getToolbarItems(group)
   return group.querySelectorAll(`[role=${target.role}]`)
 }
 
@@ -37,12 +40,19 @@ function getToolbarItems(group) {
       item.role === 'button' ||
       item.type === 'button' ||
       item.role === 'checkbox' ||
-      item.type === 'checkbox'
+      item.type === 'checkbox' ||
+      item.hasAttribute('tabindex')
     )
   })
 }
 
 function isHorizontalOrientation(group) {
+  let fg = group.getAttribute('focusgroup')
+  if (fg !== null)
+  {
+    return !fg.split(' ').includes('block');
+  }
+
   let ariaOrientation = group.getAttribute('aria-orientation')
   if (ariaOrientation === 'vertical') return false
   if (ariaOrientation === 'horizontal') return true

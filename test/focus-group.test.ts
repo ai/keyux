@@ -456,3 +456,103 @@ test('adds toolbar widget', () => {
   press(window, 'ArrowRight')
   equal(window.document.activeElement, buttons[0])
 })
+
+test('adds focusgroup widget', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div focusgroup tabIndex="-1">' +
+    '<span tabindex="-1">Mac</span>' +
+    '<span tabindex="-1">Windows</span>' +
+    '<span tabindex="-1">Linux</span>' +
+    '</div>'
+  let inlineElements = window.document.querySelectorAll('span')
+  inlineElements[0].focus()
+
+  equal(window.document.activeElement, inlineElements[0])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, inlineElements[1])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, inlineElements[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, inlineElements[2])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, inlineElements[0])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, inlineElements[2])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, inlineElements[0])
+})
+
+test('adds focusgroup inline widget', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div focusgroup="inline" tabIndex="-1">' +
+    '<span tabindex="-1">Mac</span>' +
+    '<span tabindex="-1">Windows</span>' +
+    '<span tabindex="-1">Linux</span>' +
+    '</div>'
+  let inlineElements = window.document.querySelectorAll('span')
+  inlineElements[0].focus()
+
+  equal(window.document.activeElement, inlineElements[0])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, inlineElements[1])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, inlineElements[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, inlineElements[2])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, inlineElements[0])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, inlineElements[2])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, inlineElements[0])
+})
+
+test('adds focusgroup block widget', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div focusgroup="block" tabIndex="-1">' +
+    '<div tabindex="-1">Dog</div>' +
+    '<div tabindex="-1">Cat</div>' +
+    '<div tabindex="-1">Turtle</div>' +
+    '</div>'
+  let blockElements = window.document.querySelectorAll('div:not([focusgroup="block"])');
+  // @ts-ignore
+  blockElements[0].focus()
+
+  equal(window.document.activeElement, blockElements[0])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, blockElements[1])
+
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, blockElements[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, blockElements[2])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, blockElements[0])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, blockElements[0])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, blockElements[0])
+})
