@@ -390,9 +390,9 @@ const FocusGroup: FC = () => {
         focusgroup={''}
         tabIndex={0}
       >
-        <span className="focusgroup-item" role="menuitem" tabIndex={-1}>Red</span>
-        <span className="focusgroup-item" role="menuitem" tabIndex={-1}>Yellow</span>
-        <span className="focusgroup-item" role="menuitem" tabIndex={-1}>Green</span>
+        <button role="button" tabIndex={-1}>Red</button>
+        <button role="button" tabIndex={-1}>Yellow</button>
+        <button role="button" tabIndex={-1}>Green</button>
       </div>
     </>
   )
@@ -407,9 +407,9 @@ const FocusGroupInline: FC = () => {
         focusgroup="inline"
         tabIndex={0}
       >
-        <span className="focusgroup-item" role="menuitem" tabIndex={-1}>Mac</span>
-        <span className="focusgroup-item" role="menuitem" tabIndex={-1}>Windows</span>
-        <span className="focusgroup-item" role="menuitem" tabIndex={-1}>Linux</span>
+        <button role="button" tabIndex={-1}>Mac</button>
+        <button role="button" tabIndex={-1}>Windows</button>
+        <button role="button" tabIndex={-1}>Linux</button>
       </div>
     </>
   )
@@ -424,9 +424,9 @@ const FocusGroupBlock: FC = () => {
         focusgroup="block"
         tabIndex={0}
       >
-        <div className="focusgroup-item" role="menuitem" tabIndex={-1}>Dog</div>
-        <div className="focusgroup-item" role="menuitem" tabIndex={-1}>Cat</div>
-        <div className="focusgroup-item" role="menuitem" tabIndex={-1}>Turtle</div>
+        <button role="button" tabIndex={-1}>Dog</button>
+        <button role="button" tabIndex={-1}>Cat</button>
+        <button role="button" tabIndex={-1}>Turtle</button>
       </div>
     </>
   )

@@ -40,8 +40,7 @@ function getToolbarItems(group) {
       item.role === 'button' ||
       item.type === 'button' ||
       item.role === 'checkbox' ||
-      item.type === 'checkbox' ||
-      item.hasAttribute('tabindex')
+      item.type === 'checkbox'
     )
   })
 }
