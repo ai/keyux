@@ -390,9 +390,9 @@ const FocusGroup: FC = () => {
         focusgroup={''}
         tabIndex={0}
       >
-        <button role="button" tabIndex={-1}>Red</button>
-        <button role="button" tabIndex={-1}>Yellow</button>
-        <button role="button" tabIndex={-1}>Green</button>
+        <button type="button">Red</button>
+        <button type="button">Yellow</button>
+        <button type="button">Green</button>
       </div>
     </>
   )
@@ -407,9 +407,9 @@ const FocusGroupInline: FC = () => {
         focusgroup="inline"
         tabIndex={0}
       >
-        <button role="button" tabIndex={-1}>Mac</button>
-        <button role="button" tabIndex={-1}>Windows</button>
-        <button role="button" tabIndex={-1}>Linux</button>
+        <button type="button">Mac</button>
+        <button type="button">Windows</button>
+        <button type="button">Linux</button>
       </div>
     </>
   )
@@ -424,9 +424,9 @@ const FocusGroupBlock: FC = () => {
         focusgroup="block"
         tabIndex={0}
       >
-        <button role="button" tabIndex={-1}>Dog</button>
-        <button role="button" tabIndex={-1}>Cat</button>
-        <button role="button" tabIndex={-1}>Turtle</button>
+        <button type="button">Dog</button>
+        <button type="button">Cat</button>
+        <button type="button">Turtle</button>
       </div>
     </>
   )
