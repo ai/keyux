@@ -532,7 +532,7 @@ test('adds focusgroup block widget', () => {
     '<button role="button" tabindex="-1">Cat</button>' +
     '<button role="button" tabindex="-1">Turtle</button>' +
     '</div>'
-  let buttons = window.document.querySelectorAll('button');
+  let buttons = window.document.querySelectorAll('button')
   // @ts-ignore
   buttons[0].focus()
 
@@ -554,5 +554,26 @@ test('adds focusgroup block widget', () => {
   equal(window.document.activeElement, buttons[0])
 
   press(window, 'ArrowRight')
+  equal(window.document.activeElement, buttons[0])
+})
+
+test('disabling focusgroup memory', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div focusgroup="no-memory">' +
+    '<button type="button">Item 1</button>' +
+    '<button type="button">Item 2</button>' +
+    '<button type="button">Item 3</button>' +
+    '</div>'
+  let buttons = window.document.querySelectorAll('button')
+  buttons[0].focus()
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, buttons[1])
+
+  buttons[1].blur()
+  buttons[0].focus()
+
   equal(window.document.activeElement, buttons[0])
 })

@@ -404,7 +404,7 @@ const FocusGroupInline: FC = () => {
       <div
         className="focusgroup"
         // @ts-expect-error
-        focusgroup="inline"
+        focusgroup="inline no-memory"
         tabIndex={0}
       >
         <button type="button">Mac</button>
