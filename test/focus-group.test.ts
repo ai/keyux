@@ -577,3 +577,42 @@ test('disabling focusgroup memory', () => {
 
   equal(window.document.activeElement, buttons[0])
 })
+
+test('adds toolbar widget with focusgroup block option', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div role="toolbar" focusgroup="block">' +
+    '<div>' +
+    '<button type="button">Copy</button>' +
+    '<button type="button">Paste</button>' +
+    '<button type="button">Cut</button>' +
+    '</div>' +
+    '<div>' +
+    '<input type="checkbox"/>' +
+    '</div>' +
+    '</div>'
+  let buttons = window.document.querySelectorAll('button')
+  let checkboxes = window.document.querySelectorAll('[type="checkbox"]')
+  buttons[0].focus()
+
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, buttons[1])
+
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, checkboxes[0])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, buttons[0])
+})
