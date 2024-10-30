@@ -131,13 +131,19 @@
         border: 1px solid #aaa;
         padding: 0.5em 1em;
         background: #eee;
-      }
-      .focusgroup button:not(:last-child) {
-        margin-right: 1em;
-      }
-      .focusgroup[focusgroup='block'] button {
-        display: block;
-        margin-bottom: 1em;
+
+        &[focusgroup='block'] button {
+          display: block;
+          margin-bottom: 1em;
+        }
+
+        button {
+          background-color: white;
+        }
+
+        button:not(:last-child) {
+          margin-right: 1em;
+        }
       }
       .toolbar {
         margin-top: 1em;
@@ -164,7 +170,7 @@
         cursor: pointer;
       }
     </style>
-    <script type="module" crossorigin src="./assets/index-B0uJYWtM.js"></script>
+    <script type="module" crossorigin src="./assets/index-CZbNEVjK.js"></script>
   </head>
   <body>
     <div id="app"></div>
