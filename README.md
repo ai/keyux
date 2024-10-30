@@ -410,7 +410,31 @@ startKeyUX(window, [
   focusGroupKeyUX()
 ])
 ```
+### Focusgroup attribute
 
+```html
+<div focusgroup>
+  <button type="button">Copy</button>
+  <button type="button">Paste</button>
+  <button type="button">Cut</button>
+</div>
+```
+
+```html
+<div focusgroup="inline">
+  <button type="button">Mac</button>
+  <button type="button">Windows</button>
+  <button type="button">Linux</button>
+</div>
+```
+
+```html
+<div focusgroup="block">
+  <button type="button">Dog</button>
+  <button type="button">Cat</button>
+  <button type="button">Turtle</button>
+</div>
+```
 
 ## Focus Jumps
 
