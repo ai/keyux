@@ -38,6 +38,7 @@ https://github.com/user-attachments/assets/bcd78271-cf76-45a3-8beb-4f3cea69c143
   - [Hotkeys for List](#hotkeys-for-list)
   - [Meta instead of Ctrl on Mac](#meta-instead-of-ctrl-on-mac)
 - [Focus Groups](#focus-groups)
+  - [`focusgroup` attribute](#focusgroup-attribute)
   - [Menu](#menu)
   - [Listbox](#listbox)
   - [Tablist](#tablist)
@@ -288,6 +289,26 @@ Using only <kbd>Tab</kbd> for navigation is not very useful. User may need to
 press it too many times to get to their button (also non-screen-reader users
 don’t have quick navigation).
 
+
+### `focusgroup` attribute
+
+Key UX has limited polyfill for [`focusgroup` attribute](https://open-ui.org/components/focusgroup.explainer/) to mark groups where user will move `:focus`
+by arrows.
+
+```html
+<div focusgroup>
+  <button type="button">Copy</button>
+  <button type="button">Paste</button>
+  <button type="button">Cut</button>
+</div>
+```
+
+Key UX supports (you can combine these features):
+- `focusgroup="block"` for vertical arrows.
+- `focusgroup="no-memory"` to not restore last focus position.
+
+Key UX doesn’t support `wrap`, `none`, and `grid` features.
+
 ### Menu
 
 To reduce Tab-list you can group website’s menu
@@ -409,31 +430,6 @@ import { focusGroupKeyUX } from 'keyux'
 startKeyUX(window, [
   focusGroupKeyUX()
 ])
-```
-### Focusgroup attribute
-
-```html
-<div focusgroup>
-  <button type="button">Copy</button>
-  <button type="button">Paste</button>
-  <button type="button">Cut</button>
-</div>
-```
-
-```html
-<div focusgroup="inline">
-  <button type="button">Mac</button>
-  <button type="button">Windows</button>
-  <button type="button">Linux</button>
-</div>
-```
-
-```html
-<div focusgroup="block">
-  <button type="button">Dog</button>
-  <button type="button">Cat</button>
-  <button type="button">Turtle</button>
-</div>
 ```
 
 ## Focus Jumps
