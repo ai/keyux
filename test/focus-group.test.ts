@@ -461,10 +461,10 @@ test('adds focusgroup widget', () => {
   let window = new JSDOM().window
   startKeyUX(window, [focusGroupKeyUX()])
   window.document.body.innerHTML =
-    '<div focusgroup tabIndex="-1">' +
-    '<button role="button" tabindex="-1">Mac</button>' +
-    '<button role="button" tabindex="-1">Windows</button>' +
-    '<button role="button" tabindex="-1">Linux</button>' +
+    '<div focusgroup>' +
+    '<button role="button">Mac</button>' +
+    '<button role="button">Windows</button>' +
+    '<button role="button">Linux</button>' +
     '</div>'
   let buttons = window.document.querySelectorAll('button')
   buttons[0].focus()
@@ -480,13 +480,13 @@ test('adds focusgroup widget', () => {
   press(window, 'End')
   equal(window.document.activeElement, buttons[2])
 
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, buttons[2])
+
   press(window, 'Home')
   equal(window.document.activeElement, buttons[0])
 
   press(window, 'ArrowLeft')
-  equal(window.document.activeElement, buttons[2])
-
-  press(window, 'ArrowRight')
   equal(window.document.activeElement, buttons[0])
 })
 
@@ -494,10 +494,10 @@ test('adds focusgroup inline widget', () => {
   let window = new JSDOM().window
   startKeyUX(window, [focusGroupKeyUX()])
   window.document.body.innerHTML =
-    '<div focusgroup="inline" tabIndex="-1">' +
-    '<button role="button" tabindex="-1">Mac</button>' +
-    '<button role="button" tabindex="-1">Windows</button>' +
-    '<button role="button" tabindex="-1">Linux</button>' +
+    '<div focusgroup="inline">' +
+    '<button role="button">Mac</button>' +
+    '<button role="button">Windows</button>' +
+    '<button role="button">Linux</button>' +
     '</div>'
   let buttons = window.document.querySelectorAll('button')
   buttons[0].focus()
@@ -513,13 +513,13 @@ test('adds focusgroup inline widget', () => {
   press(window, 'End')
   equal(window.document.activeElement, buttons[2])
 
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, buttons[2])
+
   press(window, 'Home')
   equal(window.document.activeElement, buttons[0])
 
   press(window, 'ArrowLeft')
-  equal(window.document.activeElement, buttons[2])
-
-  press(window, 'ArrowRight')
   equal(window.document.activeElement, buttons[0])
 })
 
@@ -527,13 +527,12 @@ test('adds focusgroup block widget', () => {
   let window = new JSDOM().window
   startKeyUX(window, [focusGroupKeyUX()])
   window.document.body.innerHTML =
-    '<div focusgroup="block" tabIndex="-1">' +
-    '<button role="button" tabindex="-1">Dog</button>' +
-    '<button role="button" tabindex="-1">Cat</button>' +
-    '<button role="button" tabindex="-1">Turtle</button>' +
+    '<div focusgroup="block">' +
+    '<button role="button">Dog</button>' +
+    '<button role="button">Cat</button>' +
+    '<button role="button">Turtle</button>' +
     '</div>'
   let buttons = window.document.querySelectorAll('button')
-  // @ts-ignore
   buttons[0].focus()
 
   equal(window.document.activeElement, buttons[0])
@@ -615,4 +614,37 @@ test('adds toolbar widget with focusgroup block option', () => {
 
   press(window, 'ArrowRight')
   equal(window.document.activeElement, buttons[0])
+})
+
+test('enabling wrap behaviors in focusgroup', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div focusgroup="inline wrap">' +
+    '<button role="button">Dog</button>' +
+    '<button role="button">Cat</button>' +
+    '<button role="button">Turtle</button>' +
+    '</div>'
+  let buttons = window.document.querySelectorAll('button')
+  buttons[0].focus()
+
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, buttons[1])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, buttons[2])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, buttons[2])
 })

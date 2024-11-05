@@ -421,7 +421,7 @@ const FocusGroupBlock: FC = () => {
       <div
         className="focusgroup"
         // @ts-expect-error
-        focusgroup="block"
+        focusgroup="block wrap"
         tabIndex={0}
       >
         <button type="button">Dog</button>
