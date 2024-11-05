@@ -306,8 +306,9 @@ by arrows.
 Key UX supports (you can combine these features):
 - `focusgroup="block"` for vertical arrows.
 - `focusgroup="no-memory"` to not restore last focus position.
+- `focusgroup="wrap"` enables cyclic focus movement within a group.
 
-Key UX doesn’t support `wrap`, `none`, and `grid` features.
+Key UX doesn’t support `none` and `grid` features.
 
 ### Menu
 
