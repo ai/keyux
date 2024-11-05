@@ -92,20 +92,22 @@ export function focusGroupKeyUX(options) {
       if (event.key === nextKey) {
         event.preventDefault()
         if (group.hasAttribute('focusgroup')) {
-          items[index + 1]
-            ? focus(event.target, items[index + 1])
-            : group.getAttribute('focusgroup').includes('wrap') &&
-              focus(event.target, items[0])
+          if (items[index + 1]) {
+            focus(event.target, items[index + 1])
+          } else if (group.getAttribute('focusgroup').includes('wrap')) {
+            focus(event.target, items[0])
+          }
         } else {
           focus(event.target, items[index + 1] || items[0])
         }
       } else if (event.key === prevKey) {
         event.preventDefault()
         if (group.hasAttribute('focusgroup')) {
-          items[index - 1]
-            ? focus(event.target, items[index - 1])
-            : group.getAttribute('focusgroup').includes('wrap') &&
-              focus(event.target, items[items.length - 1])
+          if (items[index - 1]) {
+            focus(event.target, items[index - 1])
+          } else if (group.getAttribute('focusgroup').includes('wrap')) {
+            focus(event.target, items[items.length - 1])
+          }
         } else {
           focus(event.target, items[index - 1] || items[items.length - 1])
         }
