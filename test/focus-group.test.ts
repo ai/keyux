@@ -648,3 +648,101 @@ test('enabling wrap behaviors in focusgroup', () => {
   press(window, 'ArrowLeft')
   equal(window.document.activeElement, buttons[2])
 })
+
+test('disabling focusgroup=none elements', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div focusgroup="block">' +
+    '<button role="button" focusgroup="none">Button 1</button>' +
+    '<button role="button">Button 2</button>' +
+    '<button role="button" focusgroup="none">Button 3</button>' +
+    '<button role="button">Button 4</button>' +
+    '</div>'
+  let buttons = window.document.querySelectorAll('button')
+  buttons[1].focus()
+
+  equal(window.document.activeElement, buttons[1])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, buttons[3])
+
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, buttons[1])
+
+  press(window, 'End')
+  equal(window.document.activeElement, buttons[3])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, buttons[1])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, buttons[1])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, buttons[1])
+})
+
+test('focusgroup=none with wrap behavior', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div focusgroup="inline wrap">' +
+    '<button role="button" focusgroup="none">Button 1</button>' +
+    '<button role="button">Button 2</button>' +
+    '<button role="button" focusgroup="none">Button 3</button>' +
+    '<button role="button">Button 4</button>' +
+    '</div>'
+  let buttons = window.document.querySelectorAll('button')
+  buttons[1].focus()
+
+  equal(window.document.activeElement, buttons[1])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, buttons[3])
+
+  press(window, 'End')
+  equal(window.document.activeElement, buttons[3])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, buttons[1])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, buttons[1])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, buttons[3])
+
+  press(window, 'ArrowDown')
+  equal(window.document.activeElement, buttons[3])
+
+  press(window, 'ArrowUp')
+  equal(window.document.activeElement, buttons[3])
+})
+
+test('skips all lements with focusgroup=none', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [focusGroupKeyUX()])
+  window.document.body.innerHTML =
+    '<div focusgroup="wrap">' +
+    '<button role="button" focusgroup="none">Button 1</button>' +
+    '<button role="button" focusgroup="none">Button 2</button>' +
+    '<button role="button" focusgroup="none">Button 3</button>' +
+    '</div>'
+  let buttons = window.document.querySelectorAll('button')
+  buttons[0].focus()
+
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'ArrowRight')
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'ArrowLeft')
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'Home')
+  equal(window.document.activeElement, buttons[0])
+
+  press(window, 'End')
+  equal(window.document.activeElement, buttons[0])
+})
