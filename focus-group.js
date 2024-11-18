@@ -151,10 +151,7 @@ export function focusGroupKeyUX(options) {
           window.addEventListener('keydown', keyDown)
         }
 
-        let items = Array.from(getItems(event.target, group)).filter(
-          item => !item.closest('[focusgroup="none"]')
-        )
-        if (!items.length) return stop()
+        let items = Array.from(getItems(event.target, group))
         if (
           !items.some(item => item.getAttribute('tabindex') === '0') &&
           group.hasAttribute('focusgroup')
@@ -162,7 +159,7 @@ export function focusGroupKeyUX(options) {
           items.forEach((item, idx) =>
             item.setAttribute('tabindex', idx === 0 ? 0 : -1)
           )
-          items[0].focus()
+          items[0]?.focus()
         } else {
           items.forEach(item => {
             if (item !== event.target) item.setAttribute('tabindex', -1)
