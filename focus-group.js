@@ -13,7 +13,7 @@ function focus(current, next) {
 }
 
 function findGroupNodeByEventTarget(target) {
-  let fg = target.closest('[focusgroup]')
+  let fg = target.closest('[focusgroup]:not([focusgroup="none"])')
   if (fg) return fg
 
   let itemRole = target.role || target.type || target.tagName
@@ -36,7 +36,7 @@ function getItems(target, group) {
 }
 
 function getToolbarItems(group) {
-  let items = [...group.querySelectorAll('*')]
+  let items = [...group.querySelectorAll('*:not([focusgroup="none"])')]
   return items.filter(item => {
     return (
       item.role === 'button' ||
@@ -150,11 +150,20 @@ export function focusGroupKeyUX(options) {
           inGroup = true
           window.addEventListener('keydown', keyDown)
         }
-        let items = getItems(event.target, group)
-        for (let item of items) {
-          if (item !== event.target) {
-            item.setAttribute('tabindex', -1)
-          }
+
+        let items = Array.from(getItems(event.target, group))
+        if (
+          !items.some(item => item.getAttribute('tabindex') === '0') &&
+          group.hasAttribute('focusgroup')
+        ) {
+          items.forEach((item, idx) =>
+            item.setAttribute('tabindex', idx === 0 ? 0 : -1)
+          )
+          items[0]?.focus()
+        } else {
+          items.forEach(item => {
+            if (item !== event.target) item.setAttribute('tabindex', -1)
+          })
         }
       } else if (inGroup) {
         stop()

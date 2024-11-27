@@ -407,9 +407,29 @@ const FocusGroupInline: FC = () => {
         focusgroup="inline no-memory"
         tabIndex={0}
       >
-        <button type="button">Mac</button>
+        <button
+          // @ts-expect-error
+          focusgroup="none"
+          type="button"
+        >
+          Mac
+        </button>
         <button type="button">Windows</button>
-        <button type="button">Linux</button>
+        <button
+          // @ts-expect-error
+          focusgroup="none"
+          type="button"
+        >
+          Linux
+        </button>
+        <button type="button">Android</button>
+        <button
+          // @ts-expect-error
+          focusgroup="none"
+          type="button"
+        >
+          IOS
+        </button>
       </div>
     </>
   )
@@ -424,7 +444,13 @@ const FocusGroupBlock: FC = () => {
         focusgroup="block wrap"
         tabIndex={0}
       >
-        <button type="button">Dog</button>
+        <button
+          // @ts-expect-error
+          focusgroup="none"
+          type="button"
+        >
+          Dog
+        </button>
         <button type="button">Cat</button>
         <button type="button">Turtle</button>
       </div>
