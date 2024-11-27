@@ -156,8 +156,8 @@ export function focusGroupKeyUX(options) {
           !items.some(item => item.getAttribute('tabindex') === '0') &&
           group.hasAttribute('focusgroup')
         ) {
-          items.forEach((item, idx) =>
-            item.setAttribute('tabindex', idx === 0 ? 0 : -1)
+          items.forEach((item, index) =>
+            item.setAttribute('tabindex', index === 0 ? 0 : -1)
           )
           items[0]?.focus()
         } else {
