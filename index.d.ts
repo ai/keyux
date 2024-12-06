@@ -75,6 +75,19 @@ export function hotkeyKeyUX(transformers?: Transformer[]): KeyUXModule
 export function focusGroupKeyUX(options?: FocusGroupKeyUXOptions): KeyUXModule
 
 /**
+ * Add polyfill for focusgroup attribute to enable arrow-key navigation within groups.
+ *
+ * ```js
+ * import { startKeyUX, focusGroupPolyfill } from 'keyux'
+ *
+ * startKeyUX(window, [
+ *   focusGroupPolyfill()
+ * ])
+ * ```
+ */
+export function focusGroupPolyfill(options?: FocusGroupKeyUXOptions): KeyUXModule
+
+/**
  * Add pressed style on button activation from keyboard.
  *
  * ```js

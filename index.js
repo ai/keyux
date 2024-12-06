@@ -1,4 +1,5 @@
 export * from './compat.js'
+export * from './focus-group-polyfill.js'
 export * from './focus-group.js'
 export * from './hidden.js'
 export * from './hotkey.js'
