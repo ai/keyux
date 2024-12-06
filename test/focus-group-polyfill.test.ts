@@ -3,7 +3,12 @@ import { equal } from 'node:assert'
 import { describe, test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
-import { focusGroupPolyfill, hotkeyKeyUX, startKeyUX } from '../index.js'
+import {
+  focusGroupKeyUX,
+  focusGroupPolyfill,
+  hotkeyKeyUX,
+  startKeyUX
+} from '../index.js'
 import { press } from './utils.js'
 
 describe('focus-group-polyfill', () => {
@@ -473,5 +478,79 @@ describe('focus-group-polyfill', () => {
 
     press(window, 'End')
     equal(window.document.activeElement, buttons[0])
+  })
+
+  test('compatibility between the menu widget and the focusgroup polyfill', () => {
+    let window = new JSDOM().window
+    startKeyUX(window, [focusGroupKeyUX(), focusGroupPolyfill()])
+    window.document.body.innerHTML =
+      '<div role="menu" aria-orientation="horizontal">' +
+      '<a href="#" role="menuitem">Item 1</a>' +
+      '<a href="#" role="menuitem">Item 2</a>' +
+      '<a href="#" role="menuitem">Item 3</a>' +
+      '</div>' +
+      '<div focusgroup="inline">' +
+      '<button role="button">Button 1</button>' +
+      '<button role="button">Button 2</button>' +
+      '<button role="button">Button 3</button>' +
+      '</div>'
+
+    let tabItems = window.document.querySelectorAll('a')
+    let fgItems = window.document.querySelectorAll('button')
+
+    tabItems[0].focus()
+    equal(window.document.activeElement, tabItems[0])
+
+    press(window, 'ArrowRight')
+    equal(window.document.activeElement, tabItems[1])
+
+    press(window, 'ArrowLeft')
+    equal(window.document.activeElement, tabItems[0])
+
+    fgItems[0].focus()
+    equal(window.document.activeElement, fgItems[0])
+
+    press(window, 'ArrowRight')
+    equal(window.document.activeElement, fgItems[1])
+
+    press(window, 'ArrowLeft')
+    equal(window.document.activeElement, fgItems[0])
+  })
+
+  test('compatibility between the toolbar widget and the focusgroup polyfill', () => {
+    let window = new JSDOM().window
+    startKeyUX(window, [focusGroupKeyUX(), focusGroupPolyfill()])
+    window.document.body.innerHTML =
+      '<div role="tablist">' +
+      '<button role="tab">Tab 1</button>' +
+      '<button role="tab">Tab 2</button>' +
+      '<button role="tab">Tab 3</button>' +
+      '</div>' +
+      '<div focusgroup="inline">' +
+      '<a href="#" role="button">Button 1</a>' +
+      '<a href="#" role="button">Button 2</a>' +
+      '<a href="#" role="button">Button 3</a>' +
+      '</div>'
+
+    let tabItems = window.document.querySelectorAll('button')
+    let fgItems = window.document.querySelectorAll('a')
+
+    tabItems[0].focus()
+    equal(window.document.activeElement, tabItems[0])
+
+    press(window, 'ArrowRight')
+    equal(window.document.activeElement, tabItems[1])
+
+    press(window, 'ArrowLeft')
+    equal(window.document.activeElement, tabItems[0])
+
+    fgItems[0].focus()
+    equal(window.document.activeElement, fgItems[0])
+
+    press(window, 'ArrowRight')
+    equal(window.document.activeElement, fgItems[1])
+
+    press(window, 'ArrowLeft')
+    equal(window.document.activeElement, fgItems[0])
   })
 })
