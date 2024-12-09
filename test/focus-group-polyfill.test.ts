@@ -1,69 +1,15 @@
 import { JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { describe, test } from 'node:test'
-import { setTimeout } from 'node:timers/promises'
 
 import {
   focusGroupKeyUX,
   focusGroupPolyfill,
-  hotkeyKeyUX,
   startKeyUX
 } from '../index.js'
 import { press } from './utils.js'
 
 describe('focus-group-polyfill', () => {
-  test('moves focus by typing item name', async () => {
-    let window = new JSDOM().window
-    startKeyUX(window, [
-      hotkeyKeyUX(),
-      focusGroupPolyfill({
-        searchDelayMs: 100
-      })
-    ])
-
-    window.document.body.innerHTML =
-      '<button aria-keyshortcuts="h">Button</button>' +
-      '<nav focusgroup="inline">' +
-      '<a href="#" type="button">HOME</a>' +
-      '<a href="#" type="button">About</a>' +
-      '<a href="#" type="button"> agh  </a>' +
-      '<a href="#" type="button">Backspace</a>' +
-      '</nav>'
-
-    let clicked = 0
-    window.document.querySelector('button')!.addEventListener('click', () => {
-      clicked++
-    })
-
-    let items = window.document.querySelectorAll('a')
-    items[0].focus()
-
-    press(window, 'a')
-    equal(window.document.activeElement, items[1])
-
-    press(window, 'G')
-    equal(window.document.activeElement, items[2])
-
-    await setTimeout(150)
-    press(window, 'h')
-    equal(window.document.activeElement, items[0])
-    equal(clicked, 0)
-
-    press(window, 'a')
-    equal(window.document.activeElement, items[0])
-
-    await setTimeout(150)
-    press(window, 'a')
-    equal(window.document.activeElement, items[1])
-
-    await setTimeout(150)
-    press(window, 'Backspace')
-    equal(window.document.activeElement, items[1])
-
-    press(window, 'b')
-    equal(window.document.activeElement, items[3])
-  })
-
   test('stops tacking on loosing focus', () => {
     let window = new JSDOM().window
     startKeyUX(window, [focusGroupPolyfill()])

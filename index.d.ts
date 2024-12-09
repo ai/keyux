@@ -85,7 +85,7 @@ export function focusGroupKeyUX(options?: FocusGroupKeyUXOptions): KeyUXModule
  * ])
  * ```
  */
-export function focusGroupPolyfill(options?: FocusGroupKeyUXOptions): KeyUXModule
+export function focusGroupPolyfill(): KeyUXModule
 
 /**
  * Add pressed style on button activation from keyboard.

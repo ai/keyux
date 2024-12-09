@@ -100,13 +100,8 @@ export function hotkeyKeyUX(transformers = []) {
         event.target.isContentEditable ||
         event.target.tagName === 'TEXTAREA' ||
         (event.target.tagName === 'INPUT' && !IGNORE_INPUTS[event.target.type])
-        
       let insideFocusGroup =
-        event.target.role === 'menuitem' ||
-        event.target.role === 'button' ||
-        event.target.type === 'button' ||
-        event.target.role === 'checkbox' ||
-        event.target.type === 'checkbox'
+        event.target.role === 'menuitem'
       if (!isSpecialKey && (insideEditable || insideFocusGroup)) {
         return
       }

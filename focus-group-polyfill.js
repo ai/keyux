@@ -30,12 +30,9 @@ function isHorizontalOrientation(group) {
   if (fg !== null) return !fg.split(' ').includes('block')
 }
 
-export function focusGroupPolyfill(options) {
+export function focusGroupPolyfill() {
   return window => {
     let inGroup = false
-    let typingDelayMs = options?.searchDelayMs || 300
-    let lastTyped = 0
-    let searchPrefix = ''
 
     function keyDown(event) {
       let group = findGroupNodeByEventTarget(event.target)
@@ -80,25 +77,6 @@ export function focusGroupPolyfill(options) {
       } else if (event.key === 'End') {
         event.preventDefault()
         focus(event.target, items[items.length - 1])
-      } else if (event.key.length === 1) {
-        if (event.timeStamp - lastTyped <= typingDelayMs) {
-          searchPrefix += event.key.toLowerCase()
-        } else {
-          searchPrefix = event.key.toLowerCase()
-        }
-        lastTyped = event.timeStamp
-
-        let found = Array.from(items).find(item => {
-          return item.textContent
-            ?.trim()
-            ?.toLowerCase()
-            ?.startsWith(searchPrefix)
-        })
-
-        if (found) {
-          event.preventDefault()
-          focus(event.target, found)
-        }
       }
     }
 
