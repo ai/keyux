@@ -68,6 +68,7 @@ import {
   hotkeyOverrides,
   jumpKeyUX,
   focusGroupKeyUX,
+  focusGroupPolyfill,
   pressKeyUX,
   startKeyUX
 } from 'keyux'
@@ -77,6 +78,7 @@ const overrides = hotkeyOverrides({})
 startKeyUX(window, [
   hotkeyKeyUX([overrides]),
   focusGroupKeyUX(),
+  focusGroupPolyfill(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
   hiddenKeyUX()
@@ -310,6 +312,16 @@ Key UX supports (you can combine these features):
 - `focusgroup="none"` excludes element from arrow key navigation.
 
 Key UX doesn’t support `grid` feature.
+
+To enable this feature, call `focusGroupPolyfill`.
+
+```js
+import { focusGroupPolyfill } from 'keyux'
+
+startKeyUX(window, [
+  focusGroupPolyfill()
+])
+```
 
 ### Menu
 

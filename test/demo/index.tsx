@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import type { HotkeyOverride } from '../../index.js'
 import {
   focusGroupKeyUX,
+  focusGroupPolyfill,
   getHotKeyHint,
   hiddenKeyUX,
   hotkeyKeyUX,
@@ -22,6 +23,7 @@ let macCompatTransformer = hotkeyMacCompat()
 startKeyUX(window, [
   hotkeyKeyUX([macCompatTransformer, overridesTransformer]),
   focusGroupKeyUX(),
+  focusGroupPolyfill(),
   pressKeyUX('is-pressed'),
   jumpKeyUX(),
   hiddenKeyUX()
