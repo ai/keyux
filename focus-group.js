@@ -13,9 +13,6 @@ function focus(current, next) {
 }
 
 function findGroupNodeByEventTarget(target) {
-  let fg = target.closest('[focusgroup]:not([focusgroup="none"])')
-  if (fg) return fg
-
   let itemRole = target.role || target.type || target.tagName
   if (!itemRole) return null
 
@@ -29,14 +26,12 @@ function findGroupNodeByEventTarget(target) {
 }
 
 function getItems(target, group) {
-  if (group.role === 'toolbar' || group.hasAttribute('focusgroup')) {
-    return getToolbarItems(group)
-  }
+  if (group.role === 'toolbar') return getToolbarItems(group)
   return group.querySelectorAll(`[role=${target.role}]`)
 }
 
 function getToolbarItems(group) {
-  let items = [...group.querySelectorAll('*:not([focusgroup="none"])')]
+  let items = [...group.querySelectorAll('*')]
   return items.filter(item => {
     return (
       item.role === 'button' ||
@@ -48,9 +43,6 @@ function getToolbarItems(group) {
 }
 
 function isHorizontalOrientation(group) {
-  let fg = group.getAttribute('focusgroup')
-  if (fg !== null) return !fg.split(' ').includes('block')
-
   let ariaOrientation = group.getAttribute('aria-orientation')
   if (ariaOrientation === 'vertical') return false
   if (ariaOrientation === 'horizontal') return true
@@ -68,7 +60,6 @@ export function focusGroupKeyUX(options) {
 
     function keyDown(event) {
       let group = findGroupNodeByEventTarget(event.target)
-
       if (!group) {
         stop()
         return
@@ -91,26 +82,10 @@ export function focusGroupKeyUX(options) {
 
       if (event.key === nextKey) {
         event.preventDefault()
-        if (group.hasAttribute('focusgroup')) {
-          if (items[index + 1]) {
-            focus(event.target, items[index + 1])
-          } else if (group.getAttribute('focusgroup').includes('wrap')) {
-            focus(event.target, items[0])
-          }
-        } else {
-          focus(event.target, items[index + 1] || items[0])
-        }
+        focus(event.target, items[index + 1] || items[0])
       } else if (event.key === prevKey) {
         event.preventDefault()
-        if (group.hasAttribute('focusgroup')) {
-          if (items[index - 1]) {
-            focus(event.target, items[index - 1])
-          } else if (group.getAttribute('focusgroup').includes('wrap')) {
-            focus(event.target, items[items.length - 1])
-          }
-        } else {
-          focus(event.target, items[index - 1] || items[items.length - 1])
-        }
+        focus(event.target, items[index - 1] || items[items.length - 1])
       } else if (event.key === 'Home') {
         event.preventDefault()
         focus(event.target, items[0])
@@ -150,20 +125,11 @@ export function focusGroupKeyUX(options) {
           inGroup = true
           window.addEventListener('keydown', keyDown)
         }
-
-        let items = Array.from(getItems(event.target, group))
-        if (
-          !items.some(item => item.getAttribute('tabindex') === '0') &&
-          group.hasAttribute('focusgroup')
-        ) {
-          items.forEach((item, index) =>
-            item.setAttribute('tabindex', index === 0 ? 0 : -1)
-          )
-          items[0]?.focus()
-        } else {
-          items.forEach(item => {
-            if (item !== event.target) item.setAttribute('tabindex', -1)
-          })
+        let items = getItems(event.target, group)
+        for (let item of items) {
+          if (item !== event.target) {
+            item.setAttribute('tabindex', -1)
+          }
         }
       } else if (inGroup) {
         stop()
@@ -171,14 +137,6 @@ export function focusGroupKeyUX(options) {
     }
 
     function focusOut(event) {
-      let group = findGroupNodeByEventTarget(event.target)
-      if (group?.getAttribute('focusgroup')?.includes('no-memory')) {
-        let items = getItems(event.target, group)
-        items.forEach((item, index) => {
-          item.setAttribute('tabindex', index === 0 ? 0 : -1)
-        })
-      }
-
       if (!event.relatedTarget || event.relatedTarget === window.document) {
         stop()
       }
