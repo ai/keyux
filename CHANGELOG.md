@@ -2,6 +2,9 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.0
+* Added `focusgroup` limited polyfill (by @echo-vladimir & @mezhnin).
+
 ## 0.10.0
 * Added support for hotkey with any modifier (`Alt`/`Meta`) inside text input.
 * Added click by `Space` key support to `pressKeyUX()`.
