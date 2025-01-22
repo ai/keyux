@@ -485,4 +485,4 @@ const App: FC = () => {
   )
 }
 
-createRoot(document.getElementById('app')!).render(<App />)
+createRoot(document.getElementById('app')).render(<App />)
