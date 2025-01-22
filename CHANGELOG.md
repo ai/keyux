@@ -3,8 +3,8 @@
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.10.0
-* Add support for hotkey with any modifier (`Alt` or `Meta`) inside text input.
-* Add click by Space key support to `pressKeyUX()`.
+* Added support for hotkey with any modifier (`Alt`/`Meta`) inside text input.
+* Added click by `Space` key support to `pressKeyUX()`.
 
 ## 0.9.0
 * Added `inert` and `aria-hidden` support.
