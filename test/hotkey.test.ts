@@ -152,6 +152,9 @@ test('supports non-English keyboard layouts', () => {
 
   press(window, { altKey: true, code: 'KeyB', key: 'и' })
   equal(clicked, 1)
+
+  press(window, { altKey: true, code: 'KeyB', key: 'Unidentified' })
+  equal(clicked, 2)
 })
 
 test('allows to override hotkeys', () => {

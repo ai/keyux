@@ -82,7 +82,7 @@ function findHotKey(event, window, transformers) {
   let hotkey = checkHotkey(window, code, transformers)
   if (
     !hotkey &&
-    NON_ENGLISH_LAYOUT.test(event.key) &&
+    (event.key.length > 1 || NON_ENGLISH_LAYOUT.test(event.key)) &&
     /^Key.$/.test(event.code)
   ) {
     let enKey = event.code.replace(/^Key/, '').toLowerCase()
@@ -100,8 +100,7 @@ export function hotkeyKeyUX(transformers = []) {
         event.target.isContentEditable ||
         event.target.tagName === 'TEXTAREA' ||
         (event.target.tagName === 'INPUT' && !IGNORE_INPUTS[event.target.type])
-      let insideFocusGroup =
-        event.target.role === 'menuitem'
+      let insideFocusGroup = event.target.role === 'menuitem'
       if (!isSpecialKey && (insideEditable || insideFocusGroup)) {
         return
       }
