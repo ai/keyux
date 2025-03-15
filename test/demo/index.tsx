@@ -388,7 +388,7 @@ const FocusGroup: FC = () => {
     <>
       <div
         className="focusgroup"
-        // @ts-expect-error
+        // @ts-expect-error focusgroup is not official and is not part of types
         focusgroup={''}
         tabIndex={0}
       >
@@ -405,12 +405,12 @@ const FocusGroupInline: FC = () => {
     <>
       <div
         className="focusgroup"
-        // @ts-expect-error
+        // @ts-expect-error attr is not official and is not part of types
         focusgroup="inline no-memory"
         tabIndex={0}
       >
         <button
-          // @ts-expect-error
+          // @ts-expect-error attr is not official and is not part of types
           focusgroup="none"
           type="button"
         >
@@ -418,7 +418,7 @@ const FocusGroupInline: FC = () => {
         </button>
         <button type="button">Windows</button>
         <button
-          // @ts-expect-error
+          // @ts-expect-error attr is not official and is not part of types
           focusgroup="none"
           type="button"
         >
@@ -426,7 +426,7 @@ const FocusGroupInline: FC = () => {
         </button>
         <button type="button">Android</button>
         <button
-          // @ts-expect-error
+          // @ts-expect-error attr is not official and is not part of types
           focusgroup="none"
           type="button"
         >
@@ -442,12 +442,12 @@ const FocusGroupBlock: FC = () => {
     <>
       <div
         className="focusgroup"
-        // @ts-expect-error
+        // @ts-expect-error attr is not official and is not part of types
         focusgroup="block wrap"
         tabIndex={0}
       >
         <button
-          // @ts-expect-error
+          // @ts-expect-error attr is not official and is not part of types
           focusgroup="none"
           type="button"
         >
