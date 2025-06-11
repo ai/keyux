@@ -85,6 +85,23 @@ const Counter: FC = () => {
   )
 }
 
+const Numbers: FC = () => {
+  return (
+    <div className="toolbar" role="toolbar">
+      <div className="toolbar_group">
+        {Array(10)
+          .fill(0)
+          .map((_, i) => (
+            <button aria-keyshortcuts={`alt+${i}`} key={i}>
+              Digit <strong>{i}</strong>
+              <HotKeyHint hotkey={`alt+${i}`} />
+            </button>
+          ))}
+      </div>
+    </div>
+  )
+}
+
 const Search: FC = () => {
   return (
     <div>
@@ -481,6 +498,7 @@ const App: FC = () => {
       <FocusGroup />
       <FocusGroupInline />
       <FocusGroupBlock />
+      <Numbers />
     </>
   )
 }
