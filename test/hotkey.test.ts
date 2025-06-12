@@ -143,11 +143,18 @@ test('does not ignore hotkeys with Alt on focus in text field', () => {
 test('supports non-English keyboard layouts', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
-  window.document.body.innerHTML = '<button aria-keyshortcuts="Alt+B"></button>'
+  window.document.body.innerHTML =
+    '<button id="button1" aria-keyshortcuts="Alt+B"></button>' +
+    '<button id="button2" aria-keyshortcuts="Alt+0"></button>'
 
   let clicked = 0
-  window.document.querySelector('button')!.addEventListener('click', () => {
+  window.document.querySelector('#button1')!.addEventListener('click', () => {
     clicked += 1
+  })
+
+  let digitClicked = 0
+  window.document.querySelector('#button2')!.addEventListener('click', () => {
+    digitClicked += 1
   })
 
   press(window, { altKey: true, code: 'KeyB', key: 'и' })
@@ -155,6 +162,9 @@ test('supports non-English keyboard layouts', () => {
 
   press(window, { altKey: true, code: 'KeyB', key: 'Unidentified' })
   equal(clicked, 2)
+
+  press(window, { altKey: true, code: 'Digit0', key: 'º' })
+  equal(digitClicked, 1)
 })
 
 test('allows to override hotkeys', () => {
