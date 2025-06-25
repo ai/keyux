@@ -15,7 +15,7 @@
     "test:build": "pnpm run build",
     "test:size": "size-limit",
     "test": "pnpm run /^test:/",
-    "start": "vite test/demo/",
+    "start": "vite test/demo/ --host 0.0.0.0",
     "build": "vite build --base ./ test/demo/"
   },
   "author": "Andrey Sitnik <andrey@sitnik.ru>",
