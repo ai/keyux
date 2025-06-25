@@ -144,16 +144,16 @@ test('supports non-English keyboard layouts', () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])
   window.document.body.innerHTML =
-    '<button id="button1" aria-keyshortcuts="Alt+B"></button>' +
-    '<button id="button2" aria-keyshortcuts="Alt+0"></button>'
+    '<button id="buttonB" aria-keyshortcuts="Alt+B"></button>' +
+    '<button id="button0" aria-keyshortcuts="Alt+0"></button>'
 
   let clicked = 0
-  window.document.querySelector('#button1')!.addEventListener('click', () => {
+  window.document.querySelector('#buttonB')!.addEventListener('click', () => {
     clicked += 1
   })
 
   let digitClicked = 0
-  window.document.querySelector('#button2')!.addEventListener('click', () => {
+  window.document.querySelector('#button0')!.addEventListener('click', () => {
     digitClicked += 1
   })
 
