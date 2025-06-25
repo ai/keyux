@@ -83,9 +83,9 @@ function findHotKey(event, window, transformers) {
   if (
     !hotkey &&
     (event.key.length > 1 || NON_ENGLISH_LAYOUT.test(event.key)) &&
-    /^Key.$/.test(event.code)
+    /^(Key.|Digit\d)$/.test(event.code)
   ) {
-    let enKey = event.code.replace(/^Key/, '').toLowerCase()
+    let enKey = event.code.replace(/^Key|^Digit/, '').toLowerCase()
     hotkey = checkHotkey(window, prefix + enKey, transformers)
   }
 
