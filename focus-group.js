@@ -30,6 +30,19 @@ function getItems(target, group) {
   return group.querySelectorAll(`[role=${target.role}]`)
 }
 
+function filterNested(allItems, group) {
+  return Array.from(allItems).filter(item => {
+    let current = item.parentElement
+    while (current && current !== group) {
+      if (current.getAttribute('aria-hidden') === 'true') {
+        return false
+      }
+      current = current.parentElement
+    }
+    return true
+  })
+}
+
 function getToolbarItems(group) {
   let items = [...group.querySelectorAll('*')]
   return items.filter(item => {
@@ -65,7 +78,8 @@ export function focusGroupKeyUX(options) {
         return
       }
 
-      let items = getItems(event.target, group)
+      let allItems = getItems(event.target, group)
+      let items = filterNested(allItems, group)
       let index = Array.from(items).indexOf(event.target)
 
       let nextKey = 'ArrowDown'
@@ -100,7 +114,7 @@ export function focusGroupKeyUX(options) {
         }
         lastTyped = event.timeStamp
 
-        let found = Array.from(items).find(item => {
+        let found = Array.from(allItems).find(item => {
           return item.textContent
             ?.trim()
             ?.toLowerCase()

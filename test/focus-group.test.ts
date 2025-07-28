@@ -3,7 +3,12 @@ import { equal } from 'node:assert'
 import { describe, test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
-import { focusGroupKeyUX, hotkeyKeyUX, startKeyUX } from '../index.js'
+import {
+  focusGroupKeyUX,
+  hotkeyKeyUX,
+  jumpKeyUX,
+  startKeyUX
+} from '../index.js'
 import { press } from './utils.js'
 
 describe('focus-group', () => {
@@ -456,5 +461,42 @@ describe('focus-group', () => {
 
     press(window, 'ArrowRight')
     equal(window.document.activeElement, buttons[0])
+  })
+
+  test('supports nested menu', async () => {
+    let window = new JSDOM().window
+    startKeyUX(window, [focusGroupKeyUX(), jumpKeyUX()])
+
+    window.document.body.innerHTML =
+      '<nav role="menu">' +
+      '<button role="menuitem" aria-controls="nested">1</button>' +
+      '<div role="menu" id="nested" aria-hidden="true">' +
+      '<button role="menuitem">1.1</button>' +
+      '<button role="menuitem">1.2</button>' +
+      '</div>' +
+      '<button role="menuitem">2</button>' +
+      '</nav>'
+    let items = window.document.querySelectorAll('button')
+    items[0].focus()
+    equal(window.document.activeElement?.textContent, '1')
+
+    press(window, 'ArrowDown')
+    equal(window.document.activeElement?.textContent, '2')
+
+    press(window, 'ArrowUp')
+    equal(window.document.activeElement?.textContent, '1')
+
+    press(window, 'Enter')
+    await setTimeout(100)
+    equal(window.document.activeElement?.textContent, '1.1')
+
+    press(window, 'ArrowDown')
+    equal(window.document.activeElement?.textContent, '1.2')
+
+    press(window, 'ArrowDown')
+    equal(window.document.activeElement?.textContent, '1.1')
+
+    press(window, 'Escape')
+    equal(window.document.activeElement?.textContent, '1')
   })
 })
