@@ -370,7 +370,7 @@ describe('focus-group', () => {
     equal(window.document.activeElement, items[0])
   })
 
-  test('node with role "tablist" should not support moving focus by search', async () => {
+  test('role "tablist" should not support moving focus by search', async () => {
     let window = new JSDOM().window
     startKeyUX(window, [
       hotkeyKeyUX(),
