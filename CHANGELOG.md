@@ -2,6 +2,9 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.3
+* Fixed nested menu support in `focusGroupKeyUX()`.
+
 ## 0.11.2
 * Fixed digit with ⌥ hotkeys support on MacOS (by Egor Kolesnikov).
 
