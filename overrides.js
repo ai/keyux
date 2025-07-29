@@ -1,18 +1,8 @@
 export function hotkeyOverrides(overrides) {
-  return [
-    code => {
-      let realCode = overrides[code]
-      if (Object.values(overrides).includes(code) && !realCode) return false
-      return realCode || code
-    },
+  let getOverrided = code => Object.keys(overrides).find(key => overrides[key] === code)
 
-    code => {
-      for (let i in overrides) {
-        if (overrides[i] === code) {
-          return i
-        }
-      }
-      return code
-    }
+  return [
+    code => overrides[code] || (getOverrided(code) ? false : code),
+    code => getOverrided(code) || code
   ]
 }
