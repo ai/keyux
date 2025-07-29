@@ -2,7 +2,7 @@ export function hotkeyOverrides(overrides) {
   return [
     code => {
       let realCode = overrides[code]
-      if (Object.values(overrides).includes(code) && !realCode) return false
+      if (!realCode && Object.values(overrides).includes(code)) return false
       return realCode || code
     },
 
