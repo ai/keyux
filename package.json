@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "test:lint": "eslint .",
-    "test:coverage": "c8 pnpm bnt",
+    "test:coverage": "pnpm bnt --coverage 100 --coverage-exclude 'test/**'",
     "test:build": "pnpm run build",
     "test:size": "size-limit",
     "test": "pnpm run /^test:/",
@@ -46,7 +46,6 @@
     "@types/react-dom": "^19.2.2",
     "actions-up": "^1.4.1",
     "better-node-test": "^0.8.3",
-    "c8": "^10.1.3",
     "clean-publish": "^5.2.2",
     "eslint": "^9.37.0",
     "jsdom": "^27.0.0",
@@ -65,21 +64,6 @@
     "semi": false,
     "singleQuote": true,
     "trailingComma": "none"
-  },
-  "c8": {
-    "exclude": [
-      "test/demo/dist",
-      "**/*.test.*",
-      "test/*"
-    ],
-    "lines": 100,
-    "check-coverage": true,
-    "reporter": [
-      "text",
-      "lcov"
-    ],
-    "skip-full": true,
-    "clean": true
   },
   "size-limit": [
     {
