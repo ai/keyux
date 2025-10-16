@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "target": "es2018",
     "module": "esnext",
     "moduleResolution": "node",
@@ -9,7 +10,5 @@
     "noEmit": true,
     "jsx": "react"
   },
-  "exclude": [
-    "**/errors.ts"
-  ]
+  "exclude": ["**/errors.ts"]
 }

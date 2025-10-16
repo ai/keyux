@@ -4,7 +4,7 @@ import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
 import { jumpKeyUX, startKeyUX } from '../index.js'
-import { keyboardClick, mouseClick, press } from './utils.js'
+import { keyboardClick, mouseClick, press } from './utils.ts'
 
 test('jumps to next area by click and back by escape', async () => {
   let window = new JSDOM().window

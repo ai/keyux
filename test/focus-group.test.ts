@@ -9,7 +9,7 @@ import {
   jumpKeyUX,
   startKeyUX
 } from '../index.js'
-import { press } from './utils.js'
+import { press } from './utils.ts'
 
 describe('focus-group', () => {
   test('adds menu navigation', () => {

@@ -9,7 +9,7 @@ import {
   hotkeyOverrides,
   startKeyUX
 } from '../index.js'
-import { press } from './utils.js'
+import { press } from './utils.ts'
 
 test('adds hot keys to buttons and links', () => {
   let window = new JSDOM().window
@@ -25,7 +25,7 @@ test('adds hot keys to buttons and links', () => {
   let buttons = window.document.querySelectorAll('button, a')
   for (let button of buttons) {
     button.addEventListener('click', () => {
-      result += parseInt(button.textContent!)
+      result += parseInt(button.textContent)
     })
   }
 

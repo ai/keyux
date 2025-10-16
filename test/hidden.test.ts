@@ -4,7 +4,7 @@ import { test } from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 
 import { hiddenKeyUX, jumpKeyUX, startKeyUX } from '../index.js'
-import { keyboardClick, press } from './utils.js'
+import { keyboardClick, press } from './utils.ts'
 
 test('supports nested hidden menus', async () => {
   let window = new JSDOM().window

@@ -7,7 +7,7 @@ import {
   focusGroupPolyfill,
   startKeyUX
 } from '../index.js'
-import { press } from './utils.js'
+import { press } from './utils.ts'
 
 describe('focus-group-polyfill', () => {
   test('stops tacking on loosing focus', () => {

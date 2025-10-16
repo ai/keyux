@@ -3,7 +3,7 @@ import { equal } from 'node:assert'
 import { test } from 'node:test'
 
 import { hotkeyKeyUX, pressKeyUX, startKeyUX } from '../index.js'
-import { keyboardClick, mouseClick } from './utils.js'
+import { keyboardClick, mouseClick } from './utils.ts'
 
 test('adds pressed state', () => {
   let window = new JSDOM().window
