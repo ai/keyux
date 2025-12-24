@@ -106,6 +106,8 @@ export function hotkeyKeyUX(transformers = []) {
       }
       let active = findHotKey(event, window, transformers)
       if (!active) return
+      // Prevent default browser behavior
+      event.preventDefault()
       if (
         active.tagName === 'TEXTAREA' ||
         (active.tagName === 'INPUT' && !CLICK_INPUTS[active.type])
