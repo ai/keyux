@@ -4,22 +4,24 @@ JS library to improve the keyboard UI of web apps. It is designed not only
 for **a11y**, but also to create **professions tools** where users prefer
 to use the keyboard.
 
-* Add **hotkeys** with `aria-keyshortcuts`.
-* Show a button’s `:active` state when a hotkey is pressed.
-* Enable **navigation with keyboard arrows** in `role="menu"` lists.
-* Jump to the next section according to `aria-controls` and back
+- Add **hotkeys** with `aria-keyshortcuts`.
+- Show a button’s `:active` state when a hotkey is pressed.
+- Enable **navigation with keyboard arrows** in `role="menu"` lists.
+- Jump to the next section according to `aria-controls` and back
   with <kbd>Esc</kbd>.
-* Show and hide submenus of `role="menu"`.
-* Allow users to **override hotkeys**.
-* **2 KB** (minified and brotlied). No dependencies.
-* Vanilla JS and works with any framework including React, Vue, Svelte.
+- Show and hide submenus of `role="menu"`.
+- Allow users to **override hotkeys**.
+- **2 KB** (minified and brotlied). No dependencies.
+- Vanilla JS and works with any framework including React, Vue, Svelte.
 
 ```jsx
 export const Button = ({ hotkey, children }) => {
-  return <button aria-keyshortcuts={hotkey}>
-    {children}
-    {likelyWithKeyboard(window) && <kbd>{getHotKeyHint(window, hotkey)}</kbd>}
-  </button>
+  return (
+    <button aria-keyshortcuts={hotkey}>
+      {children}
+      {likelyWithKeyboard(window) && <kbd>{getHotKeyHint(window, hotkey)}</kbd>}
+    </button>
+  )
 }
 ```
 
@@ -48,10 +50,9 @@ https://github.com/user-attachments/assets/bcd78271-cf76-45a3-8beb-4f3cea69c143
 
 ---
 
-<img src="https://cdn.evilmartians.com/badges/logo-no-label.svg" alt="" width="22" height="16" />  Made at <b><a href="https://evilmartians.com/devtools?utm_source=keyux&utm_campaign=devtools-button&utm_medium=github">Evil Martians</a></b>, product consulting for <b>developer tools</b>.
+<img src="https://cdn.evilmartians.com/badges/logo-no-label.svg" alt="" width="22" height="16" /> Made at <b><a href="https://evilmartians.com/devtools?utm_source=keyux&utm_campaign=devtools-button&utm_medium=github">Evil Martians</a></b>, product consulting for <b>developer tools</b>.
 
 ---
-
 
 ## Install
 
@@ -85,7 +86,6 @@ startKeyUX(window, [
 ])
 ```
 
-
 ## Hotkeys
 
 When the user presses a hotkey, KeyUX will click on the button or link
@@ -112,9 +112,7 @@ To enable this feature, call `hotkeyKeyUX`:
 ```js
 import { hotkeyKeyUX, startKeyUX } from 'keyux'
 
-startKeyUX(window, [
-  hotkeyKeyUX()
-])
+startKeyUX(window, [hotkeyKeyUX()])
 ```
 
 Hotkeys inside block with `inert` or `aria-hidden` attribute will be ignored.
@@ -122,13 +120,11 @@ You can use it, to disable page’s hotkeys when dialog is shown:
 
 ```html
 <main inert>
-  <button aria-keyshortcuts="h">Help</button> <!-- Will be ignored -->
+  <button aria-keyshortcuts="h">Help</button>
+  <!-- Will be ignored -->
 </main>
-<dialog>
-  …
-</dialog>
+<dialog>…</dialog>
 ```
-
 
 ### Hotkeys Hint
 
@@ -139,10 +135,12 @@ a prettier way:
 import { likelyWithKeyboard, getHotKeyHint } from 'keyux'
 
 export const Button = ({ hokey, children }) => {
-  return <button aria-keyshortcuts={hotkey}>
-    {children}
-    {likelyWithKeyboard(window) && <kbd>{getHotKeyHint(window, hotkey)}</kbd>}
-  </button>
+  return (
+    <button aria-keyshortcuts={hotkey}>
+      {children}
+      {likelyWithKeyboard(window) && <kbd>{getHotKeyHint(window, hotkey)}</kbd>}
+    </button>
+  )
 }
 ```
 
@@ -158,12 +156,7 @@ If you’re using overrides, pass the same override config both to `hotkeyKeyUX(
 and `getHotKeyHint()` for accurate hints:
 
 ```js
-import {
-  getHotKeyHint,
-  hotkeyOverrides,
-  hotkeyKeyUX,
-  startKeyUX
-} from 'keyux'
+import { getHotKeyHint, hotkeyOverrides, hotkeyKeyUX, startKeyUX } from 'keyux'
 
 let config = { 'alt+b': 'b' }
 
@@ -177,7 +170,6 @@ One-letter hotkeys (like <kbd>B</kbd>) will be ignored if user’s focus is insi
 text inputs or [focus groups](#focus-groups). This is why for general hotkeys
 we recommend add some modifier like <kbd>Alt</kbd>+<kbd>B</kbd>.
 
-
 ### Pressed State
 
 KeyUX can set class to show pressed state for a button when user
@@ -186,10 +178,7 @@ presses a hotkey. It will make the UI more responsive.
 ```js
 import { hotkeyKeyUX, startKeyUX, pressKeyUX } from 'keyux'
 
-startKeyUX(window, [
-  pressKeyUX('is-pressed'),
-  hotkeyKeyUX()
-])
+startKeyUX(window, [pressKeyUX('is-pressed'), hotkeyKeyUX()])
 ```
 
 ```css
@@ -200,11 +189,11 @@ button {
   }
 }
 ```
+
 overriding
 You can use
 [`postcss-pseudo-classes`](https://github.com/giuseppeg/postcss-pseudo-classes)
 to automatically add class for every `:active` state in your CSS.
-
 
 ### Hotkeys Override
 
@@ -227,13 +216,13 @@ Then KeyUX will click on `aria-keyshortcuts="b"` when
 `getHotKeyHint(window, 'b', [hotkeyOverrides(overrides)])` will return
 `Alt + B`/`⌥ B`.
 
-
 ### Hotkeys for List
 
 Websites may have hotkeys for each list element. For instance, for “Add to card”
 button in shopping list.
 
 To implement it:
+
 1. Hide list item’s buttons by `data-keyux-ignore-hotkeys` from global search.
 2. Make list item focusable by `tabindex="0"`. When item has a focus,
    KeyUX ignores `data-keyux-ignore-hotkeys`.
@@ -241,7 +230,9 @@ To implement it:
 ```jsx
 <li data-keyux-ignore-hotkeys tabIndex={0}>
   {product.title}
-  <button aria-keyshortcuts="a" tabIndex={-1}>Add to card</button>
+  <button aria-keyshortcuts="a" tabIndex={-1}>
+    Add to card
+  </button>
 </li>
 ```
 
@@ -261,7 +252,6 @@ If you have common panel with actions for focused item, you can use
 </div>
 ```
 
-
 ### Meta instead of Ctrl on Mac
 
 It’s common to use the <kbd>Meta</kbd> (or <kbd>⌘</kbd>) modifier for hotkeys
@@ -269,14 +259,9 @@ on Mac, while Windows and Linux usually favor the <kbd>Ctrl</kbd> key. To provid
 familiar experience on all platforms, enable the Mac compatibility transform:
 
 ```js
-import {
-  hotkeyMacCompat,
-  hotkeyKeyUX,
-  startKeyUX,
-  getHotKeyHint
-} from 'keyux'
+import { hotkeyMacCompat, hotkeyKeyUX, startKeyUX, getHotKeyHint } from 'keyux'
 
-const mac = hotkeyMacCompat();
+const mac = hotkeyMacCompat()
 startKeyUX(window, [hotkeyKeyUX([mac])])
 getHotKeyHint(window, 'ctrl+b', [mac]) // Ctrl+B on Windows/Linux and ⌘+b on Mac
 ```
@@ -284,13 +269,11 @@ getHotKeyHint(window, 'ctrl+b', [mac]) // Ctrl+B on Windows/Linux and ⌘+b on M
 Hotkeys pressed with the <kbd>Meta</kbd> modifier will work as if
 the <kbd>Ctrl</kbd> modifier was pressed.
 
-
 ## Focus Groups
 
 Using only <kbd>Tab</kbd> for navigation is not very useful. User may need to
 press it too many times to get to their button (also non-screen-reader users
 don’t have quick navigation).
-
 
 ### `focusgroup` attribute
 
@@ -306,6 +289,7 @@ by arrows.
 ```
 
 Key UX supports (you can combine these features):
+
 - `focusgroup="block"` for vertical arrows.
 - `focusgroup="no-memory"` to not restore last focus position.
 - `focusgroup="wrap"` enables cyclic focus movement within a group.
@@ -318,9 +302,7 @@ To enable this feature, call `focusGroupPolyfill`.
 ```js
 import { focusGroupPolyfill } from 'keyux'
 
-startKeyUX(window, [
-  focusGroupPolyfill()
-])
+startKeyUX(window, [focusGroupPolyfill()])
 ```
 
 ### Menu
@@ -347,11 +329,8 @@ To enable this feature, call `focusGroupKeyUX`.
 ```js
 import { focusGroupKeyUX } from 'keyux'
 
-startKeyUX(window, [
-  focusGroupKeyUX()
-])
+startKeyUX(window, [focusGroupKeyUX()])
 ```
-
 
 ### Listbox
 
@@ -377,11 +356,8 @@ To enable this feature, call `focusGroupKeyUX`.
 ```js
 import { focusGroupKeyUX } from 'keyux'
 
-startKeyUX(window, [
-  focusGroupKeyUX()
-])
+startKeyUX(window, [focusGroupKeyUX()])
 ```
-
 
 ### Tablist
 
@@ -406,11 +382,8 @@ To enable this feature, call `focusGroupKeyUX`.
 ```js
 import { focusGroupKeyUX } from 'keyux'
 
-startKeyUX(window, [
-  focusGroupKeyUX()
-])
+startKeyUX(window, [focusGroupKeyUX()])
 ```
-
 
 ### Toolbar
 
@@ -441,9 +414,7 @@ To enable this feature, call `focusGroupKeyUX`.
 ```js
 import { focusGroupKeyUX } from 'keyux'
 
-startKeyUX(window, [
-  focusGroupKeyUX()
-])
+startKeyUX(window, [focusGroupKeyUX()])
 ```
 
 ## Focus Jumps
@@ -481,12 +452,8 @@ To enable this feature, call `jumpKeyUX`.
 ```js
 import { focusGroupKeyUX, jumpKeyUX } from 'keyux'
 
-startKeyUX(window, [
-  focusGroupKeyUX(),
-  jumpKeyUX()
-])
+startKeyUX(window, [focusGroupKeyUX(), jumpKeyUX()])
 ```
-
 
 ### Nested Menu
 
@@ -498,7 +465,9 @@ and `aria-hidden="true"`.
 
 <div id="edit" hidden aria-hidden="true" role="menu">
   <button role="menuitem">Undo</button>
-  <button role="menuitem" aria-controls="find" aria-haspopup="menu">Find</button>
+  <button role="menuitem" aria-controls="find" aria-haspopup="menu">
+    Find
+  </button>
 </div>
 
 <div id="find" hidden aria-hidden="true" role="menu">
@@ -515,9 +484,5 @@ To enable this feature, call `hiddenKeyUX`.
 ```js
 import { focusGroupKeyUX, jumpKeyUX, hiddenKeyUX } from 'keyux'
 
-startKeyUX(window, [
-  focusGroupKeyUX(),
-  jumpKeyUX(),
-  hiddenKeyUX()
-])
+startKeyUX(window, [focusGroupKeyUX(), jumpKeyUX(), hiddenKeyUX()])
 ```

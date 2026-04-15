@@ -23,7 +23,7 @@ describe('focus-group', () => {
       '<a href="#" role="menuitem">Contact</a>' +
       '</nav>'
     let items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
 
     equal(window.document.activeElement, items[0])
     equal(
@@ -76,15 +76,15 @@ describe('focus-group', () => {
     let button = window.document.querySelector('button')!
     let items = window.document.querySelectorAll('a')
 
-    items[0].focus()
-    items[0].blur()
+    items[0]!.focus()
+    items[0]!.blur()
 
-    items[0].focus()
+    items[0]!.focus()
     button.focus()
     press(window, 'ArrowDown')
     equal(window.document.activeElement, button)
 
-    items[0].focus()
+    items[0]!.focus()
     button.dispatchEvent(
       new window.KeyboardEvent('keydown', {
         bubbles: true,
@@ -106,7 +106,7 @@ describe('focus-group', () => {
       '<a href="#" role="menuitem">Contact</a>' +
       '</nav>'
     items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
     press(window, 'ArrowRight')
     equal(window.document.activeElement, items[1])
     press(window, 'ArrowLeft')
@@ -119,7 +119,7 @@ describe('focus-group', () => {
       '<a href="#" role="menuitem">Contact</a>' +
       '</nav>'
     items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
     press(window, 'ArrowRight')
     equal(window.document.activeElement, items[1])
     press(window, 'ArrowLeft')
@@ -132,7 +132,7 @@ describe('focus-group', () => {
       '<a href="#" role="menuitem">Contact</a>' +
       '</nav>'
     items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
     press(window, 'ArrowDown')
     equal(window.document.activeElement, items[1])
     press(window, 'ArrowUp')
@@ -145,7 +145,7 @@ describe('focus-group', () => {
       '<a href="#" role="menuitem">Contact</a>' +
       '</nav>'
     items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
     press(window, 'ArrowDown')
     equal(window.document.activeElement, items[1])
     press(window, 'ArrowUp')
@@ -176,7 +176,7 @@ describe('focus-group', () => {
     })
 
     let items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
 
     press(window, 'a')
     equal(window.document.activeElement, items[1])
@@ -216,7 +216,7 @@ describe('focus-group', () => {
       '<a href="#" role="menuitem">Contact</a>' +
       '</nav>'
     let items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
 
     press(window, 'ArrowLeft')
     equal(window.document.activeElement, items[1])
@@ -236,7 +236,7 @@ describe('focus-group', () => {
       '<a href="#" role="menuitem">Contact</a>' +
       '</nav>'
     let items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
 
     press(window, 'ArrowDown')
     equal(window.document.activeElement, items[1])
@@ -255,7 +255,7 @@ describe('focus-group', () => {
       '<a href="#" role="menuitem">About</a>' +
       '<a href="#" role="menuitem">Contact</a>'
     let items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
 
     press(window, 'ArrowDown')
     equal(window.document.activeElement, items[0])
@@ -267,7 +267,7 @@ describe('focus-group', () => {
       '<a href="#" role="menuitem">Contact</a>' +
       '</nav>'
     let another = window.document.querySelectorAll('a')
-    another[0].focus()
+    another[0]!.focus()
 
     window.document.querySelector('nav')!.role = ''
     press(window, 'ArrowDown')
@@ -285,7 +285,7 @@ describe('focus-group', () => {
       '<a href="#" role="menuitem">Contact</a>' +
       '</nav>'
     let items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
 
     equal(window.document.activeElement, items[0])
 
@@ -319,7 +319,7 @@ describe('focus-group', () => {
       '<li tabindex="0" role="option">Ramen</li>' +
       '</ul>'
     let items = window.document.querySelectorAll('li')
-    items[0].focus()
+    items[0]!.focus()
 
     equal(window.document.activeElement, items[0])
 
@@ -352,7 +352,7 @@ describe('focus-group', () => {
       '<button role="tab">Contact</button>' +
       '</div>'
     let items = window.document.querySelectorAll('button')
-    items[0].focus()
+    items[0]!.focus()
 
     equal(window.document.activeElement, items[0])
 
@@ -392,7 +392,7 @@ describe('focus-group', () => {
       '</div>'
 
     let items = window.document.querySelectorAll('button')
-    items[0].focus()
+    items[0]!.focus()
 
     press(window, 'A')
     await setTimeout(150)
@@ -411,8 +411,8 @@ describe('focus-group', () => {
       '</nav>'
     let items = window.document.querySelectorAll('a')
 
-    items[0].focus()
-    items[1].click()
+    items[0]!.focus()
+    items[1]!.click()
 
     equal(
       window.document.body.innerHTML,
@@ -440,7 +440,7 @@ describe('focus-group', () => {
       '</div>'
     let buttons = window.document.querySelectorAll('button')
     let checkboxes = window.document.querySelectorAll('[type="checkbox"]')
-    buttons[0].focus()
+    buttons[0]!.focus()
 
     equal(window.document.activeElement, buttons[0])
 
@@ -477,7 +477,7 @@ describe('focus-group', () => {
       '<button role="menuitem">2</button>' +
       '</nav>'
     let items = window.document.querySelectorAll('button')
-    items[0].focus()
+    items[0]!.focus()
     equal(window.document.activeElement?.textContent, '1')
 
     press(window, 'ArrowDown')

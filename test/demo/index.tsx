@@ -64,7 +64,7 @@ let MenuItem: FC<{
       role="menuitem"
       tabIndex={tabIndex}
     >
-      {route[0].toUpperCase() + route.slice(1)}
+      {route[0]!.toUpperCase() + route.slice(1)}
       {hotkey ? <HotKeyHint hotkey={hotkey} /> : null}
     </a>
   )
@@ -290,7 +290,7 @@ let Page: FC<{
           }
           for (let i of e.target.value.split('\n')) {
             let [key, value] = i.split(/:\s*/)
-            overrides[key] = value
+            if (key && value) overrides[key] = value
           }
           update()
         }}

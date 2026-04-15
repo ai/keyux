@@ -96,7 +96,7 @@ test('ignores links without data attribute', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [jumpKeyUX()])
   window.document.body.innerHTML =
-    '<a id="step1" href="#"></a>' + '<div id="step2"><button></button></div>'
+    '<a id="step1" href="#"></a><div id="step2"><button></button></div>'
 
   keyboardClick(window, window.document.querySelector('#step1')!)
   await setTimeout(50)

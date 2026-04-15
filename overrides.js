@@ -1,5 +1,7 @@
 export function hotkeyOverrides(overrides) {
-  let getOverrided = code => Object.keys(overrides).find(key => overrides[key] === code)
+  function getOverrided(code) {
+    return Object.keys(overrides).find(key => overrides[key] === code)
+  }
 
   return [
     code => overrides[code] || (getOverrided(code) ? false : code),

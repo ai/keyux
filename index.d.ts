@@ -10,7 +10,7 @@ interface MinimalWindow {
   ): void
 
   document: {
-    querySelector(selector: string): any
+    querySelector(selector: string): unknown
   }
 
   navigator: {

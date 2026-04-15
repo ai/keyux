@@ -3,87 +3,112 @@
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.11.3
-* Fixed nested menu support in `focusGroupKeyUX()`.
+
+- Fixed nested menu support in `focusGroupKeyUX()`.
 
 ## 0.11.2
-* Fixed digit with ⌥ hotkeys support on MacOS (by Egor Kolesnikov).
+
+- Fixed digit with ⌥ hotkeys support on MacOS (by Egor Kolesnikov).
 
 ## 0.11.1
-* Fixed hotkeys with `Alt` on MacOS (by @mira-kovar).
+
+- Fixed hotkeys with `Alt` on MacOS (by @mira-kovar).
 
 ## 0.11.0
-* Added `focusgroup` limited polyfill (by @echo-vladimir & @mezhnin).
+
+- Added `focusgroup` limited polyfill (by @echo-vladimir & @mezhnin).
 
 ## 0.10.0
-* Added support for hotkey with any modifier (`Alt`/`Meta`) inside text input.
-* Added click by `Space` key support to `pressKeyUX()`.
+
+- Added support for hotkey with any modifier (`Alt`/`Meta`) inside text input.
+- Added click by `Space` key support to `pressKeyUX()`.
 
 ## 0.9.0
-* Added `inert` and `aria-hidden` support.
+
+- Added `inert` and `aria-hidden` support.
 
 ## 0.8.3
-* Fixed `contenteditable` support (by @vitalybaev).
+
+- Fixed `contenteditable` support (by @vitalybaev).
 
 ## 0.8.2
-* Fixed hotkey with space support (by @vitalybaev).
+
+- Fixed hotkey with space support (by @vitalybaev).
 
 ## 0.8.1
-* Fixed hotkeys with space (by @vitalybaev).
+
+- Fixed hotkeys with space (by @vitalybaev).
 
 ## 0.8.0
-* Added ability to put focus to text input by hotkey.
+
+- Added ability to put focus to text input by hotkey.
 
 ## 0.7.2
-* Fixed Safari support.
+
+- Fixed Safari support.
 
 ## 0.7.1
-* Add support for hotkey with `Alt` on focus in text fields.
+
+- Add support for hotkey with `Alt` on focus in text fields.
 
 ## 0.7.0
-* Changed hotkeys override API with transformers (by @myandrienko).
-* Added `hotkeyMacCompat` transformer (by @myandrienko).
+
+- Changed hotkeys override API with transformers (by @myandrienko).
+- Added `hotkeyMacCompat` transformer (by @myandrienko).
 
 ## 0.6.2
-* Reduced npm package size.
+
+- Reduced npm package size.
 
 ## 0.6.1
-* Fixed `aria-controls` jump with loader in next menu.
-* Fixed blur on `Esc` on last element of jump queue.
-* Fixed pressed state on pressing two hotkeys.
+
+- Fixed `aria-controls` jump with loader in next menu.
+- Fixed blur on `Esc` on last element of jump queue.
+- Fixed pressed state on pressing two hotkeys.
 
 ## 0.6.0
-* Added `toolbar` support to `focusGroupKeyUX()` (by @dmitry-kurmanov).
+
+- Added `toolbar` support to `focusGroupKeyUX()` (by @dmitry-kurmanov).
 
 ## 0.5.0
-* Renamed `menuKeyUX()` to `focusGroupKeyUX()` (by @dmitry-kurmanov).
-* Added more `role` to `focusGroupKeyUX()` (by @dmitry-kurmanov).
+
+- Renamed `menuKeyUX()` to `focusGroupKeyUX()` (by @dmitry-kurmanov).
+- Added more `role` to `focusGroupKeyUX()` (by @dmitry-kurmanov).
 
 ## 0.4.0
-* Added hotkeys for list items (by Fedorov Ignatij).
+
+- Added hotkeys for list items (by Fedorov Ignatij).
 
 ## 0.3.1
-* Fixed jumps for slow client-render apps.
+
+- Fixed jumps for slow client-render apps.
 
 ## 0.3.0
-* Changed modifier order for Windows canonical order (by @myandrienko).
-* Improved Mac OS X support in `getHotKeyHint` (by @myandrienko).
-* Fixed listeners leak in `pressKeyUX` (by @ilyhryh).
-* Fixed docs (by @myandrienko, @lentsd, and @maximal).
+
+- Changed modifier order for Windows canonical order (by @myandrienko).
+- Improved Mac OS X support in `getHotKeyHint` (by @myandrienko).
+- Fixed listeners leak in `pressKeyUX` (by @ilyhryh).
+- Fixed docs (by @myandrienko, @lentsd, and @maximal).
 
 ## 0.2.1
-* Fixed `menu` typing search and hotkeys conflict.
+
+- Fixed `menu` typing search and hotkeys conflict.
 
 ## 0.2.0
-* Added typing search for `menu` (by @VladBrok).
+
+- Added typing search for `menu` (by @VladBrok).
 
 ## 0.1.2
-* Fixed scroll on up/down keys in `menu`.
-* Fixed jumps in real apps with slower render.
+
+- Fixed scroll on up/down keys in `menu`.
+- Fixed jumps in real apps with slower render.
 
 ## 0.1.1
-* Fixed focus jump to checked radio input.
-* Fixed hotkey tracking with focus on radio input.
-* Fixed focus jump after mouse click.
+
+- Fixed focus jump to checked radio input.
+- Fixed hotkey tracking with focus on radio input.
+- Fixed focus jump after mouse click.
 
 ## 0.1.0
-* Initial release.
+
+- Initial release.

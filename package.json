@@ -3,14 +3,30 @@
   "version": "0.11.3",
   "description": "Improve keyboard UI of web apps",
   "keywords": [
-    "hotkey",
-    "menu",
-    "keyboard",
+    "a11y",
     "accessibility",
-    "a11y"
+    "hotkey",
+    "keyboard",
+    "menu"
   ],
+  "license": "MIT",
+  "author": "Andrey Sitnik <andrey@sitnik.ru>",
+  "repository": "ai/keyux",
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/ai"
+    }
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "types": "./index.d.ts",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
   "scripts": {
-    "test:lint": "eslint .",
+    "test:lint": "oxlint",
     "test:coverage": "pnpm bnt --coverage 100 --coverage-exclude 'test/**'",
     "test:build": "pnpm run build",
     "test:size": "size-limit",
@@ -18,27 +34,8 @@
     "start": "vite test/demo/ --host 0.0.0.0",
     "build": "vite build --base ./ test/demo/"
   },
-  "author": "Andrey Sitnik <andrey@sitnik.ru>",
-  "license": "MIT",
-  "repository": "ai/keyux",
-  "sideEffects": false,
-  "type": "module",
-  "types": "./index.d.ts",
-  "exports": {
-    ".": "./index.js",
-    "./package.json": "./package.json"
-  },
-  "engines": {
-    "node": "^20.0.0 || ^22.0.0 || >=24.0.0"
-  },
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/ai"
-    }
-  ],
   "devDependencies": {
-    "@logux/eslint-config": "^57.1.0",
+    "@logux/oxc-configs": "^0.3.3",
     "@size-limit/preset-small-lib": "^12.1.0",
     "@types/jsdom": "^28.0.1",
     "@types/node": "^25.6.0",
@@ -47,9 +44,11 @@
     "actions-up": "^1.13.0",
     "better-node-test": "^0.8.4",
     "clean-publish": "^6.0.5",
-    "eslint": "^10.2.0",
+    "eslint-plugin-prefer-let": "^4.2.2",
     "jsdom": "^29.0.2",
     "multiocular": "^0.8.2",
+    "oxlint": "^1.60.0",
+    "oxlint-tsgolint": "^0.21.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "size-limit": "^12.1.0",
@@ -57,23 +56,18 @@
     "typescript": "^6.0.2",
     "vite": "^8.0.8"
   },
-  "prettier": {
-    "arrowParens": "avoid",
-    "jsxSingleQuote": false,
-    "quoteProps": "consistent",
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "none"
-  },
   "size-limit": [
     {
       "name": "All modules",
       "import": {
         "./index.js": "{ startKeyUX, hotkeyKeyUX, pressKeyUX, focusGroupKeyUX, jumpKeyUX, hiddenKeyUX, likelyWithKeyboard, getHotKeyHint, hotkeyOverrides, hotkeyMacCompat }"
       },
-      "limit": "2271 B"
+      "limit": "2261 B"
     }
   ],
+  "engines": {
+    "node": "^20.0.0 || ^22.0.0 || >=24.0.0"
+  },
   "clean-publish": {
     "cleanDocs": true
   }

@@ -2,8 +2,7 @@ import { JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { test } from 'node:test'
 
-import { hotkeyMacCompat } from '../compat.js'
-import type { MinimalWindow } from '../index.js'
+import { type MinimalWindow, hotkeyMacCompat } from '../index.js'
 
 const MAC_WINDOW = {
   navigator: {

@@ -2,11 +2,7 @@ import { JSDOM } from 'jsdom'
 import { equal } from 'node:assert'
 import { describe, test } from 'node:test'
 
-import {
-  focusGroupKeyUX,
-  focusGroupPolyfill,
-  startKeyUX
-} from '../index.js'
+import { focusGroupKeyUX, focusGroupPolyfill, startKeyUX } from '../index.js'
 import { press } from './utils.ts'
 
 describe('focus-group-polyfill', () => {
@@ -24,15 +20,15 @@ describe('focus-group-polyfill', () => {
     let button = window.document.querySelector('button')!
     let items = window.document.querySelectorAll('a')
 
-    items[0].focus()
-    items[0].blur()
+    items[0]!.focus()
+    items[0]!.blur()
 
-    items[0].focus()
+    items[0]!.focus()
     button.focus()
     press(window, 'ArrowDown')
     equal(window.document.activeElement, button)
 
-    items[0].focus()
+    items[0]!.focus()
     button.dispatchEvent(
       new window.KeyboardEvent('keydown', {
         bubbles: true,
@@ -53,8 +49,8 @@ describe('focus-group-polyfill', () => {
       '<button type="button">Item 3</button>' +
       '</nav>'
     let buttons = window.document.querySelectorAll('button')
-    buttons[0].focus()
-    buttons[1].click()
+    buttons[0]!.focus()
+    buttons[1]!.click()
 
     equal(
       window.document.body.innerHTML,
@@ -78,7 +74,7 @@ describe('focus-group-polyfill', () => {
       '<a href="#" type="button">Contact</a>' +
       '</nav>'
     let items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
 
     press(window, 'ArrowLeft')
     equal(window.document.activeElement, items[1])
@@ -97,7 +93,7 @@ describe('focus-group-polyfill', () => {
       '<button role="button">Linux</button>' +
       '</div>'
     let buttons = window.document.querySelectorAll('button')
-    buttons[0].focus()
+    buttons[0]!.focus()
 
     equal(window.document.activeElement, buttons[0])
 
@@ -130,7 +126,7 @@ describe('focus-group-polyfill', () => {
       '<button role="button">Linux</button>' +
       '</div>'
     let buttons = window.document.querySelectorAll('button')
-    buttons[0].focus()
+    buttons[0]!.focus()
 
     equal(window.document.activeElement, buttons[0])
 
@@ -163,7 +159,7 @@ describe('focus-group-polyfill', () => {
       '<button role="button">Turtle</button>' +
       '</div>'
     let buttons = window.document.querySelectorAll('button')
-    buttons[0].focus()
+    buttons[0]!.focus()
 
     equal(window.document.activeElement, buttons[0])
 
@@ -196,13 +192,13 @@ describe('focus-group-polyfill', () => {
       '<button type="button">Item 3</button>' +
       '</div>'
     let buttons = window.document.querySelectorAll('button')
-    buttons[0].focus()
+    buttons[0]!.focus()
 
     press(window, 'ArrowRight')
     equal(window.document.activeElement, buttons[1])
 
-    buttons[1].blur()
-    buttons[0].focus()
+    buttons[1]!.blur()
+    buttons[0]!.focus()
 
     equal(window.document.activeElement, buttons[0])
   })
@@ -223,7 +219,7 @@ describe('focus-group-polyfill', () => {
       '</div>'
     let buttons = window.document.querySelectorAll('button')
     let checkboxes = window.document.querySelectorAll('[type="checkbox"]')
-    buttons[0].focus()
+    buttons[0]!.focus()
 
     equal(window.document.activeElement, buttons[0])
 
@@ -257,7 +253,7 @@ describe('focus-group-polyfill', () => {
       '<a href="#" role="button">Contact</a>' +
       '</nav>'
     let items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
 
     press(window, 'ArrowDown')
     equal(window.document.activeElement, items[1])
@@ -276,7 +272,7 @@ describe('focus-group-polyfill', () => {
       '<a href="#" role="button">About</a>' +
       '<a href="#" role="button">Contact</a>'
     let items = window.document.querySelectorAll('a')
-    items[0].focus()
+    items[0]!.focus()
 
     press(window, 'ArrowDown')
     equal(window.document.activeElement, items[0])
@@ -288,7 +284,7 @@ describe('focus-group-polyfill', () => {
       '<a href="#" role="button">Contact</a>' +
       '</nav>'
     let another = window.document.querySelectorAll('a')
-    another[0].focus()
+    another[0]!.focus()
 
     window.document.querySelector('nav')!.role = ''
     press(window, 'ArrowDown')
@@ -305,7 +301,7 @@ describe('focus-group-polyfill', () => {
       '<button role="button">Turtle</button>' +
       '</div>'
     let buttons = window.document.querySelectorAll('button')
-    buttons[0].focus()
+    buttons[0]!.focus()
 
     equal(window.document.activeElement, buttons[0])
 
@@ -339,7 +335,7 @@ describe('focus-group-polyfill', () => {
       '<button role="button">Button 4</button>' +
       '</div>'
     let buttons = window.document.querySelectorAll('button')
-    buttons[1].focus()
+    buttons[1]!.focus()
 
     equal(window.document.activeElement, buttons[1])
 
@@ -373,7 +369,7 @@ describe('focus-group-polyfill', () => {
       '<button role="button">Button 4</button>' +
       '</div>'
     let buttons = window.document.querySelectorAll('button')
-    buttons[1].focus()
+    buttons[1]!.focus()
 
     equal(window.document.activeElement, buttons[1])
 
@@ -409,7 +405,7 @@ describe('focus-group-polyfill', () => {
       '<button role="button" focusgroup="none">Button 3</button>' +
       '</div>'
     let buttons = window.document.querySelectorAll('button')
-    buttons[0].focus()
+    buttons[0]!.focus()
 
     equal(window.document.activeElement, buttons[0])
 
@@ -444,7 +440,7 @@ describe('focus-group-polyfill', () => {
     let tabItems = window.document.querySelectorAll('a')
     let fgItems = window.document.querySelectorAll('button')
 
-    tabItems[0].focus()
+    tabItems[0]!.focus()
     equal(window.document.activeElement, tabItems[0])
 
     press(window, 'ArrowRight')
@@ -453,7 +449,7 @@ describe('focus-group-polyfill', () => {
     press(window, 'ArrowLeft')
     equal(window.document.activeElement, tabItems[0])
 
-    fgItems[0].focus()
+    fgItems[0]!.focus()
     equal(window.document.activeElement, fgItems[0])
 
     press(window, 'ArrowRight')
@@ -481,7 +477,7 @@ describe('focus-group-polyfill', () => {
     let tabItems = window.document.querySelectorAll('button')
     let fgItems = window.document.querySelectorAll('a')
 
-    tabItems[0].focus()
+    tabItems[0]!.focus()
     equal(window.document.activeElement, tabItems[0])
 
     press(window, 'ArrowRight')
@@ -490,7 +486,7 @@ describe('focus-group-polyfill', () => {
     press(window, 'ArrowLeft')
     equal(window.document.activeElement, tabItems[0])
 
-    fgItems[0].focus()
+    fgItems[0]!.focus()
     equal(window.document.activeElement, fgItems[0])
 
     press(window, 'ArrowRight')

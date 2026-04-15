@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
     "allowImportingTsExtensions": true,
-    "target": "es2018",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
     "allowJs": true,
-    "strict": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "noEmit": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "stableTypeOrdering": true,
+    "strict": true,
+    "target": "es2024",
+    "types": ["node"],
     "jsx": "react"
   },
   "exclude": ["**/errors.ts"]
