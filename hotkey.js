@@ -1,18 +1,18 @@
-let NON_ENGLISH_LAYOUT = /^[^\x00-\x7F]$/
+const NON_ENGLISH_LAYOUT = /^[^\x00-\x7F]$/
 
-let IGNORE_INPUTS = {
+const IGNORE_INPUTS = {
   checkbox: true,
   file: true,
   radio: true
 }
 
-let CLICK_INPUTS = {
+const CLICK_INPUTS = {
   button: true,
   reset: true,
   submit: true
 }
 
-let KEY_REPLACERS = {
+const KEY_REPLACERS = {
   ' ': 'space',
   '+': 'plus'
 }

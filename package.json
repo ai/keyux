@@ -38,24 +38,24 @@
     }
   ],
   "devDependencies": {
-    "@logux/eslint-config": "^56.1.0",
-    "@size-limit/preset-small-lib": "^11.2.0",
-    "@types/jsdom": "^27.0.0",
-    "@types/node": "^24.7.2",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "actions-up": "^1.4.1",
-    "better-node-test": "^0.8.3",
-    "clean-publish": "^5.2.2",
-    "eslint": "^9.37.0",
-    "jsdom": "^27.0.0",
-    "multiocular": "^0.8.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "size-limit": "^11.2.0",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3",
-    "vite": "^7.1.10"
+    "@logux/eslint-config": "^57.1.0",
+    "@size-limit/preset-small-lib": "^12.1.0",
+    "@types/jsdom": "^28.0.1",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "actions-up": "^1.13.0",
+    "better-node-test": "^0.8.4",
+    "clean-publish": "^6.0.5",
+    "eslint": "^10.2.0",
+    "jsdom": "^29.0.2",
+    "multiocular": "^0.8.2",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "size-limit": "^12.1.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8"
   },
   "prettier": {
     "arrowParens": "avoid",
@@ -71,7 +71,7 @@
       "import": {
         "./index.js": "{ startKeyUX, hotkeyKeyUX, pressKeyUX, focusGroupKeyUX, jumpKeyUX, hiddenKeyUX, likelyWithKeyboard, getHotKeyHint, hotkeyOverrides, hotkeyMacCompat }"
       },
-      "limit": "2267 B"
+      "limit": "2271 B"
     }
   ],
   "clean-publish": {

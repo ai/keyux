@@ -29,7 +29,7 @@ startKeyUX(window, [
   hiddenKeyUX()
 ])
 
-const HotKeyHint: FC<{ hotkey: string }> = ({ hotkey }) => {
+let HotKeyHint: FC<{ hotkey: string }> = ({ hotkey }) => {
   return likelyWithKeyboard(window) ? (
     <kbd>
       {getHotKeyHint(window, hotkey, [
@@ -40,7 +40,7 @@ const HotKeyHint: FC<{ hotkey: string }> = ({ hotkey }) => {
   ) : null
 }
 
-const MenuItem: FC<{
+let MenuItem: FC<{
   controls: string
   hotkey?: string
   route: string
@@ -70,7 +70,7 @@ const MenuItem: FC<{
   )
 }
 
-const Counter: FC = () => {
+let Counter: FC = () => {
   let [clicked, setClicked] = useState(0)
   return (
     <button
@@ -85,7 +85,7 @@ const Counter: FC = () => {
   )
 }
 
-const Numbers: FC = () => {
+let Numbers: FC = () => {
   return (
     <div className="toolbar" role="toolbar">
       <div className="toolbar_group">
@@ -102,7 +102,7 @@ const Numbers: FC = () => {
   )
 }
 
-const Search: FC = () => {
+let Search: FC = () => {
   return (
     <div>
       <input aria-keyshortcuts="f" placeholder="f" type="text" />
@@ -110,7 +110,7 @@ const Search: FC = () => {
   )
 }
 
-const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
+let Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
   router,
   setRouter
 }) => {
@@ -156,7 +156,7 @@ const Menu: FC<{ router: string; setRouter: (value: string) => void }> = ({
   )
 }
 
-const Page: FC<{
+let Page: FC<{
   router: string
   setRouter: (value: string) => void
   update: () => void
@@ -301,7 +301,7 @@ const Page: FC<{
   return <main id="page">{content}</main>
 }
 
-const Tabs: FC = () => {
+let Tabs: FC = () => {
   let [tab, setTab] = useState('home')
   return (
     <>
@@ -374,7 +374,7 @@ const Tabs: FC = () => {
   )
 }
 
-const Toolbar: FC = () => {
+let Toolbar: FC = () => {
   return (
     <>
       <div className="toolbar" role="toolbar">
@@ -400,7 +400,7 @@ const Toolbar: FC = () => {
   )
 }
 
-const FocusGroup: FC = () => {
+let FocusGroup: FC = () => {
   return (
     <>
       <div
@@ -417,7 +417,7 @@ const FocusGroup: FC = () => {
   )
 }
 
-const FocusGroupInline: FC = () => {
+let FocusGroupInline: FC = () => {
   return (
     <>
       <div
@@ -454,7 +454,7 @@ const FocusGroupInline: FC = () => {
   )
 }
 
-const FocusGroupBlock: FC = () => {
+let FocusGroupBlock: FC = () => {
   return (
     <>
       <div
@@ -477,7 +477,7 @@ const FocusGroupBlock: FC = () => {
   )
 }
 
-const App: FC = () => {
+let App: FC = () => {
   let [, setUpdate] = useState({})
   let [router, setRouter] = useState('home')
 
@@ -503,4 +503,4 @@ const App: FC = () => {
   )
 }
 
-createRoot(document.getElementById('app')).render(<App />)
+createRoot(document.getElementById('app')!).render(<App />)

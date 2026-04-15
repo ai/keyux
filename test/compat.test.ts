@@ -12,7 +12,7 @@ const MAC_WINDOW = {
   }
 } as MinimalWindow
 
-const [transformForward, transformReverse] = hotkeyMacCompat()
+let [transformForward, transformReverse] = hotkeyMacCompat()
 
 test('applies hotkey compatibility for Mac platform', () => {
   equal(transformForward('meta+shift+b', MAC_WINDOW), 'ctrl+shift+b')

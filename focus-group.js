@@ -1,4 +1,4 @@
-let ROLES = {
+const ROLES = {
   button: ['toolbar'],
   checkbox: ['toolbar'],
   menuitem: ['menu', 'menubar'],
