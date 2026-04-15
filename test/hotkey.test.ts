@@ -369,6 +369,23 @@ test('is ready for missed data-keyux-hotkeys', () => {
   equal(clicked, 'Global')
 })
 
+test('ignores hot keys during IME composition', () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [hotkeyKeyUX()])
+  window.document.body.innerHTML = '<button aria-keyshortcuts="b"></button>'
+
+  let clicked = 0
+  window.document.querySelector('button')!.addEventListener('click', () => {
+    clicked += 1
+  })
+
+  press(window, { isComposing: true, key: 'b' })
+  equal(clicked, 0)
+
+  press(window, { isComposing: false, key: 'b' })
+  equal(clicked, 1)
+})
+
 test('puts focus to text inputs', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [hotkeyKeyUX()])

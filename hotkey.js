@@ -95,6 +95,7 @@ function findHotKey(event, window, transformers) {
 export function hotkeyKeyUX(transformers = []) {
   return window => {
     function keyDown(event) {
+      if (event.isComposing) return
       let isSpecialKey = event.ctrlKey || event.metaKey || event.altKey
       let insideEditable =
         event.target.isContentEditable ||
