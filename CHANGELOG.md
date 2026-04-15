@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.4
+
+- Fixed hotkeys detection during IME composition.
+
 ## 0.11.3
 
 - Fixed nested menu support in `focusGroupKeyUX()`.
