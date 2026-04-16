@@ -54,6 +54,7 @@ export function jumpKeyUX() {
     }
 
     function keyDown(event) {
+      if (event.isComposing) return
       if (event.target.getAttribute('aria-controls')) {
         if (event.key === 'Enter') {
           jump(event.target)
