@@ -148,6 +148,32 @@ test('is ready for missed previous area', async () => {
   equal(window.document.activeElement, step1)
 })
 
+test('ignores keys during IME composition', async () => {
+  let window = new JSDOM().window
+  startKeyUX(window, [jumpKeyUX()])
+  window.document.body.innerHTML =
+    '<a id="step1" href="#" aria-controls="step2"></a>' +
+    '<div id="step2"><button></button></div>'
+
+  let step1 = window.document.querySelector<HTMLElement>('#step1')!
+  let step2button = window.document.querySelector('#step2 button')!
+
+  step1.focus()
+  press(window, { isComposing: true, key: 'Enter' }, step1)
+  await setTimeout(50)
+  equal(window.document.activeElement, step1)
+
+  press(window, { isComposing: false, key: 'Enter' }, step1)
+  await setTimeout(50)
+  equal(window.document.activeElement, step2button)
+
+  press(window, { isComposing: true, key: 'Escape' })
+  equal(window.document.activeElement, step2button)
+
+  press(window, { isComposing: false, key: 'Escape' })
+  equal(window.document.activeElement, step1)
+})
+
 test('fires event on jump', async () => {
   let window = new JSDOM().window
   startKeyUX(window, [jumpKeyUX()])
