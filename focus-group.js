@@ -32,6 +32,10 @@ function getItems(target, group) {
 
 function filterNested(allItems, group) {
   return Array.from(allItems).filter(item => {
+    if (item.disabled || item.getAttribute('aria-disabled') === 'true') {
+      return false
+    }
+
     let current = item.parentElement
     while (current && current !== group) {
       if (current.getAttribute('aria-hidden') === 'true') {
@@ -80,7 +84,7 @@ export function focusGroupKeyUX(options) {
 
       let allItems = getItems(event.target, group)
       let items = filterNested(allItems, group)
-      let index = Array.from(items).indexOf(event.target)
+      let index = items.indexOf(event.target)
 
       let nextKey = 'ArrowDown'
       let prevKey = 'ArrowUp'
@@ -114,7 +118,7 @@ export function focusGroupKeyUX(options) {
         }
         lastTyped = event.timeStamp
 
-        let found = Array.from(allItems).find(item => {
+        let found = items.find(item => {
           return item.textContent
             ?.trim()
             ?.toLowerCase()
