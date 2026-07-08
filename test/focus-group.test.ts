@@ -204,6 +204,46 @@ describe('focus-group', () => {
     equal(window.document.activeElement, items[3])
   })
 
+  test('skips disabled items', async () => {
+    let window = new JSDOM().window
+    startKeyUX(window, [
+      hotkeyKeyUX(),
+      focusGroupKeyUX({
+        searchDelayMs: 100
+      })
+    ])
+
+    window.document.body.innerHTML =
+      '<nav role="menu">' +
+      '<button role="menuitem">Home</button>' +
+      '<button role="menuitem" disabled>About</button>' +
+      '<button role="menuitem" aria-disabled="true">Blog</button>' +
+      '<button role="menuitem">Contact</button>' +
+      '</nav>'
+
+    let items = window.document.querySelectorAll('button')
+    items[0]!.focus()
+
+    press(window, 'ArrowDown')
+    equal(window.document.activeElement, items[3])
+
+    press(window, 'ArrowUp')
+    equal(window.document.activeElement, items[0])
+
+    press(window, 'End')
+    equal(window.document.activeElement, items[3])
+
+    press(window, 'Home')
+    equal(window.document.activeElement, items[0])
+
+    press(window, 'ArrowUp')
+    equal(window.document.activeElement, items[3])
+
+    await setTimeout(150)
+    press(window, 'b')
+    equal(window.document.activeElement, items[3])
+  })
+
   test('supports RTL locales', () => {
     let window = new JSDOM().window
     startKeyUX(window, [focusGroupKeyUX()])
