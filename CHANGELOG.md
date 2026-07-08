@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.6
+
+- Fixed skipping disabled items in focus group navigation (by @TrySound).
+
 ## 0.11.5
 
 - Fixed jump key detection during IME composition.
